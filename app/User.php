@@ -27,4 +27,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function deck() {
+        return $this->hasMany('App\Models\Deck');
+    }
 }

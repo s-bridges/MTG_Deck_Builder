@@ -15,6 +15,16 @@
                     @endif
 
                     You are logged in!
+                    <br>
+                    <br>
+                    <p>To Do:
+                    <ul>
+                    <li>Deck -> Build a Deck</li>
+                    <li>Deck -> View Decks You've Built</li>
+                    <li>Cards -> View Cards</li>
+                    <li>Cards -> Search for Specific Cards</li>
+                    </ul>
+                    <p>
                 </div>
             </div>
         </div>

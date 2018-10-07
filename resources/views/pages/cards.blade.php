@@ -70,6 +70,7 @@
                 <div class="top-right links">
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/decks') }}">My Decks</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
                         <a href="{{ route('register') }}">Register</a>
@@ -78,7 +79,13 @@
             @endif
 
             <div class="content">
-                
+                <h1> Cards will be displayed here. <h1>
+                <p>To Do:
+                <ul>
+                <li>Display Cards</li>
+                <li>Search For Cards</li>
+                </ul>
+                <p>
             </div>
         </div>
     </body>

@@ -70,6 +70,7 @@
                 <div class="top-right links">
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/deck') }}">My Decks</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
                         <a href="{{ route('register') }}">Register</a>
@@ -84,8 +85,9 @@
 
                 <div class="links">
                     <a href="http://homestead.test/">Home</a>
-                    <a href="http://homestead.test/cards">Cards</a>
-                    <a href="https://github.com/s-bridges">GitHub</a>
+                    <a href="http://homestead.test/cards/">Cards</a>
+                    <a href="http://homestead.test/deck/">Build a Deck</a>
+                    <a href="https://github.com/s-bridges/">GitHub</a>
                 </div>
             </div>
         </div>
