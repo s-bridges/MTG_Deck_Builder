@@ -78,10 +78,7 @@
             @endif
 
             <div class="content">
-                <?php
                 
-                
-                ?>
             </div>
         </div>
     </body>
