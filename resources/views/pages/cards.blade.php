@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>MTG: Deck Builder</title>
+        <title>MTG: Cards</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
@@ -63,7 +63,7 @@
                 margin-bottom: 30px;
             }
         </style>
-    </head>
+      </head>
     <body>
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
@@ -78,15 +78,10 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
-                    MTG Deck Builder
-                </div>
-
-                <div class="links">
-                    <a href="http://homestead.test/">Home</a>
-                    <a href="http://homestead.test/cards">Cards</a>
-                    <a href="https://github.com/s-bridges">GitHub</a>
-                </div>
+                <?php
+                
+                
+                ?>
             </div>
         </div>
     </body>

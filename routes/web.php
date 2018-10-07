@@ -19,6 +19,10 @@ Route::get('/about', function() {
     return view('pages.about');
 });
 
+Route::get('/cards', function() {
+    return view('pages.cards');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
