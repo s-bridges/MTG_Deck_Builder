@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Deck;
+use App\User;
+use App\Card;
 
 class DecksController extends Controller
 {   
@@ -22,10 +24,16 @@ class DecksController extends Controller
      */
     public function index()
     {
-        $deck = Deck::with('user')->where('user_id', 1)->where('id', 1)->get();
+        $deck = Deck::where('user_id', Auth::user()->id)->get();
+        $user = Auth::user();
+        $data = collect(['user' => $user, 'deck' => $deck]);
+        return view('deck.index', ['data' => $data]);
 
-        return view('deck.index', ['deck' => $deck]);
-
+        /** NOT TO STANDARD | SAVE UNTIL WORKING
+         * $deck = Deck::with('user')->where('user_id', 1)->where('id', 1)->get();
+         *
+         * return view('deck.index', ['deck' => $deck]);
+         */
     }
 
     /**
