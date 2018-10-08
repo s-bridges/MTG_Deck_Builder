@@ -15,16 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/about', function() {
-    return view('pages.about');
-});
-
-Route::get('/cards', function() {
-    return view('pages.cards');
-});
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('deck', 'DecksController');
+
+Route::resource('card', 'CardsController');
