@@ -47575,62 +47575,60 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "container py-3" }, [
+        _c("div", { staticClass: "col-lg-3 col-md-3" }, [
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.filterColors,
+                  expression: "filterColors"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { id: "colors" },
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.filterColors = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                  function($event) {
+                    _vm.colorAPI()
+                  }
+                ]
+              }
+            },
+            [
+              _c("option", { attrs: { disabled: "", value: "" } }, [
+                _vm._v("Search By Mana")
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.colorOptions, function(option) {
+                return _c("option", { domProps: { value: option } }, [
+                  _vm._v(_vm._s(option))
+                ])
+              })
+            ],
+            2
+          )
+        ]),
+        _vm._v(" "),
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "mx-auto col-sm-12" }, [
             _c("div", { staticClass: "card" }, [
               _vm._m(0),
-              _vm._v(" "),
-              _c("thead", { attrs: { scope: "col" } }, [
-                _c("th", { attrs: { scope: "" } }, [_vm._v("Search")]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.filterColors,
-                        expression: "filterColors"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { id: "colors" },
-                    on: {
-                      change: [
-                        function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.filterColors = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        },
-                        function($event) {
-                          _vm.colorAPI()
-                        }
-                      ]
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { disabled: "", value: "" } }, [
-                      _vm._v("None Selected")
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.colorOptions, function(option) {
-                      return _c("option", { domProps: { value: option } }, [
-                        _vm._v(_vm._s(option))
-                      ])
-                    })
-                  ],
-                  2
-                )
-              ]),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
                 _vm.cards.length > 0
@@ -47643,7 +47641,7 @@ var render = function() {
                           return _c("tr", [
                             _c("td", [_vm._v(_vm._s(card.name))]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(card.colors.join(",")))]),
+                            _c("td", [_vm._v(_vm._s(card.colors.join(", ")))]),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(card.type))]),
                             _vm._v(" "),

@@ -2,19 +2,19 @@
     <div class="container">
         <div class="row justify-content-center">                
             <div class="container py-3">
+                <div class="col-lg-3 col-md-3">
+                    <select id="colors" class="form-control" v-model="filterColors" v-on:change="colorAPI()">
+                    <option disabled value="">Search By Mana</option>
+                    <option v-for="option in colorOptions" :value="option">{{option}}</option>
+                    </select>
+                </div>
                 <div class="row">
                     <div class="mx-auto col-sm-12">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="mb-0">All Cards</h4>
                             </div>
-                            <thead scope="col">
-                                <th scope>Search</th>
-                                    <select id="colors" class="form-control" v-model="filterColors" v-on:change="colorAPI()">
-                                        <option disabled value="">None Selected</option>
-                                        <option v-for="option in colorOptions" :value="option">{{option}}</option>
-                                    </select>
-                                </thead>
+                            
                             <div class="card-body">
                                 <table class="table" v-if="cards.length > 0">
                                     <thead>
@@ -30,7 +30,7 @@
                                     <tbody>
                                         <tr v-for="card in cards">
                                             <td>{{card.name}}</td>
-                                            <td>{{card.colors.join(',')}}</td>
+                                            <td>{{card.colors.join(', ')}}</td>
                                             <td>{{card.type}}</td>
                                             <td>{{card.rarity}}</td>
                                             <td>{{card.set}}</td>
