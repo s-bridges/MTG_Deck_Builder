@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Deck;
+use App\Models\Deck;
 use Illuminate\Http\Request;
 
 class DecksController extends Controller
@@ -15,9 +15,9 @@ class DecksController extends Controller
     public function index()
     {
         //
-        $decks = Deck::All();
+        $deck = Deck::all();
 
-        return view('deck.index', ['deck' => $decks]);
+        return view('deck.index', ['deck' => $deck]);
 
     }
 
@@ -48,11 +48,10 @@ class DecksController extends Controller
      * @param  \App\Deck  $deck
      * @return \Illuminate\Http\Response
      */
-    public function show(Deck $deck)
+    public function show($id)
     {
-        //
-        //$deck = Deck::where('id', $deck->id)->first();
-        $deck = Deck::find($deck->id);
+        $deck = Deck::with('user_id')->findOrFail($id);
+        dd($deck);
         return view('deck.show', ['deck'=>$deck]);
     }
 

@@ -26,11 +26,10 @@ class Deck extends Model
         'cards',
     ];
 
-    public function user() {
-        return $this->belongsTo('App\Models\Deck');
+    /* public function user() {
+        return $this->belongsTo(User::class);
     }
-
     public function cards() {
-        return $this->hasMany('App\Models\Card');
-    }
+        return $this->hasMany(Card::class);
+    } */
 }

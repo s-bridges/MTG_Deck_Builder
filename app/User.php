@@ -28,11 +28,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function decks() {
-        return $this->hasMany('App\Models\Deck');
+    /* public function decks() {
+        return $this->hasMany(Deck::class);
     }
-
     public function cards() {
-        return $this->hasMany('App\Models\Card');
-    }
+        return $this->hasMany(Card::class);
+    } */
 }

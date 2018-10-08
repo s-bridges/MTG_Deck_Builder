@@ -19,6 +19,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('deck', 'DecksController');
+
+Route::get('deck', 'DecksController@index');
+Route::get('/deck/{id}', 'DecksController@show');
 
 Route::resource('card', 'CardsController');
