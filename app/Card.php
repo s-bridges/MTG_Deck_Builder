@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Deck extends Model
+class Card extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -13,7 +13,7 @@ class Deck extends Model
      */
     protected $fillable = [
         'name', 
-        'description',
+        'colors',
     ];
 
     /**
@@ -22,15 +22,17 @@ class Deck extends Model
      * @var array
      */
     protected $hidden = [
-        'user_id',
-        'cards',
+        'id',
+        'deck_id',
+        'multiverseid',
     ];
 
-    public function user() {
-        return $this->belongsTo('App\Models\Deck');
+    public function decks() {
+        return $this->hasMany('App\Models\Deck');
     }
 
-    public function cards() {
-        return $this->hasMany('App\Models\Card');
+    public function users() {
+        return $this->hasMany('App\Models\User');
     }
+
 }

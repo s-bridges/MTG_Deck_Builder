@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Deck;
+use App\Card;
 use Illuminate\Http\Request;
 
-class DecksController extends Controller
+class CardsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,11 +14,9 @@ class DecksController extends Controller
      */
     public function index()
     {
-        //
-        $decks = Deck::All();
+        $cards = Card::All();
 
-        return view('deck.index', ['deck' => $decks]);
-
+        return view('card.index', ['card' => $cards]);
     }
 
     /**
@@ -45,24 +43,22 @@ class DecksController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Deck  $deck
+     * @param  \App\Card  $card
      * @return \Illuminate\Http\Response
      */
-    public function show(Deck $deck)
+    public function show(Card $card)
     {
-        //
-        //$deck = Deck::where('id', $deck->id)->first();
-        $deck = Deck::find($deck->id);
-        return view('deck.show', ['deck'=>$deck]);
+        $card = Card::find($card->id);
+        return view('card.show', ['card'=>$card]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Deck  $deck
+     * @param  \App\Card  $card
      * @return \Illuminate\Http\Response
      */
-    public function edit(Deck $deck)
+    public function edit(Card $card)
     {
         //
     }
@@ -71,10 +67,10 @@ class DecksController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Deck  $deck
+     * @param  \App\Card  $card
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Deck $deck)
+    public function update(Request $request, Card $card)
     {
         //
     }
@@ -82,10 +78,10 @@ class DecksController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Deck  $deck
+     * @param  \App\Card  $card
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Deck $deck)
+    public function destroy(Card $card)
     {
         //
     }
