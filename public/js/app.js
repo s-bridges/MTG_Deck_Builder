@@ -14013,7 +14013,7 @@ window.Vue = __webpack_require__(37);
  */
 
 Vue.component('example-component', __webpack_require__(40));
-Vue.component('cards', __webpack_require__(43));
+Vue.component('list-cards', __webpack_require__(43));
 
 var app = new Vue({
   el: '#app'
@@ -47435,7 +47435,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/js/components/CardsComponent.vue"
+Component.options.__file = "resources/js/components/ListCards.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -47444,9 +47444,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-54096305", Component.options)
+    hotAPI.createRecord("data-v-1a772dec", Component.options)
   } else {
-    hotAPI.reload("data-v-54096305", Component.options)
+    hotAPI.reload("data-v-1a772dec", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -47478,43 +47478,71 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        var _this = this;
+  mounted: function mounted() {
+    var _this = this;
 
-        axios.get('https://api.magicthegathering.io/v1').then(function (response) {
-            return _this.info = response;
-        });
-    },
+    this.getCardsFromAPI();
+    axios.get('https://api.magicthegathering.io/v1/cards').then(function (response) {
+      _this.cards = response.data.cards;
+      console.log(_this.cards);
+    });
+    this.setAPI();
+    axios.get('https://api.magicthegathering.io/v1/sets?name=' + this.filterSet).then(function (response) {
+      _this.cards = response.data.cards;
+      console.log(_this.cards);
+    }).catch(function (error) {});
+  },
 
-    props: {
-        data: {
-            type: Object,
-            required: false // set this to true if you need data passed to the component for it to work
-        }
-    },
-    data: function data() {
-        return {
-            cards: [],
-            card: {
-                id: '',
-                name: ''
-            },
-            card_id: '',
-            pagination: {},
-            edit: false
-        };
-    },
-
-    methods: {
-        getAllCardsAPI: function getAllCardsAPI() {
-            // Do you api logic from a method you can call here as much as you want
-            set.all({ name: '' }).on('data', function (set) {
-                console.log(set.name);
-            });
-        }
+  props: {
+    data: {
+      type: Object,
+      required: false
     }
+  },
+  data: function data() {
+    return {
+      cards: [],
+      filterSet: '',
+      setOptions: ['Khans', 'Ixilan', 'Amonkhet']
+    };
+  },
+
+  methods: {
+    getCardsFromAPI: function getCardsFromAPI() {
+      // API stuff to mtgo
+
+    }
+  }
+
 });
 
 /***/ }),
@@ -47525,28 +47553,113 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "container py-3" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "mx-auto col-sm-12" }, [
+            _c("div", { staticClass: "card" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("thead", { attrs: { scope: "col" } }, [
+                _c("th", { attrs: { scope: "" } }, [_vm._v("Search")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filterSet,
+                        expression: "filterSet"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "set" },
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.filterSet = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                        function($event) {
+                          _vm.setAPI()
+                        }
+                      ]
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { disabled: "", value: "" } }, [
+                      _vm._v("None Selected")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.setOptions, function(option) {
+                      return _c("option", { domProps: { value: option } }, [
+                        _vm._v(_vm._s(option))
+                      ])
+                    })
+                  ],
+                  2
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
+                _vm.cards.length > 0
+                  ? _c("table", { staticClass: "table" }, [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.cards, function(card) {
+                          return _c("tr", [
+                            _c("td", [_vm._v(_vm._s(card.name))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(card.setName))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(card.multiverseid))])
+                          ])
+                        })
+                      )
+                    ])
+                  : _vm._e()
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card card-default" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Card Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
-          ])
-        ])
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h4", { staticClass: "mb-0" }, [_vm._v("All Cards")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Card Name")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Set")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Multiverse ID")])
       ])
     ])
   }
@@ -47556,7 +47669,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-54096305", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-1a772dec", module.exports)
   }
 }
 

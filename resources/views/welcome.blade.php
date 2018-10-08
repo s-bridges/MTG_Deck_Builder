@@ -86,7 +86,7 @@
 
                 <div class="links">
                     <a href="http://homestead.test/">Home</a>
-                    <a href="http://homestead.test/cards/">Cards</a>
+                    <a href="http://homestead.test/card/">Cards</a>
                     <a href="http://homestead.test/deck/">Build a Deck</a>
                     <a href="https://github.com/s-bridges/">GitHub</a>
                 </div>
