@@ -24,6 +24,7 @@ class DecksController extends Controller
      */
     public function index()
     {
+        dd($data);
         $deck = Deck::where('user_id', Auth::user()->id)->get();
         $user = Auth::user();
         $data = collect(['user' => $user, 'deck' => $deck]);

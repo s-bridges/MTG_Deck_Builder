@@ -47496,13 +47496,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function data() {
         return {
-            cards: [this.data.cards]
+            cards: [],
+            card: {
+                id: '',
+                name: ''
+            },
+            card_id: '',
+            pagination: {},
+            edit: false
         };
     },
 
     methods: {
         getAllCardsAPI: function getAllCardsAPI() {
             // Do you api logic from a method you can call here as much as you want
+            set.all({ name: '' }).on('data', function (set) {
+                console.log(set.name);
+            });
         }
     }
 });

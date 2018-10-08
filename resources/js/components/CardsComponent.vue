@@ -29,12 +29,23 @@
     },
     data() {
         return {
-            cards: [this.data.cards]
+            cards: [],
+            card: {
+                id: '',
+                name: ''
+            }, 
+            card_id: '',
+            pagination: {},
+            edit: false
         };
     },
     methods: {
         getAllCardsAPI() {
             // Do you api logic from a method you can call here as much as you want
+            set.all({ name: '' })
+            .on('data', set=> {
+                console.log(set.name)
+            })
         }
     }
     };
