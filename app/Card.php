@@ -28,11 +28,11 @@ class Card extends Model
     ];
 
     public function decks() {
-        return $this->hasMany('Deck::class');
+        return $this->hasMany(Deck::class);
     }
 
     public function users() {
-        return $this->hasMany('App\Models\User');
+        return $this->hasMany(User::class);
     }
 
 }

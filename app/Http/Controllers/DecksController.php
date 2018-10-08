@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Deck;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Deck;
 
 class DecksController extends Controller
-{
+{   
+    protected $request;
+
+    public function __construct(Request $request)
+    {
+        $this->middleware('auth');
+        $this->request = $request;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +22,6 @@ class DecksController extends Controller
      */
     public function index()
     {
-        //
         $deck = Deck::with('user')->where('user_id', 1)->where('id', 1)->get();
 
         return view('deck.index', ['deck' => $deck]);
@@ -29,7 +35,8 @@ class DecksController extends Controller
      */
     public function create()
     {
-        //
+        $form = $this->request->all();
+        $form['user_id'] = Auth::user()->id;
     }
 
     /**
@@ -52,7 +59,7 @@ class DecksController extends Controller
     public function show($id)
     {
         $deck = Deck::with('user_id')->findOrFail($id);
-        dd($deck);
+        //dd($deck);
         return view('deck.show', ['deck'=>$deck]);
     }
 

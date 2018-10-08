@@ -22,6 +22,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::prefix('deck')->middleware(['auth'])->group(function (){
     Route::get('/', 'DecksController@index');
     Route::get('/deck/{id}', 'DecksController@show');
+    Route::post('deck/add', 'DecksController@create');
+    Route::put('{id}/edit-deck', 'DecksController@edit');
+    Route::delete('{id}/delete-deck', 'DecksController@delete');
 });
 
 Route::resource('card', 'CardsController');

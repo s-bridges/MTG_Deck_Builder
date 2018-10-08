@@ -80,12 +80,11 @@
 
             <div class="content">
                 <h1> Cards will be displayed here. <h1>
-                <p>To Do:
-                <ul>
-                <li>Display Cards</li>
-                <li>Search For Cards</li>
-                </ul>
-                <p>
+                mounted () {
+                    axios
+                    .get('https://api.magicthegathering.io/v1')
+                    .then(response => (this.info = response))
+                 }
             </div>
         </div>
     </body>
