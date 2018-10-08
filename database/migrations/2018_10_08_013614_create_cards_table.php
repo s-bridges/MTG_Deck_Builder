@@ -19,7 +19,6 @@ class CreateCardsTable extends Migration
             $table->text('name');
             $table->integer('multiverseid')->unsigned();
             $table->text('colors');
-            $table->foreign('deck_id')->references('id')->on('decks');
             $table->timestamps();
         });
     }

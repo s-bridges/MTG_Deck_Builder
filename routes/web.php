@@ -19,8 +19,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
-Route::get('deck', 'DecksController@index');
-Route::get('/deck/{id}', 'DecksController@show');
+Route::prefix('deck')->middleware(['auth'])->group(function (){
+    Route::get('/', 'DecksController@index');
+    Route::get('/deck/{id}', 'DecksController@show');
+});
 
 Route::resource('card', 'CardsController');

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Deck;
+use App\Deck;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DecksController extends Controller
 {
@@ -15,7 +16,7 @@ class DecksController extends Controller
     public function index()
     {
         //
-        $deck = Deck::all();
+        $deck = Deck::with('user')->where('user_id', 1)->where('id', 1)->get();
 
         return view('deck.index', ['deck' => $deck]);
 

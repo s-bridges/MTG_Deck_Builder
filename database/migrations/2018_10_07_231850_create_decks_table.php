@@ -19,7 +19,6 @@ class CreateDecksTable extends Migration
             $table->string('name');
             $table->longText('description');
             $table->integer('cards')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
