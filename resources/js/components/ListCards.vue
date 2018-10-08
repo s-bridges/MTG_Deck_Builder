@@ -10,9 +10,9 @@
                             </div>
                             <thead scope="col">
                                 <th scope>Search</th>
-                                    <select id="set" class="form-control" v-model="filterSet" v-on:change="setAPI()">
+                                    <select id="colors" class="form-control" v-model="filterColors" v-on:change="colorAPI()">
                                         <option disabled value="">None Selected</option>
-                                        <option v-for="option in setOptions" :value="option">{{option}}</option>
+                                        <option v-for="option in colorOptions" :value="option">{{option}}</option>
                                     </select>
                                 </thead>
                             <div class="card-body">
@@ -20,6 +20,9 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">Card Name</th>
+                                            <th scope="col">Mana Color</th>
+                                            <th scope="col">Type</th>
+                                            <th scope="col">Rarity</th>
                                             <th scope="col">Set</th>
                                             <th scope="col">Multiverse ID</th>
                                         </tr>
@@ -27,7 +30,10 @@
                                     <tbody>
                                         <tr v-for="card in cards">
                                             <td>{{card.name}}</td>
-                                            <td>{{card.setName}}</td>
+                                            <td>{{card.colors.join(',')}}</td>
+                                            <td>{{card.type}}</td>
+                                            <td>{{card.rarity}}</td>
+                                            <td>{{card.set}}</td>
                                             <td>{{card.multiverseid}}</td>
                                         </tr>
                                     </tbody>
@@ -44,19 +50,8 @@
 <script>
 export default {
   mounted() {
+      // call methods here that you want done on page load, the methods are defined in the methods section below
     this.getCardsFromAPI();
-    axios.get(`https://api.magicthegathering.io/v1/cards`)
-        .then(response => {
-            this.cards = response.data.cards;
-            console.log(this.cards);
-        })
-    this.setAPI();
-    axios.get(`https://api.magicthegathering.io/v1/sets?name=${this.filterSet}`)
-        .then(response => {
-            this.cards = response.data.cards;
-            console.log(this.cards);
-        })
-    .catch(error => {});
   },
   props: {
     data: {
@@ -67,16 +62,37 @@ export default {
   data() {
     return {
       cards: [],
-      filterSet: '',
-      setOptions: ['Khans', 'Ixilan', 'Amonkhet']
+      filterColors: '',
+      colorOptions: ['Black', 'Blue', 'White', 'Red', 'Green'],
+      mtgoColorData: {}
     };
   },
   methods: {
     getCardsFromAPI() {
-        // API stuff to mtgo
-        
+        // API stuff to mtgo for all cards
+        axios.get(`https://api.magicthegathering.io/v1/cards`)
+        .then(response => {
+            this.cards = response.data.cards;
+        })
+    },
+    colorAPI(){
+        axios.get(`https://api.magicthegathering.io/v1/cards?colors=${this.filterColors}`)
+        .then(response => {
+            this.cards = response.data.cards;
+
+            console.log(this.cards);
+        })
+        .catch(error => {});
+    },
+    setAPI(){
+        axios.get(`https://api.magicthegathering.io/v1/sets?name=${this.filterSet}`)
+        .then(response => {
+            this.mtgoSetData = response.data;
+
+            console.log(this.mtgoSetData);
+        })
+        .catch(error => {});   
     }
-    
   }
 
 };

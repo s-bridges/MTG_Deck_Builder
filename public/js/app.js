@@ -47505,21 +47505,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    var _this = this;
-
+    // call methods here that you want done on page load, the methods are defined in the methods section below
     this.getCardsFromAPI();
-    axios.get('https://api.magicthegathering.io/v1/cards').then(function (response) {
-      _this.cards = response.data.cards;
-      console.log(_this.cards);
-    });
-    this.setAPI();
-    axios.get('https://api.magicthegathering.io/v1/sets?name=' + this.filterSet).then(function (response) {
-      _this.cards = response.data.cards;
-      console.log(_this.cards);
-    }).catch(function (error) {});
   },
 
   props: {
@@ -47531,15 +47527,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       cards: [],
-      filterSet: '',
-      setOptions: ['Khans', 'Ixilan', 'Amonkhet']
+      filterColors: '',
+      colorOptions: ['Black', 'Blue', 'White', 'Red', 'Green'],
+      mtgoColorData: {}
     };
   },
 
   methods: {
     getCardsFromAPI: function getCardsFromAPI() {
-      // API stuff to mtgo
+      var _this = this;
 
+      // API stuff to mtgo for all cards
+      axios.get('https://api.magicthegathering.io/v1/cards').then(function (response) {
+        _this.cards = response.data.cards;
+      });
+    },
+    colorAPI: function colorAPI() {
+      var _this2 = this;
+
+      axios.get('https://api.magicthegathering.io/v1/cards?colors=' + this.filterColors).then(function (response) {
+        _this2.cards = response.data.cards;
+
+        console.log(_this2.cards);
+      }).catch(function (error) {});
+    },
+    setAPI: function setAPI() {
+      var _this3 = this;
+
+      axios.get('https://api.magicthegathering.io/v1/sets?name=' + this.filterSet).then(function (response) {
+        _this3.mtgoSetData = response.data;
+
+        console.log(_this3.mtgoSetData);
+      }).catch(function (error) {});
     }
   }
 
@@ -47571,12 +47590,12 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.filterSet,
-                        expression: "filterSet"
+                        value: _vm.filterColors,
+                        expression: "filterColors"
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { id: "set" },
+                    attrs: { id: "colors" },
                     on: {
                       change: [
                         function($event) {
@@ -47588,12 +47607,12 @@ var render = function() {
                               var val = "_value" in o ? o._value : o.value
                               return val
                             })
-                          _vm.filterSet = $event.target.multiple
+                          _vm.filterColors = $event.target.multiple
                             ? $$selectedVal
                             : $$selectedVal[0]
                         },
                         function($event) {
-                          _vm.setAPI()
+                          _vm.colorAPI()
                         }
                       ]
                     }
@@ -47603,7 +47622,7 @@ var render = function() {
                       _vm._v("None Selected")
                     ]),
                     _vm._v(" "),
-                    _vm._l(_vm.setOptions, function(option) {
+                    _vm._l(_vm.colorOptions, function(option) {
                       return _c("option", { domProps: { value: option } }, [
                         _vm._v(_vm._s(option))
                       ])
@@ -47624,7 +47643,13 @@ var render = function() {
                           return _c("tr", [
                             _c("td", [_vm._v(_vm._s(card.name))]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(card.setName))]),
+                            _c("td", [_vm._v(_vm._s(card.colors.join(",")))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(card.type))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(card.rarity))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(card.set))]),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(card.multiverseid))])
                           ])
@@ -47656,6 +47681,12 @@ var staticRenderFns = [
     return _c("thead", [
       _c("tr", [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Card Name")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Mana Color")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Type")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Rarity")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Set")]),
         _vm._v(" "),
