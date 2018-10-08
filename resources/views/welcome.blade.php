@@ -79,7 +79,7 @@
             @endif
 
             <div class="content">
-                <img src="D:\Laravel_Projects\MTG_Deck_Builder\public\images\mana-symbols.png" alt='Magic' height="118" width="666">
+                <img src="public\images\mana-symbols.png" alt='Magic'>
                 <div class="title m-b-md">
                     MTG Deck Builder
                 </div>
