@@ -7,7 +7,7 @@
                     <option disabled value="">Search By Mana</option>
                     <option v-for="option in colorOptions" :value="option">{{option}}</option>
                     </select>
-                </div>
+                </div>                
                 <div class="row">
                     <div class="mx-auto col-sm-12">
                         <div class="card">
