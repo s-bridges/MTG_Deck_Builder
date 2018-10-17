@@ -3,19 +3,8 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
             <div id="app">
-                    <div class="search-wrapper">
-                        <input type="text" v-model="search" placeholder="Search for card..."/>
-                    </div>
-                    <div class="wrapper">
-                        <div class="card" v-for="post in filteredList">
-                        <a v-bind:href="post.link" target="_blank">
-                            <img v-bind:src="post.img"/>
-                            <small>posted by: {{ post.author }}</small>
-                            {{ post.title }}
-                        </a>
-                        </div>
-                    </div>
-                    </div>
+                   <input type="text" v-model.lazy="keywords" placeholder="Search for card...">
+            </div>
                 <div class="card card-default">
                     <div class="card-header">Search Results</div>
                     <div class="card-body">
@@ -36,27 +25,22 @@
 <script>
     export default {
         mounted() {
-            this.getCardsFromAPI();
-        },
-        props: {
-            data: {
-                type: Object,
-                required: false
-            }
         },
         data() {
             return {
-                cards: [],
-                searchBy: '',
-                searchForData: {}
+                keywords: null,
+                results: []
             };
         },
+        watch: {
+            keywords(after, before) {
+                this.fetch();
+            }
+        },
         methods: {
-            getCardsFromAPI() {
-                axios.get(`https://api.magicthegathering.io/v1/cards`)
-                .then(response => {
-                    this.cards = response.data.cards;
-                })
+            fetch() {
+                axios.get(`https://api.magicthegathering.io/v1/cards`, { params: { keywords: this.keywords } })
+                .then(response => this.results = response.data)
                 .catch(error => {});
             }
         }

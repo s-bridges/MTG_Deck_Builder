@@ -16,3 +16,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/decks', 'DeckController@store');
+Route::get('/decks/{deck}', 'DeckController@show');
+Route::put('/decks/{deck}', 'DeckController@update');
+Route::delete('/decks/{deck}', 'DeckController@destroy');

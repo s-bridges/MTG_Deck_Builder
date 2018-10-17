@@ -13,7 +13,7 @@ MTG: Deck Builder is brought to you by -
 - [GitHub: MTG API](https://github.com/magicthegathering)
 - [MTG API Site](https://magicthegathering.io)
 - [Wizards of the Coast](http://company.wizards.com/)
-- [Seth Bridges](https://sethbridges.me).
+- [Seth Bridges](https://sethbridges.me)
 - [Alex Rindone](https://github.com/alexrindone)
 
 ## Contributing
