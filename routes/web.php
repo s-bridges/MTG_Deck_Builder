@@ -28,7 +28,7 @@ Route::prefix('deck')->middleware(['auth'])->group(function (){
 });
 
 Route::prefix('import')->middleware(['auth'])->group(function (){
-    Route::get('/import', 'ImportController@getImport')->name('import');
+    Route::get('/', 'ImportController@getImport')->name('import');
     Route::post('import', 'ImportController@saveImport')->name('import_post');
     Route::get('/importing/{id}', 'ImportController@importing')->name('importing');
     Route::post('/process/', 'ImportController@process')->name('process');

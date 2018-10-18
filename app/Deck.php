@@ -13,7 +13,32 @@ class Deck extends Model
      * @var array
      */
     protected $importable = [
-        //list from imports
+        'id',
+        'name',
+        'multiverseid',
+        'layout',
+        'names',
+        'cmc',
+        'colors',
+        'type',
+        'types',
+        'subtypes',
+        'rarity',
+        'text',
+        'flavor',
+        'artist',
+        'number',
+        'power',
+        'toughness',
+        'reserved',
+        'rulings',
+        'printings',
+        'originalText',
+        'originalType',
+        'legalities',
+        'source',
+        'imageUrl',
+        'set',
     ];
     
     /**
