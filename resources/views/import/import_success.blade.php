@@ -1,0 +1,16 @@
+@extends('layouts.master')
+
+@section('content')
+    <div class="row">
+        <div class="col s12">
+            <p>CSV Imported Successfully!</p>
+        </div>
+    </div>
+@endsection
+
+<script type="text/javascript">
+    window.setTimeout(function(){
+        // Redirect to import page after 2 seconds
+        window.location.href = "{{ url('/setup/import') }}";
+    }, 2000);
+</script>

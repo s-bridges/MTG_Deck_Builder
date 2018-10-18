@@ -6,6 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Deck extends Model
 {
+
+    /**
+     * The attributes that are importable.
+     * 
+     * @var array
+     */
+    protected $importable = [
+        //list from imports
+    ];
+    
     /**
      * The attributes that are mass assignable.
      *

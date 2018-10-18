@@ -1,7 +1,7 @@
 <?php
 
-$url = 'ALL - Copy.json'
-$data = file_get_contents($url); # doesn't work...
+$url = 'ALL.json'
+$data = file_get_contents($url);
 $characters = json_decode($data);
 
 $csvFileName = 'mtg_card.csv';
