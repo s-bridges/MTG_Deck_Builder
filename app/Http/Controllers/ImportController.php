@@ -53,12 +53,12 @@ class ImportController extends Controller
             'csv_header' => $this->request->has('header'),
             'csv_data' => json_encode($data),
             'object_type' => $this->request->input('type'),
-            'client_id' => Auth::user()->client->id
+            'user_id' => Auth::user()->id
         ]);
         // if successfully added to the DB
         if ($csv_data_file) {
             // redirect to page with csv id as parameter
-            return redirect()->to('/setup/importing/' . $csv_data_file->id);
+            return redirect()->to('/import/importing/' . $csv_data_file->id);
         } else {
             return redirect()->back();
         }
@@ -66,15 +66,44 @@ class ImportController extends Controller
     public function importing($id)
     {
         // get the csv record from the DB
-        $data = CsvData::where('id', $id)->where('client_id', Auth::user()->client->id)->get();
+        $data = CsvData::where('id', $id)->where('user_id', Auth::user()->id)->get();
         // came to us as an array but we know there is only one record
         $data = $data[0];
         // decode the data that was store in the db
         $csv_data = json_decode($data->csv_data);
         // this gets the model dynamically, again you could technically write this as $model = new Deck;
-        $model = $this->getModel($data->object_type);
+        //$model = $this->getModel($data->object_type);
+        $model = new Deck;
+        $model = $model->toArray();        
         // gets the possible importable fields (helps with data integrity which is set in the actual Deck Model)
-        $importable_fields = $model['importable'];
+        $importable_fields = [
+            'id',
+            'name',
+            'multiverseid',
+            'layout',
+            'names',
+            'cmc',
+            'colors',
+            'type',
+            'types',
+            'subtypes',
+            'rarity', //fix later
+            'text',
+            'flavor',
+            'artist',
+            'number',
+            'power',
+            'toughness',
+            'reserved',
+            'rulings',
+            'printings',
+            'originalText',
+            'originalType',
+            'legalities',
+            'source',
+            'imageUrl',
+            'set'
+        ];
         // pass in the importable fields, csv, etc 
         return view('import.import_fields', compact('csv_data', 'data', 'importable_fields'));
     }
@@ -82,7 +111,7 @@ class ImportController extends Controller
     {
         // this is what actually adds the data into the database for Deck
         $csv_id = $this->request->input('csv_data_file_id');
-        $data = CsvData::where('id', $csv_id)->where('client_id', Auth::user()->client->id)->first();
+        $data = CsvData::where('id', $csv_id)->where('user_id', Auth::user()->id)->first();
         $csv_data = json_decode($data->csv_data);
         // list of items to be inserted into database after
         $items = []; 
@@ -97,7 +126,7 @@ class ImportController extends Controller
             $validator = Validator::make($dummy, $this->validate_fields[$data->object_type]);
             if ($validator->passes()){
                 // push into items array
-                $dummy['client_id'] = Auth::user()->client->id;
+                $dummy['user_id'] = Auth::user()->id;
                 $items[] = $dummy;
             } else {
                 return redirect()->back()->withErrors($validator)->withInput();

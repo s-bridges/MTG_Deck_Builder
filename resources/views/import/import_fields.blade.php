@@ -26,7 +26,7 @@
                     <select class="browser-default" name="fields[{{ $key }}]">
                         @foreach ($importable_fields as $db_field)
                             <option value="{{ $db_field }}"
-                                @if ($key === $db_field) selected @endif>{{ $db_field }}</option>
+                                @if ($key = $db_field) selected @endif>{{ $db_field }}</option>
                         @endforeach
                     </select>
                 </td>

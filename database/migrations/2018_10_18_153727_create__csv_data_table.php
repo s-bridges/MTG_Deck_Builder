@@ -19,7 +19,7 @@ class CreateCsvDataTable extends Migration
             $table->boolean('csv_header')->default();
             $table->string('object_type');
             $table->longText('csv_data');
-            $table->integer('client_id');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateCsvDataTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('_csv_data');
+        Schema::dropIfExists('csv_data');
     }
 }
