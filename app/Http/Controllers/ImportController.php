@@ -77,38 +77,30 @@ class ImportController extends Controller
         $model = $model->toArray();        
         // gets the possible importable fields (helps with data integrity which is set in the actual Deck Model)
         $importable_fields = [
+            'card',
             'id',
+            'multiverse_id',
             'name',
-            'multiverseid',
-            'layout',
-            'names',
-            'cmc',
-            'colors',
+            'cost',
+            'random_number',
             'type',
-            'types',
-            'subtypes',
-            'rarity', //fix later
-            'text',
             'flavor',
-            'artist',
-            'number',
-            'power',
-            'toughness',
-            'reserved',
-            'rulings',
-            'printings',
-            'originalText',
-            'originalType',
-            'legalities',
-            'source',
-            'imageUrl',
-            'set'
+            'number_1',
+            'number_2',
+            'pri_color',
+            'sec_color',
+            'color',
+            'set',
+            'number_4',
+            'rarity',
+            'image_url',
         ];
         // pass in the importable fields, csv, etc 
         return view('import.import_fields', compact('csv_data', 'data', 'importable_fields'));
     }
     public function process()
     {
+        $model = new Deck;
         // this is what actually adds the data into the database for Deck
         $csv_id = $this->request->input('csv_data_file_id');
         $data = CsvData::where('id', $csv_id)->where('user_id', Auth::user()->id)->first();
@@ -123,19 +115,21 @@ class ImportController extends Controller
                 $dummy[$field] = $row[$index];
             }
             // validate the fields you are wanting to import into the DB
-            $validator = Validator::make($dummy, $this->validate_fields[$data->object_type]);
+            /* $validator = Validator::make($dummy, $this->validate_fields[$model]);
             if ($validator->passes()){
                 // push into items array
                 $dummy['user_id'] = Auth::user()->id;
                 $items[] = $dummy;
             } else {
                 return redirect()->back()->withErrors($validator)->withInput();
-            }
+            } */
         }
         // get model to do mass insert into
-        $model = $this->getModel($data->object_type);
+        //$model = $this->getModel($model);
         // Mass insert all items in one query
         $inserted = $model::insert($items);
+        
+        dd($inserted);
         if ($inserted) {
             return view('import.import_success');
         } else {
