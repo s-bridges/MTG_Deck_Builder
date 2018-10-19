@@ -78,7 +78,6 @@ class ImportController extends Controller
         // gets the possible importable fields (helps with data integrity which is set in the actual Deck Model)
         $importable_fields = [
             'card',
-            'id',
             'multiverse_id',
             'name',
             'cost',
@@ -94,6 +93,7 @@ class ImportController extends Controller
             'number_4',
             'rarity',
             'image_url',
+            'user_id',
         ];
         // pass in the importable fields, csv, etc 
         return view('import.import_fields', compact('csv_data', 'data', 'importable_fields'));
@@ -106,7 +106,7 @@ class ImportController extends Controller
         $data = CsvData::where('id', $csv_id)->where('user_id', Auth::user()->id)->first();
         $csv_data = json_decode($data->csv_data);
         // list of items to be inserted into database after
-        $items = []; 
+        $items = [];
         foreach ($csv_data as $row) {
             $dummy = [];
             // loop through each of the fields set on the columns "headers"
@@ -114,6 +114,12 @@ class ImportController extends Controller
                 // create a dummy array we can validate, then do mass create
                 $dummy[$field] = $row[$index];
             }
+            // push into items array
+
+            $dummy['user_id'] = Auth::user()->id;
+
+            $items[] = $dummy;
+            //dd($items);
             // validate the fields you are wanting to import into the DB
             /* $validator = Validator::make($dummy, $this->validate_fields[$model]);
             if ($validator->passes()){
@@ -129,7 +135,6 @@ class ImportController extends Controller
         // Mass insert all items in one query
         $inserted = $model::insert($items);
         
-        dd($inserted);
         if ($inserted) {
             return view('import.import_success');
         } else {
