@@ -79,7 +79,7 @@
             @endif
 
             <div class="content">
-            <img src="/MTG_Deck_Builder/app/public/images/mana-symbols.png" alt="#" />
+            {{ asset('public\images\mana_symbols.png') }}
                 <div class="title m-b-md">
                     MTG Deck Builder
                 </div>

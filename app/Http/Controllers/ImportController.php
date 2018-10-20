@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 // whatever your deck model is below
-use App\Deck;
+use App\Card;
 use App\CsvData;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,13 +22,13 @@ class ImportController extends Controller
         return view('import.import');
     }
     // default param is set to deck for deck
-    protected function getModel($type = 'Deck')
+    protected function getModel($type = 'Card')
     {
         // switch case to return model so that this can be reused dynamically based on the select options in your import blade file
         // This really doesn't need to be used as a switch case unless you want to make it dynamic
         switch ($type) {
-            case 'Deck':
-            return new Deck;
+            case 'Card':
+            return new Card;
             break;
         }
     }
@@ -73,26 +73,26 @@ class ImportController extends Controller
         $csv_data = json_decode($data->csv_data);
         // this gets the model dynamically, again you could technically write this as $model = new Deck;
         //$model = $this->getModel($data->object_type);
-        $model = new Deck;
+        $model = new Card;
         $model = $model->toArray();        
         // gets the possible importable fields (helps with data integrity which is set in the actual Deck Model)
         $importable_fields = [
             'card',
             'multiverse_id',
             'name',
-            'cost',
-            'random_number',
+            'mana_cost',
+            'cmc',
             'type',
-            'flavor',
-            'number_1',
-            'number_2',
-            'pri_color',
+            'text',
+            'power',
+            'toughness',
+            'colors',
             'sec_color',
-            'color',
             'set',
-            'number_4',
+            'set_name',
+            'collector_number',
             'rarity',
-            'image_url',
+            'flavor',
             'user_id',
         ];
         // pass in the importable fields, csv, etc 
@@ -100,7 +100,7 @@ class ImportController extends Controller
     }
     public function process()
     {
-        $model = new Deck;
+        $model = new Card;
         // this is what actually adds the data into the database for Deck
         $csv_id = $this->request->input('csv_data_file_id');
         $data = CsvData::where('id', $csv_id)->where('user_id', Auth::user()->id)->first();
@@ -119,7 +119,6 @@ class ImportController extends Controller
             $dummy['user_id'] = Auth::user()->id;
 
             $items[] = $dummy;
-            //dd($items);
             // validate the fields you are wanting to import into the DB
             /* $validator = Validator::make($dummy, $this->validate_fields[$model]);
             if ($validator->passes()){

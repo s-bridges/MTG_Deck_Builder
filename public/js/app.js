@@ -47506,17 +47506,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     // call methods here that you want done on page load, the methods are defined in the methods section below
-    this.getCardsFromAPI();
+    // this method below here we don't need to worry about right now
+    // this.getCardsFromAPI();
   },
 
   props: {
@@ -47528,41 +47523,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       cards: [],
-      filterColors: '',
-      colorOptions: ['Black', 'Blue', 'White', 'Red', 'Green'],
-      mtgoColorData: {}
+      filterBySet: '',
+      setOptions: [{
+        label: 'Guilds of Ravnica',
+        set: 'grn'
+      }],
+      mtgSetData: {},
+      searchText: ''
     };
   },
 
   methods: {
-    getCardsFromAPI: function getCardsFromAPI() {
+    // getCardsFromAPI() {
+    //     // API stuff to mtgo for all cards
+    //     axios.get({{ /card }})
+    //     .then(response => {
+    //         this.cards = response.data.cards;
+    //     })
+    // },
+    setAPI: function setAPI() {
       var _this = this;
 
-      // API stuff to mtgo for all cards
-      axios.get('https://api.magicthegathering.io/v1/cards').then(function (response) {
-        _this.cards = response.data.cards;
-      });
-    },
-    colorAPI: function colorAPI() {
-      var _this2 = this;
-
-      axios.get('https://api.magicthegathering.io/v1/cards?colors=' + this.filterColors).then(function (response) {
-        _this2.cards = response.data.cards;
-
-        console.log(_this2.cards);
-      }).catch(function (error) {});
-    },
-    setAPI: function setAPI() {
-      var _this3 = this;
-
-      axios.get('https://api.magicthegathering.io/v1/sets?name=' + this.filterSet).then(function (response) {
-        _this3.mtgoSetData = response.data;
-
-        console.log(_this3.mtgoSetData);
+      // use the filterBySet value which the select option if the v-model of 
+      axios.get('/card/' + this.filterBySet).then(function (response) {
+        // be able to see your response to make sure you know what to set the mtgsetdata to
+        _this.cards = response.data.payload;
       }).catch(function (error) {});
     }
+  },
+  computed: {
+    filteredCards: function filteredCards() {
+      var search = this.searchText;
+      var cards_array = this.cards;
+      if (search != '') {
+        // filter by the search field
+        cards_array = _.filter(cards, function (card) {
+          // index of finds the string within the card.name property 
+          return card.name.indexOf(search) > -1;
+        });
+      }
+      return cards_array;
+    }
   }
-
 });
 
 /***/ }),
@@ -47584,12 +47586,12 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.filterColors,
-                  expression: "filterColors"
+                  value: _vm.filterBySet,
+                  expression: "filterBySet"
                 }
               ],
               staticClass: "form-control",
-              attrs: { id: "colors" },
+              attrs: { id: "sets" },
               on: {
                 change: [
                   function($event) {
@@ -47601,24 +47603,24 @@ var render = function() {
                         var val = "_value" in o ? o._value : o.value
                         return val
                       })
-                    _vm.filterColors = $event.target.multiple
+                    _vm.filterBySet = $event.target.multiple
                       ? $$selectedVal
                       : $$selectedVal[0]
                   },
                   function($event) {
-                    _vm.colorAPI()
+                    _vm.setAPI()
                   }
                 ]
               }
             },
             [
               _c("option", { attrs: { disabled: "", value: "" } }, [
-                _vm._v("Search By Mana")
+                _vm._v("Search By Set")
               ]),
               _vm._v(" "),
-              _vm._l(_vm.colorOptions, function(option) {
-                return _c("option", { domProps: { value: option } }, [
-                  _vm._v(_vm._s(option))
+              _vm._l(_vm.setOptions, function(option) {
+                return _c("option", { domProps: { value: option.set } }, [
+                  _vm._v(_vm._s(option.label))
                 ])
               })
             ],
@@ -47626,38 +47628,97 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
+        _c("form", [
+          _c("div", { staticClass: "form-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.searchText,
+                  expression: "searchText"
+                }
+              ],
+              attrs: { type: "search" },
+              domProps: { value: _vm.searchText },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.searchText = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "mx-auto col-sm-12" }, [
-            _c("div", { staticClass: "card" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _vm.cards.length > 0
-                  ? _c("table", { staticClass: "table" }, [
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _c(
-                        "tbody",
-                        _vm._l(_vm.cards, function(card) {
-                          return _c("tr", [
-                            _c("td", [_vm._v(_vm._s(card.name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(card.colors.join(", ")))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(card.type))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(card.rarity))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(card.set))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(card.multiverseid))])
-                          ])
-                        })
-                      )
-                    ])
-                  : _vm._e()
-              ])
-            ])
+            _c(
+              "div",
+              { staticClass: "card" },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _vm._l(_vm.cards, function(card) {
+                  return _c(
+                    "div",
+                    { staticClass: "row" },
+                    _vm._l(_vm.cards, function(card) {
+                      return _c("span", [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "col-md-2",
+                            staticStyle: { "padding-bottom": "1em" }
+                          },
+                          [
+                            _c("img", {
+                              attrs: {
+                                src:
+                                  "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                                  card.multiverse_id +
+                                  "&type=card"
+                              }
+                            })
+                          ]
+                        )
+                      ])
+                    })
+                  )
+                }),
+                _vm._v(" "),
+                _vm._l(_vm.filteredCards, function(card) {
+                  return _c(
+                    "div",
+                    { staticClass: "row" },
+                    _vm._l(_vm.filteredCards, function(card) {
+                      return _c("span", [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "col-md-2",
+                            staticStyle: { "padding-bottom": "1em" }
+                          },
+                          [
+                            _c("img", {
+                              attrs: {
+                                src:
+                                  "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                                  card.multiverse_id +
+                                  "&type=card"
+                              }
+                            })
+                          ]
+                        )
+                      ])
+                    })
+                  )
+                })
+              ],
+              2
+            )
           ])
         ])
       ])
@@ -47671,26 +47732,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("h4", { staticClass: "mb-0" }, [_vm._v("All Cards")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Card Name")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Mana Color")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Type")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Rarity")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Set")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Multiverse ID")])
-      ])
     ])
   }
 ]

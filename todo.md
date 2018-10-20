@@ -7,4 +7,4 @@
 - Build deck builder 
 - Reorganize database to allow for import
 - Fix deck route/layout
-- 
+- And switch out all those references, and then redo a deck table that would have specific information relation to a deck...stuff a user would set. Maybe fields like deck name, description, colors, user_id so you can keep track of who's deck it is on the database

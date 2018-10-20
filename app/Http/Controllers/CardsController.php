@@ -17,6 +17,13 @@ class CardsController extends Controller
     {
         //
     }
+    public function listCardsBy($set)
+    {
+        $cards = Card::where('set', $set)->get();
+        
+        return response()->json(['status' => 200, 'payload' => $cards]);
+    }
+
 
     public function listCards()
     {

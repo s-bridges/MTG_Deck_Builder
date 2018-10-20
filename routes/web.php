@@ -18,8 +18,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+URL::asset('public\images\mana_symbols.png');
 
+#move to api eventually
 Route::prefix('card')->middleware(['auth'])->group(function (){
+    Route::get('/{set}', 'CardsController@listCardsBy');
     Route::get('/', 'CardsController@listCards');
 });
 

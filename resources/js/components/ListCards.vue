@@ -1,44 +1,38 @@
 <template>
     <div class="container">
-        <div class="row justify-content-center">                
+        <div class="row justify-content-center">               
             <div class="container py-3">
                 <div class="col-lg-3 col-md-3">
-                    <select id="colors" class="form-control" v-model="filterColors" v-on:change="colorAPI()">
-                    <option disabled value="">Search By Mana</option>
-                    <option v-for="option in colorOptions" :value="option">{{option}}</option>
+                    <select id="sets" class="form-control" v-model="filterBySet" v-on:change="setAPI()">
+                    <option disabled value="">Search By Set</option>
+                    <option v-for="option in setOptions" :value="option.set">{{option.label}}</option>
                     </select>
-                </div>                
+                </div>      
+                <form>
+                <div class="form-group">
+                    <input type="search" v-model="searchText"> 
+                </div>  
+                </form>
                 <div class="row">
                     <div class="mx-auto col-sm-12">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="mb-0">All Cards</h4>
                             </div>
-                            
-                            <div class="card-body">
-                                <table class="table" v-if="cards.length > 0">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Card Name</th>
-                                            <th scope="col">Mana Color</th>
-                                            <th scope="col">Type</th>
-                                            <th scope="col">Rarity</th>
-                                            <th scope="col">Set</th>
-                                            <th scope="col">Multiverse ID</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="card in cards">
-                                            <td>{{card.name}}</td>
-                                            <td>{{card.colors.join(', ')}}</td>
-                                            <td>{{card.type}}</td>
-                                            <td>{{card.rarity}}</td>
-                                            <td>{{card.set}}</td>
-                                            <td>{{card.multiverseid}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <div class="row" v-for="card in cards">
+                                <span v-for="card in cards">   
+                                    <div class="col-md-2" style="padding-bottom:1em;">                                 
+                                        <img v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'" />
+                                    </div>
+                                </span>
+                            </div>                               
+                            <div class="row" v-for="card in filteredCards">
+                                <span v-for="card in filteredCards">   
+                                    <div class="col-md-2" style="padding-bottom:1em;">                                 
+                                        <img v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'" />
+                                    </div>
+                                </span>
+                            </div>                            
                         </div>
                     </div>
                 </div>
@@ -51,7 +45,8 @@
 export default {
   mounted() {
       // call methods here that you want done on page load, the methods are defined in the methods section below
-    this.getCardsFromAPI();
+      // this method below here we don't need to worry about right now
+    // this.getCardsFromAPI();
   },
   props: {
     data: {
@@ -62,38 +57,49 @@ export default {
   data() {
     return {
       cards: [],
-      filterColors: '',
-      colorOptions: ['Black', 'Blue', 'White', 'Red', 'Green'],
-      mtgoColorData: {}
+      filterBySet: '',
+      setOptions: [
+        {
+          label:'Guilds of Ravnica',
+          set: 'grn'
+        }
+      ],
+      mtgSetData: {},
+      searchText: '',
     };
   },
   methods: {
-    getCardsFromAPI() {
-        // API stuff to mtgo for all cards
-        axios.get(`https://api.magicthegathering.io/v1/cards`)
+    // getCardsFromAPI() {
+    //     // API stuff to mtgo for all cards
+    //     axios.get({{ /card }})
+    //     .then(response => {
+    //         this.cards = response.data.cards;
+    //     })
+    // },
+    setAPI(){
+      // use the filterBySet value which the select option if the v-model of 
+        axios.get(`/card/${this.filterBySet}`)
         .then(response => {
-            this.cards = response.data.cards;
-        })
-    },
-    colorAPI(){
-        axios.get(`https://api.magicthegathering.io/v1/cards?colors=${this.filterColors}`)
-        .then(response => {
-            this.cards = response.data.cards;
-
-            console.log(this.cards);
+          // be able to see your response to make sure you know what to set the mtgsetdata to
+            this.cards = response.data.payload;
         })
         .catch(error => {});
     },
-    setAPI(){
-        axios.get(`https://api.magicthegathering.io/v1/sets?name=${this.filterSet}`)
-        .then(response => {
-            this.mtgoSetData = response.data;
+  },
+ computed: {
+        filteredCards() {
+            let search = this.searchText;
+            let cards_array = this.cards;
+            if (search != '') {
+              // filter by the search field
+              cards_array = _.filter(cards, function(card) {
+                // index of finds the string within the card.name property 
+                return card.name.indexOf(search) > -1;
+              });
 
-            console.log(this.mtgoSetData);
-        })
-        .catch(error => {});   
+            }
+            return cards_array;
+        }
     }
-  }
-
-};
+}
 </script>

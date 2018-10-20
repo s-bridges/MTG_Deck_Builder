@@ -3,7 +3,6 @@
 @section('content')
     <div class="row">
         <div class="col s12">
-        dd($inserted);
             <p>CSV Imported Successfully!</p>
         </div>
     </div>
