@@ -47557,7 +47557,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var cards_array = this.cards;
       if (search != '') {
         // filter by the search field
-        cards_array = _.filter(cards, function (card) {
+        cards_array = _.filter(cards_array, function (card) {
           // index of finds the string within the card.name property 
           return card.name.indexOf(search) > -1;
         });
@@ -47639,7 +47639,12 @@ var render = function() {
                   expression: "searchText"
                 }
               ],
-              attrs: { type: "search" },
+              staticClass: "form-control",
+              attrs: {
+                type: "search",
+                id: "search",
+                placeholder: "Search by Name"
+              },
               domProps: { value: _vm.searchText },
               on: {
                 input: function($event) {
@@ -47693,7 +47698,7 @@ var render = function() {
                   return _c(
                     "div",
                     { staticClass: "row" },
-                    _vm._l(_vm.filteredCards, function(card) {
+                    _vm._l(_vm.cards_array, function(card) {
                       return _c("span", [
                         _c(
                           "div",

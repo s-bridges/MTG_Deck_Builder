@@ -10,7 +10,7 @@
                 </div>      
                 <form>
                 <div class="form-group">
-                    <input type="search" v-model="searchText"> 
+                    <input v-model="searchText" type="search" class="form-control" id="search" placeholder="Search by Name">
                 </div>  
                 </form>
                 <div class="row">
@@ -27,7 +27,7 @@
                                 </span>
                             </div>                               
                             <div class="row" v-for="card in filteredCards">
-                                <span v-for="card in filteredCards">   
+                                <span v-for="card in cards_array">   
                                     <div class="col-md-2" style="padding-bottom:1em;">                                 
                                         <img v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'" />
                                     </div>
@@ -92,7 +92,7 @@ export default {
             let cards_array = this.cards;
             if (search != '') {
               // filter by the search field
-              cards_array = _.filter(cards, function(card) {
+              cards_array = _.filter(cards_array, function(card) {
                 // index of finds the string within the card.name property 
                 return card.name.indexOf(search) > -1;
               });
