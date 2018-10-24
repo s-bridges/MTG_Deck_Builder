@@ -10,8 +10,10 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import { VLazyImagePlugin } from "v-lazy-image";
+import VuePaginate from 'vue-paginate';
 
 Vue.use(VLazyImagePlugin);
+Vue.use(VuePaginate);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
