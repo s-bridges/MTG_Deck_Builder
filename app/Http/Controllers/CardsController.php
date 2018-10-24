@@ -24,11 +24,9 @@ class CardsController extends Controller
         
         return response()->json(['status' => 200, 'payload' => $cards]);
     }
-
-
+    
     public function listCards()
     {
-        dd($data);
         return view('card.listCards');
     }
 }
