@@ -47500,12 +47500,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -47658,74 +47652,48 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "mx-auto col-sm-12" }, [
-            _c(
-              "div",
-              { staticClass: "card" },
-              [
-                _vm._m(0),
-                _vm._v(" "),
-                _vm._l(_vm.cards, function(card) {
-                  return _c(
-                    "div",
-                    { staticClass: "row" },
-                    _vm._l(_vm.cards, function(card) {
-                      return _c("span", [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "col-md-2",
-                            staticStyle: { "padding-bottom": "1em" }
-                          },
-                          [
-                            _c("img", {
-                              attrs: {
-                                src:
-                                  "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
-                                  card.multiverse_id +
-                                  "&type=card"
-                              }
-                            })
-                          ]
-                        )
-                      ])
+        _vm.filteredCards.length > 0
+          ? _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "mx-auto col-sm-12" }, [
+                _c(
+                  "div",
+                  { staticClass: "card" },
+                  [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _vm._l(_vm.filteredCards, function(card) {
+                      return _c(
+                        "div",
+                        { staticClass: "row" },
+                        _vm._l(_vm.filteredCards, function(card) {
+                          return _c("span", [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "col-md-2",
+                                staticStyle: { "padding-bottom": "1em" }
+                              },
+                              [
+                                _c("img", {
+                                  attrs: {
+                                    src:
+                                      "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                                      card.multiverse_id +
+                                      "&type=card"
+                                  }
+                                })
+                              ]
+                            )
+                          ])
+                        })
+                      )
                     })
-                  )
-                }),
-                _vm._v(" "),
-                _vm._l(_vm.filteredCards, function(card) {
-                  return _c(
-                    "div",
-                    { staticClass: "row" },
-                    _vm._l(_vm.cards_array, function(card) {
-                      return _c("span", [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "col-md-2",
-                            staticStyle: { "padding-bottom": "1em" }
-                          },
-                          [
-                            _c("img", {
-                              attrs: {
-                                src:
-                                  "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
-                                  card.multiverse_id +
-                                  "&type=card"
-                              }
-                            })
-                          ]
-                        )
-                      ])
-                    })
-                  )
-                })
-              ],
-              2
-            )
-          ])
-        ])
+                  ],
+                  2
+                )
+              ])
+            ])
+          : _vm._e()
       ])
     ])
   ])

@@ -13,21 +13,15 @@
                     <input v-model="searchText" type="search" class="form-control" id="search" placeholder="Search by Name">
                 </div>  
                 </form>
-                <div class="row">
+                <div v-if="filteredCards.length > 0" class="row">
                     <div class="mx-auto col-sm-12">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="mb-0">All Cards</h4>
                             </div>
-                            <div class="row" v-for="card in cards">
-                                <span v-for="card in cards">   
-                                    <div class="col-md-2" style="padding-bottom:1em;">                                 
-                                        <img v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'" />
-                                    </div>
-                                </span>
-                            </div>                               
+                                                         
                             <div class="row" v-for="card in filteredCards">
-                                <span v-for="card in cards_array">   
+                                <span v-for="card in filteredCards">   
                                     <div class="col-md-2" style="padding-bottom:1em;">                                 
                                         <img v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'" />
                                     </div>
