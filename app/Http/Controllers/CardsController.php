@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Auth;
+use App\Deck;
+use App\User;
 use App\Card;
+use Auth;
+use JavaScript;
 use Illuminate\Http\Request;
 
 
@@ -24,7 +26,7 @@ class CardsController extends Controller
         
         return response()->json(['status' => 200, 'payload' => $cards]);
     }
-    
+
     public function listCards()
     {
         return view('card.listCards');
