@@ -19,10 +19,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::prefix('card')->middleware(['auth'])->group(function (){  
+/* Route::prefix('card')->middleware(['auth'])->group(function (){  
     Route::get('/{set}', 'CardsController@listCardsBy');
     Route::get('/', 'CardsController@listCards');  
-});
+}); */
+
+Route::get('/card', 'CardsController@listCards');
 
 Route::prefix('deck')->middleware(['auth'])->group(function (){
     Route::get('/', 'DecksController@showDecks');
