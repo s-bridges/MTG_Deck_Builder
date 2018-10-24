@@ -24,7 +24,7 @@
                                 <span v-for="card in filteredCards">   
                                     <div class="col-md-2" style="padding-bottom:1em;">                                 
                                         <lazy-image 
-                                            :src="'https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
+                                            :src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
                                             :placeholder='images/loading.gif'  
                                         />
                                         </div>
