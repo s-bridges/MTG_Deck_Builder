@@ -79,16 +79,16 @@
             @endif
 
             <div class="content">
-            {{ asset('public\images\mana_symbols.png') }}
+            {{ asset('images/mana_symbols.png') }}
                 <div class="title m-b-md">
                     MTG Deck Builder
                 </div>
 
                 <div class="links">
-                    <a href="http://homestead.test/">Home</a>
-                    <a href="http://homestead.test/card/">Cards</a>
-                    <a href="http://homestead.test/import">Import a Deck</a>
-                    <a href="http://homestead.test/deck/">Build a Deck</a>
+                    <a href="/">Home</a>
+                    <a href="/card/">Cards</a>
+                    <a href="https://brofox.com">Import a Deck</a>
+                    <a href="/deck/">Build a Deck</a>
                     <a href="https://github.com/s-bridges/">GitHub</a>
                 </div>
             </div>
