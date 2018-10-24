@@ -25,7 +25,6 @@
                                     <div class="col-md-2" style="padding-bottom:1em;">                                 
                                         <lazy-image 
                                             v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
-                                            v-bind:placeholder="'/images/loading.gif'"  
                                         />
                                     </div>
                                 </span>
