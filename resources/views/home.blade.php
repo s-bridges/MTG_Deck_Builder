@@ -17,14 +17,8 @@
                     You are logged in!
                     <br>
                     <br>
-                    <p>To Do:
-                    <ul>
-                    <li>Deck -> Build a Deck</li>
-                    <li>Deck -> View Decks You've Built</li>
-                    <li>Cards -> View Cards</li>
-                    <li>Cards -> Search for Specific Cards</li>
-                    </ul>
-                    <p>
+                    <p>This site is in extreme beta right now. Sets will be uploaded as quickly as possible.</p>
+                    <p>Current features are you can view a set, and search for a card within that set</p>
                 </div>
             </div>
         </div>
