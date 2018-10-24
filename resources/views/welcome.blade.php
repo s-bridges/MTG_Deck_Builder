@@ -79,7 +79,7 @@
             @endif
 
             <div class="content">
-            <img src="images/mana_symbols.png" class="img-fluid" alt="MTG Deck Builder">
+            <img src="images/mana_symbols.png" class="img-fluid" alt="MTG Deck Builder" width="1000px" height="225px">
                 <div class="title m-b-md">
                     MTG Deck Builder
                 </div>
