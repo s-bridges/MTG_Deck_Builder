@@ -28,7 +28,6 @@ class CardsController extends Controller
 
     public function listCards()
     {
-        dd('hit this');
         return view('card.listCards');
     }
 }
