@@ -23,7 +23,10 @@
                             <div class="row" v-for="card in filteredCards">
                                 <span v-for="card in filteredCards">   
                                     <div class="col-md-2" style="padding-bottom:1em;">                                 
-                                       <v-lazy-image src="http://lorempixel.com/400/200/" />
+                                       <v-lazy-image
+                                            src="https://cdn-images-1.medium.com/max/1600/1*xjGrvQSXvj72W4zD6IWzfg.jpeg"
+                                            src-placeholder="https://cdn-images-1.medium.com/max/80/1*xjGrvQSXvj72W4zD6IWzfg.jpeg"
+                                        />
                                     </div>
                                 </span>
                             </div>                             

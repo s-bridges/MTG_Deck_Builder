@@ -24963,7 +24963,7 @@ module.exports = __webpack_require__(50);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_v_lazy_image__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_v_lazy_image__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_v_lazy_image___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_v_lazy_image__);
 
 /**
@@ -47301,7 +47301,98 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 40 */,
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * v-lazy-image v1.2.2
+ * (c) 2018 Alex Jover Morales <alexjovermorales@gmail.com>
+ * @license MIT
+ */
+
+(function (global, factory) {
+	 true ? factory(exports) :
+	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	(factory((global.VLazyImage = {})));
+}(this, (function (exports) { 'use strict';
+
+var VLazyImageComponent = {
+  props: {
+    src: {
+      type: String,
+      required: true
+    },
+    srcPlaceholder: {
+      type: String,
+      default: ""
+    },
+    srcset: {
+      type: String
+    },
+    intersectionOptions: {
+      type: Object,
+      default: function () { return ({}); }
+    }
+  },
+  data: function () { return ({ observer: null, intersected: false, loaded: false }); },
+  computed: {
+    srcImage: function srcImage() {
+      return this.intersected ? this.src : this.srcPlaceholder;
+    },
+    srcsetImage: function srcsetImage() {
+      return this.intersected && this.srcset ? this.srcset : false;
+    }
+  },
+  render: function render(h) {
+    return h("img", {
+      attrs: { src: this.srcImage, srcset: this.srcsetImage },
+      class: {
+        "v-lazy-image": true,
+        "v-lazy-image-loaded": this.loaded
+      }
+    });
+  },
+  mounted: function mounted() {
+    var this$1 = this;
+
+    this.$el.addEventListener("load", function (ev) {
+      if (this$1.$el.getAttribute('src') !== this$1.srcPlaceholder) {
+        this$1.loaded = true;
+        this$1.$emit("load");
+      }
+    });
+
+    this.observer = new IntersectionObserver(function (entries) {
+      var image = entries[0];
+      if (image.isIntersecting) {
+        this$1.intersected = true;
+        this$1.observer.disconnect();
+        this$1.$emit("intersect");
+      }
+    }, this.intersectionOptions);
+
+    this.observer.observe(this.$el);
+  },
+  destroyed: function destroyed() {
+    this.observer.disconnect();
+  }
+};
+
+var VLazyImagePlugin = {
+  install: function (Vue, opts) {
+    Vue.component("VLazyImage", VLazyImageComponent);
+  }
+};
+
+exports['default'] = VLazyImageComponent;
+exports.VLazyImagePlugin = VLazyImagePlugin;
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
+
+
+/***/ }),
 /* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -47473,6 +47564,9 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
 //
 //
 //
@@ -47686,7 +47780,10 @@ var render = function() {
                               [
                                 _c("v-lazy-image", {
                                   attrs: {
-                                    src: "http://lorempixel.com/400/200/"
+                                    src:
+                                      "https://cdn-images-1.medium.com/max/1600/1*xjGrvQSXvj72W4zD6IWzfg.jpeg",
+                                    "src-placeholder":
+                                      "https://cdn-images-1.medium.com/max/80/1*xjGrvQSXvj72W4zD6IWzfg.jpeg"
                                   }
                                 })
                               ],
@@ -47911,102 +48008,6 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 51 */,
-/* 52 */,
-/* 53 */,
-/* 54 */,
-/* 55 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * v-lazy-image v1.2.2
- * (c) 2018 Alex Jover Morales <alexjovermorales@gmail.com>
- * @license MIT
- */
-
-(function (global, factory) {
-	 true ? factory(exports) :
-	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(factory((global.VLazyImage = {})));
-}(this, (function (exports) { 'use strict';
-
-var VLazyImageComponent = {
-  props: {
-    src: {
-      type: String,
-      required: true
-    },
-    srcPlaceholder: {
-      type: String,
-      default: ""
-    },
-    srcset: {
-      type: String
-    },
-    intersectionOptions: {
-      type: Object,
-      default: function () { return ({}); }
-    }
-  },
-  data: function () { return ({ observer: null, intersected: false, loaded: false }); },
-  computed: {
-    srcImage: function srcImage() {
-      return this.intersected ? this.src : this.srcPlaceholder;
-    },
-    srcsetImage: function srcsetImage() {
-      return this.intersected && this.srcset ? this.srcset : false;
-    }
-  },
-  render: function render(h) {
-    return h("img", {
-      attrs: { src: this.srcImage, srcset: this.srcsetImage },
-      class: {
-        "v-lazy-image": true,
-        "v-lazy-image-loaded": this.loaded
-      }
-    });
-  },
-  mounted: function mounted() {
-    var this$1 = this;
-
-    this.$el.addEventListener("load", function (ev) {
-      if (this$1.$el.getAttribute('src') !== this$1.srcPlaceholder) {
-        this$1.loaded = true;
-        this$1.$emit("load");
-      }
-    });
-
-    this.observer = new IntersectionObserver(function (entries) {
-      var image = entries[0];
-      if (image.isIntersecting) {
-        this$1.intersected = true;
-        this$1.observer.disconnect();
-        this$1.$emit("intersect");
-      }
-    }, this.intersectionOptions);
-
-    this.observer.observe(this.$el);
-  },
-  destroyed: function destroyed() {
-    this.observer.disconnect();
-  }
-};
-
-var VLazyImagePlugin = {
-  install: function (Vue, opts) {
-    Vue.component("VLazyImage", VLazyImageComponent);
-  }
-};
-
-exports['default'] = VLazyImageComponent;
-exports.VLazyImagePlugin = VLazyImagePlugin;
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
 
 /***/ })
 /******/ ]);
