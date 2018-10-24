@@ -20,6 +20,9 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
+        "ajv": "^6.5.4",
+        "imagemin": "^5.3.1",
+        "v-lazy-image": "^1.2.2",
         "vue-lazy-images": "^1.4.6"
     }
 }
