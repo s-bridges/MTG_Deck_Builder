@@ -25,7 +25,7 @@
                                     <div class="col-md-2" style="padding-bottom:1em;">                                 
                                         <lazy-image 
                                             :src="'https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
-                                            :placeholder='url of placeholder or loading image'  
+                                            :placeholder='images/loading.gif'  
                                         />
                                         </div>
                                 </span>

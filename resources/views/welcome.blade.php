@@ -79,7 +79,10 @@
             @endif
 
             <div class="content">
-            <img src="images/mana_symbols.png" class="img-fluid" alt="MTG Deck Builder" width="1000px" height="225px">
+            <lazy-image 
+                :src="images/mana_symbols.png" class="img-fluid" alt="MTG Deck Builder" width="1000px" height="225px"
+                :placeholder='images/loading.gif'  
+            />
                 <div class="title m-b-md">
                     MTG Deck Builder
                 </div>
