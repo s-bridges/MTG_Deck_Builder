@@ -80,7 +80,7 @@
 
             <div class="content">
             <lazy-image 
-                :src="images/mana_symbols.png" class="img-fluid" alt="MTG Deck Builder" width="1000px" height="225px"
+                :src="images/mana_symbols.png"
                 :placeholder='images/loading.gif'  
             />
                 <div class="title m-b-md">
