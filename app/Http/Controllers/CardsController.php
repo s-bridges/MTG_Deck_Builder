@@ -29,6 +29,7 @@ class CardsController extends Controller
 
     public function listCards()
     {
-        return view('card.listCards');
+        return view('listCards');
+        // return view('card.listCards');
     }
 }
