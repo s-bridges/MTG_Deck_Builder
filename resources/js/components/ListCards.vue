@@ -19,15 +19,19 @@
                             <div class="card-header">
                                 <h4 class="mb-0">All Cards</h4>
                             </div>
-                                                         
-                            <div class="row" v-for="card in filteredCards">
-                                <span v-for="card in filteredCards">   
-                                    <div class="col-md-2" style="padding-bottom:1em;">                                 
-                                       <v-lazy-image
-                                            src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
-                                        />
-                                    </div>
+                             <paginate
+                                name="cards"
+                                :list="filteredCards"
+                                :per="16"
+                                >
+                                <span v-for="card in paginated(paginatedCards)"> 
+                                        <div class="col-md-2" style="padding-bottom:1em;">                                 
+                                            <v-lazy-image
+                                                src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
+                                            />
+                                        </div>
                                 </span>
+                            </paginate>
                             </div>                             
                         </div>
                     </div>
@@ -62,6 +66,7 @@ export default {
       ],
       mtgSetData: {},
       searchText: '',
+      paginate: ['paginatedCards'],
     };
   },
   methods: {
@@ -99,3 +104,4 @@ export default {
     }
 }
 </script>
+

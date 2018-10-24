@@ -48207,6 +48207,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -48230,7 +48234,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         set: 'grn'
       }],
       mtgSetData: {},
-      searchText: ''
+      searchText: '',
+      paginate: ['paginatedCards']
     };
   },
 
@@ -48368,34 +48373,38 @@ var render = function() {
                   [
                     _vm._m(0),
                     _vm._v(" "),
-                    _vm._l(_vm.filteredCards, function(card) {
-                      return _c(
-                        "div",
-                        { staticClass: "row" },
-                        _vm._l(_vm.filteredCards, function(card) {
-                          return _c("span", [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "col-md-2",
-                                staticStyle: { "padding-bottom": "1em" }
-                              },
-                              [
-                                _c("v-lazy-image", {
-                                  attrs: {
-                                    src:
-                                      "'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ])
-                        })
-                      )
-                    })
+                    _c(
+                      "paginate",
+                      {
+                        attrs: {
+                          name: "cards",
+                          list: _vm.filteredCards,
+                          per: 16
+                        }
+                      },
+                      _vm._l(_vm.paginated(_vm.paginatedCards), function(card) {
+                        return _c("span", [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "col-md-2",
+                              staticStyle: { "padding-bottom": "1em" }
+                            },
+                            [
+                              _c("v-lazy-image", {
+                                attrs: {
+                                  src:
+                                    "'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ])
+                      })
+                    )
                   ],
-                  2
+                  1
                 )
               ])
             ])
