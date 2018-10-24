@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="/images/mtgicon_S5w_icon.ico">
+    <link rel="icon" href="https://mtg.sethbridges.me/images/mtgicon_S5w_icon.ico">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
