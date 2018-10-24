@@ -47781,9 +47781,11 @@ var render = function() {
                                 _c("v-lazy-image", {
                                   attrs: {
                                     src:
-                                      "https://cdn-images-1.medium.com/max/1600/1*xjGrvQSXvj72W4zD6IWzfg.jpeg",
+                                      "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                                      card.multiverse_id +
+                                      "&type=card",
                                     "src-placeholder":
-                                      "https://cdn-images-1.medium.com/max/80/1*xjGrvQSXvj72W4zD6IWzfg.jpeg"
+                                      "https://mtg.sethbridges/images/loading.gif"
                                   }
                                 })
                               ],

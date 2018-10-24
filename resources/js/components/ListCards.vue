@@ -24,8 +24,8 @@
                                 <span v-for="card in filteredCards">   
                                     <div class="col-md-2" style="padding-bottom:1em;">                                 
                                        <v-lazy-image
-                                            src="https://cdn-images-1.medium.com/max/1600/1*xjGrvQSXvj72W4zD6IWzfg.jpeg"
-                                            src-placeholder="https://cdn-images-1.medium.com/max/80/1*xjGrvQSXvj72W4zD6IWzfg.jpeg"
+                                            v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
+                                            src-placeholder="https://mtg.sethbridges/images/loading.gif"
                                         />
                                     </div>
                                 </span>
