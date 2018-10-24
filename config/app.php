@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'MTG_Deck_Builder'),
+    'name' => env('APP_NAME', 'MTG Deck Builder'),
 
     /*
     |--------------------------------------------------------------------------
