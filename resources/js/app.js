@@ -8,6 +8,8 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import VueLazyImage from "vue-lazy-images";
+Vue.use(VueLazyImage)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

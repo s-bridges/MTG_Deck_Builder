@@ -23,8 +23,11 @@
                             <div class="row" v-for="card in filteredCards">
                                 <span v-for="card in filteredCards">   
                                     <div class="col-md-2" style="padding-bottom:1em;">                                 
-                                        <img v-bind:src="'https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'" />
-                                    </div>
+                                        <lazy-image 
+                                            :src="'https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
+                                            :placeholder='url of placeholder or loading image'  
+                                        />
+                                        </div>
                                 </span>
                             </div>                            
                         </div>
