@@ -48237,6 +48237,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       cards: [],
+      paginatedCards: [],
       filterBySet: '',
       setOptions: [{
         label: 'Guilds of Ravnica',
