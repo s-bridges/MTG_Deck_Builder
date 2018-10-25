@@ -48168,8 +48168,6 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -48238,16 +48236,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   data: function data() {
-    var _ref;
-
     return {
       cards: [],
       paginatedCards: [],
       filterBySet: '',
-      setOptions: [(_ref = {
+      setOptions: [{
         label: 'Guilds of Ravnica',
         set: 'grn'
-      }, _defineProperty(_ref, 'label', 'Signature Spellbook: Jace'), _defineProperty(_ref, 'set', 'ss1'), _defineProperty(_ref, 'label', 'Core Set 2019'), _defineProperty(_ref, 'set', 'm19'), _defineProperty(_ref, 'label', 'Commander 2018'), _defineProperty(_ref, 'set', 'c18'), _defineProperty(_ref, 'label', 'Global Series: Jiang Yanggu & Mu Yanling'), _defineProperty(_ref, 'set', 'gs1'), _defineProperty(_ref, 'label', 'Dominaria'), _defineProperty(_ref, 'set', 'dom'), _ref)],
+      }, {
+        label: 'Signature Spellbook: Jace',
+        set: 'ss1'
+      }, {
+        label: 'Core Set 2019',
+        set: 'm19'
+      }, {
+        label: 'Commander 2018',
+        set: 'c18'
+      }, {
+        label: 'Global Series: Jiang Yanggu & Mu Yanling',
+        set: 'gs1'
+      }, {
+        label: 'Dominaria',
+        set: 'dom'
+      }],
       mtgSetData: {},
       searchText: '',
       paginate: ['paginatedCards']

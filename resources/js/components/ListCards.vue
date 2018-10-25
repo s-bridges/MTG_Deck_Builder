@@ -70,20 +70,30 @@ export default {
       paginatedCards: [],
       filterBySet: '',
       setOptions: [
-        {
-          label:'Guilds of Ravnica',
-          set: 'grn',
-          label: 'Signature Spellbook: Jace',
-          set: 'ss1',
+          {
+            label:'Guilds of Ravnica',
+            set: 'grn',
+          },
+          {
+            label: 'Signature Spellbook: Jace',
+            set: 'ss1',
+          },
+          {
           label: 'Core Set 2019',
           set: 'm19',
+          },
+          {
           label: 'Commander 2018',
           set: 'c18',
+          },
+          {
           label: 'Global Series: Jiang Yanggu & Mu Yanling',
           set: 'gs1',
+          },
+          {
           label: 'Dominaria',
           set: 'dom',
-        }
+          },
       ],
       mtgSetData: {},
       searchText: '',
