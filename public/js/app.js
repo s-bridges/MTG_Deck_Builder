@@ -48392,7 +48392,7 @@ var render = function() {
                           per: 16
                         }
                       },
-                      _vm._l(_vm.paginated(_vm.paginatedCards), function(card) {
+                      _vm._l(_vm.paginatedCards, function(card) {
                         return _c("span", [
                           _c(
                             "div",
