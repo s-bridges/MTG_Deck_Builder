@@ -48242,10 +48242,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       filterBySet: '',
       setOptions: [{
         label: 'Guilds of Ravnica',
-        set: 'grn'
+        set: 'GRN'
       }, {
-        label: '',
-        set: ''
+        label: 'Core Set 2019',
+        set: 'M19'
+      }, {
+        label: 'Dominaria',
+        set: 'DOM'
+      }, {
+        label: 'Rivals of Ixalan',
+        set: 'RIX'
+      }, {
+        label: 'Ixalan',
+        set: 'XLN'
       }],
       mtgSetData: {},
       searchText: '',
