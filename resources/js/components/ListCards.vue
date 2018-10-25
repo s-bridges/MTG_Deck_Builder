@@ -20,7 +20,7 @@
                                 <h4 class="mb-0">All Cards</h4>
                             </div>
                              <paginate
-                                name="cards"
+                                name="paginatedCards"
                                 :list="filteredCards"
                                 :per="16"
                                 >
@@ -32,6 +32,15 @@
                                         </div>
                                 </span>
                             </paginate>
+                            <paginate-links :hide-single-page="true" for="paginatedCards" :show-step-links="true" 
+                                :classes="{
+                                    'ul': ['pagination', 'center-align'],
+                                    'li': 'waves-effect',
+                                    '.next > a': 'next-link',
+                                    '.prev > a': ['prev-link', 'another-class'],
+                                    '.active': 'teal'
+                                }">
+                            </paginate-links>
                             </div>                             
                         </div>
                     </div>
