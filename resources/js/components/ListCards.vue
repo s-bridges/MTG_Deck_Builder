@@ -27,7 +27,7 @@
                                 <span v-for="card in paginated('paginatedCards')"> 
                                         <div class="col-md-2" style="padding-bottom:1em;">                                 
                                             <v-lazy-image
-                                                src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
+                                                v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
                                             />
                                         </div>
                                 </span>

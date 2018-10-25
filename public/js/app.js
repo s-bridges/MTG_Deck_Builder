@@ -48404,7 +48404,9 @@ var render = function() {
                               _c("v-lazy-image", {
                                 attrs: {
                                   src:
-                                    "'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
+                                    "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                                    card.multiverse_id +
+                                    "&type=card"
                                 }
                               })
                             ],
