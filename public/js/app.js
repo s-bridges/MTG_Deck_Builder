@@ -48220,6 +48220,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -48423,8 +48424,9 @@ var render = function() {
                         "show-step-links": true,
                         classes: {
                           ul: ["pagination", "justify-content-center"],
-                          li: "page-item active",
-                          ".next > a": "page-link",
+                          li: "page-item",
+                          a: "page-link",
+                          ".next > a": "next-link",
                           ".prev > a": ["prev-link", "another-class"],
                           ".active": "teal"
                         }

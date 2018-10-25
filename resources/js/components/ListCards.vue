@@ -35,8 +35,9 @@
                             <paginate-links :hide-single-page="true" for="paginatedCards" :show-step-links="true" 
                                 :classes="{
                                     'ul': ['pagination', 'justify-content-center'],
-                                    'li': 'page-item active',
-                                    '.next > a': 'page-link',
+                                    'li': 'page-item',
+                                    'a': 'page-link',
+                                    '.next > a': 'next-link',
                                     '.prev > a': ['prev-link', 'another-class'],
                                     '.active': 'teal'
                                 }">
