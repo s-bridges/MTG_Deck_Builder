@@ -48422,9 +48422,9 @@ var render = function() {
                         for: "paginatedCards",
                         "show-step-links": true,
                         classes: {
-                          ul: ["pagination", "center-align"],
-                          li: "waves-effect",
-                          ".next > a": "next-link",
+                          ul: ["pagination", "justify-content-center"],
+                          li: "page-item active",
+                          ".next > a": "page-link",
                           ".prev > a": ["prev-link", "another-class"],
                           ".active": "teal"
                         }
