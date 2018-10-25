@@ -48211,6 +48211,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -48377,7 +48386,7 @@ var render = function() {
                       "paginate",
                       {
                         attrs: {
-                          name: "cards",
+                          name: "paginatedCards",
                           list: _vm.filteredCards,
                           per: 16
                         }
@@ -48402,7 +48411,22 @@ var render = function() {
                           )
                         ])
                       })
-                    )
+                    ),
+                    _vm._v(" "),
+                    _c("paginate-links", {
+                      attrs: {
+                        "hide-single-page": true,
+                        for: "paginatedCards",
+                        "show-step-links": true,
+                        classes: {
+                          ul: ["pagination", "center-align"],
+                          li: "waves-effect",
+                          ".next > a": "next-link",
+                          ".prev > a": ["prev-link", "another-class"],
+                          ".active": "teal"
+                        }
+                      }
+                    })
                   ],
                   1
                 )
