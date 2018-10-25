@@ -48221,6 +48221,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -48395,24 +48397,26 @@ var render = function() {
                       },
                       _vm._l(_vm.paginated("paginatedCards"), function(card) {
                         return _c("span", [
-                          _c(
-                            "div",
-                            {
-                              staticClass: "col-md-2",
-                              staticStyle: { "padding-bottom": "1em" }
-                            },
-                            [
-                              _c("v-lazy-image", {
-                                attrs: {
-                                  src:
-                                    "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
-                                    card.multiverse_id +
-                                    "&type=card"
-                                }
-                              })
-                            ],
-                            1
-                          )
+                          _c("div", { staticClass: "row" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "col-md-2",
+                                staticStyle: { "padding-bottom": "1em" }
+                              },
+                              [
+                                _c("v-lazy-image", {
+                                  attrs: {
+                                    src:
+                                      "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                                      card.multiverse_id +
+                                      "&type=card"
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          ])
                         ])
                       })
                     ),
