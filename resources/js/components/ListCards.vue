@@ -25,12 +25,10 @@
                                 :per="16"
                                 >
                                 <span v-for="card in paginated('paginatedCards')"> 
-                                        <div class="row">
                                         <div class="col-md-2" style="padding-bottom:1em;">                                 
-                                            <v-lazy-image
+                                            <v-lazy-image 
                                                 v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
                                             />
-                                        </div>
                                         </div>
                                 </span>
                             </paginate>
@@ -74,7 +72,17 @@ export default {
       setOptions: [
         {
           label:'Guilds of Ravnica',
-          set: 'grn'
+          set: 'grn',
+          label: 'Signature Spellbook: Jace',
+          set: 'ss1',
+          label: 'Core Set 2019',
+          set: 'm19',
+          label: 'Commander 2018',
+          set: 'c18',
+          label: 'Global Series: Jiang Yanggu & Mu Yanling',
+          set: 'gs1',
+          label: 'Dominaria',
+          set: 'dom',
         }
       ],
       mtgSetData: {},

@@ -48168,8 +48168,8 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -48238,14 +48238,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   data: function data() {
+    var _ref;
+
     return {
       cards: [],
       paginatedCards: [],
       filterBySet: '',
-      setOptions: [{
+      setOptions: [(_ref = {
         label: 'Guilds of Ravnica',
         set: 'grn'
-      }],
+      }, _defineProperty(_ref, 'label', 'Signature Spellbook: Jace'), _defineProperty(_ref, 'set', 'ss1'), _defineProperty(_ref, 'label', 'Core Set 2019'), _defineProperty(_ref, 'set', 'm19'), _defineProperty(_ref, 'label', 'Commander 2018'), _defineProperty(_ref, 'set', 'c18'), _defineProperty(_ref, 'label', 'Global Series: Jiang Yanggu & Mu Yanling'), _defineProperty(_ref, 'set', 'gs1'), _defineProperty(_ref, 'label', 'Dominaria'), _defineProperty(_ref, 'set', 'dom'), _ref)],
       mtgSetData: {},
       searchText: '',
       paginate: ['paginatedCards']
@@ -48397,26 +48399,24 @@ var render = function() {
                       },
                       _vm._l(_vm.paginated("paginatedCards"), function(card) {
                         return _c("span", [
-                          _c("div", { staticClass: "row" }, [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "col-md-2",
-                                staticStyle: { "padding-bottom": "1em" }
-                              },
-                              [
-                                _c("v-lazy-image", {
-                                  attrs: {
-                                    src:
-                                      "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
-                                      card.multiverse_id +
-                                      "&type=card"
-                                  }
-                                })
-                              ],
-                              1
-                            )
-                          ])
+                          _c(
+                            "div",
+                            {
+                              staticClass: "col-md-2",
+                              staticStyle: { "padding-bottom": "1em" }
+                            },
+                            [
+                              _c("v-lazy-image", {
+                                attrs: {
+                                  src:
+                                    "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                                    card.multiverse_id +
+                                    "&type=card"
+                                }
+                              })
+                            ],
+                            1
+                          )
                         ])
                       })
                     ),
