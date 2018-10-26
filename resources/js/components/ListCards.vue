@@ -24,13 +24,11 @@
                                 :list="filteredCards"
                                 :per="16"
                                 >
-                                <span v-for="card in paginated('paginatedCards')"> 
-                                        <div class="col-md-2" style="padding-bottom:1em;">                                 
+                                        <div class="col-md-2" style="padding-bottom:1em;" v-for="card in paginated('paginatedCards')">                                 
                                             <v-lazy-image 
                                                 v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
                                             />
                                         </div>
-                                </span>
                             </paginate>
                             <paginate-links :hide-single-page="true" for="paginatedCards" :show-step-links="true" 
                                 :classes="{
