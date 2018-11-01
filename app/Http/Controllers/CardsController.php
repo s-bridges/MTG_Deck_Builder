@@ -31,4 +31,9 @@ class CardsController extends Controller
     {
         return view('list-cards');
     }
+    
+    public function saveCards()
+    {
+        return view();
+    }
 }

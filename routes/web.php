@@ -34,3 +34,5 @@ Route::post('/import', 'ImportController@saveImport')->name('import_post');
 Route::get('import/importing/{id}', 'ImportController@importing')->name('importing');
 Route::post('/process', 'ImportController@process')->name('process');
 
+Route::get('/contact', 'ContactController@showContact')->name('contact.show');
+Route::post('/contact', 'ContactController@sendEmail')->name('contact.send');
