@@ -24,8 +24,7 @@ class ContactController extends Controller
 
         Notification::route('mail', 'magicdb.us@gmail.com')->notify(new SendContactNotification($request));    
 
-        Session::flash('success', 'The email was sent successfully!');
 
-        return redirect()->route('home');
+        return redirect()->route('home')->with('success', 'The email was sent successfully!');
     }
 }
