@@ -77,15 +77,11 @@
             @yield('content')
         </main>
     </div>
-    <footer>
-    <div class="footerWrap">
-    <div class="footer">
-      <div class="footerContent">
-      <p>© 2018 MagicDB.us</p>
-      </div>     
-    </div>
-</div>
-</footer>
+    <footer class="footer">
+      <div class="container">
+        <span class="text-muted">© 2018 MagicDB.us All Rights Reserved.</span>
+      </div>
+    </footer>
 </body>
 
 </html>
