@@ -2,19 +2,23 @@
     <div class="container">
         <div class="row justify-content-center">               
             <div class="container py-3">
+              <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <select id="sets" class="form-control" v-model="filterBySet" v-on:change="setAPI()">
                     <option disabled value="">Search By Set</option>
                     <option v-for="option in setOptions" :value="option.set">{{option.label}}</option>
                     </select>
-                </div>      
-                <form>
-                <div class="form-group">
-                    <input v-model="searchText" type="search" class="form-control" id="search" placeholder="Search by Name">
-                </div>  
-                </form>
-                <div v-if="filteredCards.length > 0" class="row">
-                    <div class="mx-auto col-sm-12">
+                </div>
+                <div class="col-sm-12 col-md-9">
+                  <form>
+                    <div class="form-group">
+                        <input v-model="searchText" type="search" class="form-control" id="search" placeholder="Search by Name">
+                    </div>  
+                  </form>
+                </div>   
+              </div>   
+                <div class="row">
+                    <div v-if="filteredCards.length > 0" class="mx-auto" v-bind:class="selectedCards.length > 0 ? 'col-sm-9' : 'col-sm-12'">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="mb-0">All Cards</h4>
@@ -23,12 +27,25 @@
                                 name="paginatedCards"
                                 :list="filteredCards"
                                 :per="16"
+                                tag="div"
+                                class="row card-body"
                                 >
+<<<<<<< HEAD
                                         <div class="col-md-2" style="padding-bottom:1em;" v-for="card in paginated('paginatedCards')">                                 
                                             <v-lazy-image 
                                                 v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
                                             />
                                         </div>
+=======
+                                    <div v-for="card in paginated('paginatedCards')" class="col justify-col-center addable" style="padding-bottom:2em;" v-on:click="addCard(card)">                                 
+                                        <v-lazy-image 
+                                            v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
+                                        />
+                                        <div class="overlay">
+                                            <div class="text"><i class="material-icons add">add_circle</i></div>
+                                        </div>
+                                    </div>
+>>>>>>> 79b226862cdf57a0828d544d8ec3177031ab6f59
                             </paginate>
                             <paginate-links :hide-single-page="true" for="paginatedCards" :show-step-links="true" 
                                 :classes="{
@@ -42,6 +59,22 @@
                             </paginate-links>
                             </div>                             
                         </div>
+                        <div v-if="selectedCards.length > 0" class="col-sm-3">
+                          <div class="card">
+                            <div class="card-header">
+                                <h4 class="mb-0">My Deck</h4>
+                            </div>
+                            <div class="card-body">
+                              <h5 style="margin-bottom:0.5em;"><span class="badge" v-bind:class="selectedCards.length > 60 ? 'badge-danger' : 'badge-secondary'">{{selectedCards.length}} / {{maxlength}}</span></h5>
+                              <p>Instant/Sorcery: {{instantSorceryCount}}</p>
+                              <div v-for="card in myDeck">
+                                <p class="deck-list"><i class="material-icons text-secondary" v-on:click="removeCard(card.card)">remove_circle</i> {{card.count}} <i class="material-icons text-primary" v-on:click="addCard(card.card)">add_circle</i> <span style="padding-left:0.5em;">{{card.name}}</span></p>
+                              </div>
+                              <br />
+                              <a href="#" class="btn btn-primary" v-on:click="saveDeck()">Save</a>
+                            </div>
+                          </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -52,8 +85,8 @@
 <script>
 export default {
   mounted() {
-      // call methods here that you want done on page load, the methods are defined in the methods section below
-      // this method below here we don't need to worry about right now
+    // call methods here that you want done on page load, the methods are defined in the methods section below
+    // this method below here we don't need to worry about right now
     // this.getCardsFromAPI();
   },
   props: {
@@ -66,32 +99,33 @@ export default {
     return {
       cards: [],
       paginatedCards: [],
-      filterBySet: '',
+      filterBySet: "",
       setOptions: [
-          {
-            label:'Guilds of Ravnica',
-            set: 'GRN',
-          },
-          {
-            label:'Core Set 2019',
-            set: 'M19',
-          },
-          {
-            label:'Dominaria',
-            set: 'DOM',
-          },
-          {
-            label:'Rivals of Ixalan',
-            set: 'RIX',
-          },       
-          {
-            label:'Ixalan',
-            set: 'XLN',
-          }
+        {
+          label: "Guilds of Ravnica",
+          set: "GRN"
+        },
+        {
+          label: "Core Set 2019",
+          set: "M19"
+        },
+        {
+          label: "Dominaria",
+          set: "DOM"
+        },
+        {
+          label: "Rivals of Ixalan",
+          set: "RIX"
+        },
+        {
+          label: "Ixalan",
+          set: "XLN"
+        }
       ],
       mtgSetData: {},
-      searchText: '',
-      paginate: ['paginatedCards'],
+      searchText: "",
+      paginate: ["paginatedCards"],
+      selectedCards: []
     };
   },
   methods: {
@@ -102,31 +136,93 @@ export default {
     //         this.cards = response.data.cards;
     //     })
     // },
-    setAPI(){
-      // use the filterBySet value which the select option if the v-model of 
-        axios.get(`/card/${this.filterBySet}`)
+    setAPI() {
+      // use the filterBySet value which the select option if the v-model of
+      axios
+        .get(`/card/${this.filterBySet}`)
         .then(response => {
           // be able to see your response to make sure you know what to set the mtgsetdata to
-            this.cards = response.data.payload;
+          this.cards = response.data.payload;
         })
         .catch(error => {});
     },
-  },
- computed: {
-        filteredCards() {
-            let search = this.searchText;
-            let cards_array = this.cards;
-            if (search != '') {
-              // filter by the search field
-              cards_array = _.filter(cards_array, function(card) {
-                // index of finds the string within the card.name property 
-                return card.name.indexOf(search) > -1;
-              });
+    saveDeck() {
+      // this is where the .post where you save selected cards to a deck
+      // axios
+      //   .post(`/your-post-route`, this.selectedCards)
+      //   .then(response => {
+      //       create messaging for toast that says deck saved!
+      //   })
+      //   .catch(error => {});
+      alert('Seth add this shit');
+    },
+    addCard(card) {
+      this.selectedCards.push(card);
+    },
+    removeCard(card) {
+      let index = _.findIndex(this.selectedCards, function(c) { 
+          return c.multiverse_id == card.multiverse_id; 
+      });
+      this.selectedCards = _.filter(this.selectedCards, function(item, i){
+        console.log(i);
+        console.log(item);
+        return i !== index;
+      });
 
-            }
-            return cards_array;
-        }
+      // let index = _.findIndex(this.selectedCards, function(c) { 
+      //   return c.multiverse_id == card.multiverse_id; 
+      // });
+      // console.log(index);
     }
-}
+  },
+  computed: {
+    filteredCards() {
+      let search = this.searchText;
+      let cards_array = this.cards;
+      if (search != "") {
+        // filter by the search field
+        cards_array = _.filter(cards_array, function(card) {
+          // index of finds the string within the card.name property
+          return card.name.indexOf(search) > -1;
+        });
+      }
+      return cards_array;
+    },
+    myDeck() {
+      let selectedCards = this.selectedCards;
+      // group the cards by the card name so we can keep track of duplicates
+      let result = _.chain(selectedCards).groupBy('name').map(function(v, i) {
+        // get first card out of group of the same cards and set the card data
+        let cardData = _.first(v);
+        return {
+          name: i,
+          multiverse_id: cardData.multiverse_id,
+          count: v.length,
+          card: cardData
+        }
+      }).value();
+      return result;
+    },
+    maxlength() {
+      let selectedCards = this.selectedCards;
+      // if card length is higher than 60, let max length be higher otherwise set it to 60
+      return selectedCards.length > 60 ? selectedCards.length: 60;
+    },
+    instantSorceryCount() {
+      let i = 0;
+      let selectedCards = this.selectedCards;
+      _.forEach(selectedCards, function(card) {
+        if (card.type == 'Instant' || card.type == 'Sorcery') {
+          // increase the count of i if instant or sorcery
+          i++;
+        }
+      });
+      return i;
+    },
+    creatureCount() {
+
+    },
+  }
+};
 </script>
 

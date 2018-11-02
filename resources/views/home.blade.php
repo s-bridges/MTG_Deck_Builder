@@ -15,10 +15,7 @@
                     @endif
 
                     You are logged in!
-                    <br>
-                    <br>
-                    <p>This site is in extreme beta right now. Sets will be uploaded as quickly as possible.</p>
-                    <p>Current features are you can view a set, and search for a card within that set</p>
+                    
                 </div>
             </div>
         </div>
