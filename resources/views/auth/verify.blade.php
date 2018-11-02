@@ -15,6 +15,10 @@
                     @endif
 
                     {{ __('Before proceeding, please check your email for a verification link.') }}
+                    <br>
+                    {{ __('It may have gotten caught in the SPAM filter!') }}
+                    <br>
+                    <br>
                     {{ __('If you did not receive the email') }}, <a href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>.
                 </div>
             </div>

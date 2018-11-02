@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.gmail.com'),
+    'host' => env('MAIL_HOST', 'smtp.sendgrid.net'),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'magicdb.us@gmail.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@magicdb.us'),
         'name' => env('MAIL_FROM_NAME', 'MTG Deck Builder'),
     ],
 
@@ -84,9 +84,9 @@ return [
     |
     */
 
-    'username' => env('MAIL_USERNAME', 'magicdb.us@gmail.com'),
+    'username' => env('MAIL_USERNAME', 'magicdb.us'),
 
-    'password' => env('MAIL_PASSWORD', 'varzlbnacymsiror'),
+    'password' => env('MAIL_PASSWORD', 'Hurricane187!!'),
 
     /*
     |--------------------------------------------------------------------------
