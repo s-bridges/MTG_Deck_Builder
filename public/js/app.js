@@ -1743,6 +1743,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -1802,10 +1803,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         _this.cards = response.data.payload;
       }).catch(function (error) {});
     },
+    saveDeck: function saveDeck() {
+      // this is where the .post where you save selected cards to a deck
+      // axios
+      //   .post(`/your-post-route`, this.selectedCards)
+      //   .then(response => {
+      //       create messaging for toast that says deck saved!
+      //   })
+      //   .catch(error => {});
+      alert('Seth add this shit');
+    },
     addCard: function addCard(card) {
-      if (this.selectedCards.length < 60) {
-        this.selectedCards.push(card);
-      }
+      this.selectedCards.push(card);
+    },
+    removeCard: function removeCard(card) {
+      var index = _.findIndex(this.selectedCards, function (c) {
+        return c.multiverse_id == card.multiverse_id;
+      });
+      this.selectedCards = _.filter(this.selectedCards, function (item, i) {
+        console.log(i);
+        console.log(item);
+        return i !== index;
+      });
+
+      // let index = _.findIndex(this.selectedCards, function(c) { 
+      //   return c.multiverse_id == card.multiverse_id; 
+      // });
+      // console.log(index);
     }
   },
   computed: {
@@ -1820,7 +1844,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
       }
       return cards_array;
-    }
+    },
+    myDeck: function myDeck() {
+      var selectedCards = this.selectedCards;
+      // group the cards by the card name so we can keep track of duplicates
+      var result = _.chain(selectedCards).groupBy('name').map(function (v, i) {
+        // get first card out of group of the same cards and set the card data
+        var cardData = _.first(v);
+        return {
+          name: i,
+          multiverse_id: cardData.multiverse_id,
+          count: v.length,
+          card: cardData
+        };
+      }).value();
+      return result;
+    },
+    maxlength: function maxlength() {
+      var selectedCards = this.selectedCards;
+      // if card length is higher than 60, let max length be higher otherwise set it to 60
+      return selectedCards.length > 60 ? selectedCards.length : 60;
+    },
+    instantSorceryCount: function instantSorceryCount() {
+      var i = 0;
+      var selectedCards = this.selectedCards;
+      _.forEach(selectedCards, function (card) {
+        if (card.type == 'Instant' || card.type == 'Sorcery') {
+          // increase the count of i if instant or sorcery
+          i++;
+        }
+      });
+      return i;
+    },
+    creatureCount: function creatureCount() {}
   }
 });
 
@@ -36740,15 +36796,65 @@ var render = function() {
                     { staticClass: "card-body" },
                     [
                       _c("h5", { staticStyle: { "margin-bottom": "0.5em" } }, [
-                        _c("span", { staticClass: "badge badge-secondary" }, [
-                          _vm._v(_vm._s(_vm.selectedCards.length) + " / 60")
-                        ])
+                        _c(
+                          "span",
+                          {
+                            staticClass: "badge",
+                            class:
+                              _vm.selectedCards.length > 60
+                                ? "badge-danger"
+                                : "badge-secondary"
+                          },
+                          [
+                            _vm._v(
+                              _vm._s(_vm.selectedCards.length) +
+                                " / " +
+                                _vm._s(_vm.maxlength)
+                            )
+                          ]
+                        )
                       ]),
                       _vm._v(" "),
-                      _vm._l(_vm.selectedCards, function(card) {
+                      _c("p", [
+                        _vm._v(
+                          "Instant/Sorcery: " + _vm._s(_vm.instantSorceryCount)
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.myDeck, function(card) {
                         return _c("div", [
-                          _c("p", { staticStyle: { "margin-bottom": "0" } }, [
-                            _vm._v(_vm._s(card.name))
+                          _c("p", { staticClass: "deck-list" }, [
+                            _c(
+                              "i",
+                              {
+                                staticClass: "material-icons text-secondary",
+                                on: {
+                                  click: function($event) {
+                                    _vm.removeCard(card.card)
+                                  }
+                                }
+                              },
+                              [_vm._v("remove_circle")]
+                            ),
+                            _vm._v(" " + _vm._s(card.count) + " "),
+                            _c(
+                              "i",
+                              {
+                                staticClass: "material-icons text-primary",
+                                on: {
+                                  click: function($event) {
+                                    _vm.addCard(card.card)
+                                  }
+                                }
+                              },
+                              [_vm._v("add_circle")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              { staticStyle: { "padding-left": "0.5em" } },
+                              [_vm._v(_vm._s(card.name))]
+                            )
                           ])
                         ])
                       }),
@@ -36759,7 +36865,12 @@ var render = function() {
                         "a",
                         {
                           staticClass: "btn btn-primary",
-                          attrs: { href: "#" }
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              _vm.saveDeck()
+                            }
+                          }
                         },
                         [_vm._v("Save")]
                       )
