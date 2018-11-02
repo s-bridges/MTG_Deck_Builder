@@ -57,12 +57,13 @@
                                 <h4 class="mb-0">My Deck</h4>
                             </div>
                             <div class="card-body">
-                              <h5 style="margin-bottom:0.5em;"><span class="badge badge-secondary">{{selectedCards.length}} / 60</span></h5>
-                              <div v-for="card in selectedCards">
-                                <p style="margin-bottom:0;">{{card.name}}</p>
+                              <h5 style="margin-bottom:0.5em;"><span class="badge" v-bind:class="selectedCards.length > 60 ? 'badge-danger' : 'badge-secondary'">{{selectedCards.length}} / {{maxlength}}</span></h5>
+                              <p>Instant/Sorcery: {{instantSorceryCount}}</p>
+                              <div v-for="card in myDeck">
+                                <p class="deck-list"><i class="material-icons text-secondary" v-on:click="removeCard(card.card)">remove_circle</i> {{card.count}} <i class="material-icons text-primary" v-on:click="addCard(card.card)">add_circle</i> <span style="padding-left:0.5em;">{{card.name}}</span></p>
                               </div>
                               <br />
-                              <a href="#" class="btn btn-primary">Save</a>
+                              <a href="#" class="btn btn-primary" v-on:click="saveDeck()">Save</a>
                             </div>
                           </div>
                         </div>
@@ -137,10 +138,33 @@ export default {
         })
         .catch(error => {});
     },
+    saveDeck() {
+      // this is where the .post where you save selected cards to a deck
+      // axios
+      //   .post(`/your-post-route`, this.selectedCards)
+      //   .then(response => {
+      //       create messaging for toast that says deck saved!
+      //   })
+      //   .catch(error => {});
+      alert('Seth add this shit');
+    },
     addCard(card) {
-      if (this.selectedCards.length < 60) {
-        this.selectedCards.push(card);
-      }
+      this.selectedCards.push(card);
+    },
+    removeCard(card) {
+      let index = _.findIndex(this.selectedCards, function(c) { 
+          return c.multiverse_id == card.multiverse_id; 
+      });
+      this.selectedCards = _.filter(this.selectedCards, function(item, i){
+        console.log(i);
+        console.log(item);
+        return i !== index;
+      });
+
+      // let index = _.findIndex(this.selectedCards, function(c) { 
+      //   return c.multiverse_id == card.multiverse_id; 
+      // });
+      // console.log(index);
     }
   },
   computed: {
@@ -155,7 +179,41 @@ export default {
         });
       }
       return cards_array;
-    }
+    },
+    myDeck() {
+      let selectedCards = this.selectedCards;
+      // group the cards by the card name so we can keep track of duplicates
+      let result = _.chain(selectedCards).groupBy('name').map(function(v, i) {
+        // get first card out of group of the same cards and set the card data
+        let cardData = _.first(v);
+        return {
+          name: i,
+          multiverse_id: cardData.multiverse_id,
+          count: v.length,
+          card: cardData
+        }
+      }).value();
+      return result;
+    },
+    maxlength() {
+      let selectedCards = this.selectedCards;
+      // if card length is higher than 60, let max length be higher otherwise set it to 60
+      return selectedCards.length > 60 ? selectedCards.length: 60;
+    },
+    instantSorceryCount() {
+      let i = 0;
+      let selectedCards = this.selectedCards;
+      _.forEach(selectedCards, function(card) {
+        if (card.type == 'Instant' || card.type == 'Sorcery') {
+          // increase the count of i if instant or sorcery
+          i++;
+        }
+      });
+      return i;
+    },
+    creatureCount() {
+
+    },
   }
 };
 </script>
