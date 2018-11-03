@@ -58,7 +58,9 @@
                             </div>
                             <div class="card-body">
                               <h5 style="margin-bottom:0.5em;"><span class="badge" v-bind:class="selectedCards.length > 60 ? 'badge-danger' : 'badge-secondary'">{{selectedCards.length}} / {{maxlength}}</span></h5>
-                              <p>Instant/Sorcery: {{instantSorceryCount}}</p>
+                              <p>Creature: {{ instantCreatureCount }}<br>
+                              Instant/Sorcery: {{instantSorceryCount}}<br>
+                              Land: {{ instantLandCount }}</p>
                               <div v-for="card in myDeck">
                                 <p class="deck-list"><i class="material-icons text-secondary" v-on:click="removeCard(card.card)">remove_circle</i> {{card.count}} <i class="material-icons text-primary" v-on:click="addCard(card.card)">add_circle</i> <span style="padding-left:0.5em;">{{card.name}}</span></p>
                               </div>
@@ -146,7 +148,7 @@ export default {
       //       create messaging for toast that says deck saved!
       //   })
       //   .catch(error => {});
-      alert('Seth add this shit');
+      alert('Seth or Alex add this shit');
     },
     addCard(card) {
       this.selectedCards.push(card);
@@ -211,8 +213,25 @@ export default {
       });
       return i;
     },
-    creatureCount() {
-
+    instantCreatureCount() {
+      let j = 0;
+      let selectedCards = this.selectedCards;
+      _.forEach(selectedCards, function(card){
+        if(card.type.includes('Creature')){
+          j++;        
+          }
+      });
+      return j;
+    },
+    instantLandCount() {
+      let k = 0;
+      let selectedCards = this.selectedCards;
+      _.forEach(selectedCards, function(card){
+        if(card.type.includes('Land')){
+          k++;        
+          }
+      });
+      return k;
     },
   }
 };
