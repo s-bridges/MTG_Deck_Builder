@@ -30,10 +30,12 @@ Route::prefix('deck')->middleware(['auth'])->group(function (){
     Route::get('/{deck_id}', 'DecksController@specificDeck');
 });
 
-Route::get('/import', 'ImportController@getImport')->name('import');
-Route::post('/import', 'ImportController@saveImport')->name('import_post');
-Route::get('import/importing/{id}', 'ImportController@importing')->name('importing');
-Route::post('/process', 'ImportController@process')->name('process');
+Route::prefix('import')->middleware(['auth', 'is_admin'])->group(function (){
+    Route::get('/', 'ImportController@getImport')->name('import');
+    Route::post('/', 'ImportController@saveImport')->name('import_post');
+    Route::get('/importing/{id}', 'ImportController@importing')->name('importing');
+    Route::post('/process', 'ImportController@process')->name('process');
+});
 
 Route::get('/contact', 'ContactController@showContact')->name('contact.show');
 Route::post('/contact', 'ContactController@sendEmail')->name('contact.send');
