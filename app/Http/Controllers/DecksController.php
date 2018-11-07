@@ -46,6 +46,5 @@ class DecksController extends Controller
     public function myDecks()
     {
         $deck = Deck::where('user_id', Auth::user()->id)->has('cards')->with('cards')->get();
-        dd($deck);
     }
 }

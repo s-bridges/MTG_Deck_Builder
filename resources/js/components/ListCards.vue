@@ -55,11 +55,9 @@
                           <div class="card">
                             <div class="card-header">
                                 <h4 class="mb-0">My Deck</h4>
-                                <label for="name" class="mt-3">Deck Name</label>
-                                <input v-model="deckForm.name" name="name" class="form-control">
+                                <input v-model="deckForm.name" name="name" placeholder="Deck Name" class="form-control mt-3">
 
-                                <label for="description" class="mt-3">Description</label>
-                                <input v-model="deckForm.description" name="description" class="form-control">
+                                <input v-model="deckForm.description" name="description" placeholder="Description" class="form-control mt-3">
                             </div>
                             <div class="card-body">
                               <h5 style="margin-bottom:0.5em;"><span class="badge" v-bind:class="selectedCards.length > 60 ? 'badge-danger' : 'badge-secondary'">{{selectedCards.length}} / {{maxlength}}</span></h5>
@@ -149,6 +147,7 @@ export default {
     saveDeck() {
       // this is where the .post where you save selected cards to a deck
       let deckForm = this.deckForm;
+      deckForm.cards = this.selectedCards;
        axios
          .post(`/card/save`, this.deckForm)
          .then(response => {

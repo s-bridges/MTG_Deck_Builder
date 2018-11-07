@@ -37,3 +37,7 @@ Route::post('/process', 'ImportController@process')->name('process');
 
 Route::get('/contact', 'ContactController@showContact')->name('contact.show');
 Route::post('/contact', 'ContactController@sendEmail')->name('contact.send');
+
+Route::get('/admin', 'AdminController@admin')
+    ->middleware('is_admin')
+    ->name('admin');

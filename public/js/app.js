@@ -1749,8 +1749,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -1814,6 +1812,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     saveDeck: function saveDeck() {
       // this is where the .post where you save selected cards to a deck
       var deckForm = this.deckForm;
+      deckForm.cards = this.selectedCards;
       axios.post("/card/save", this.deckForm).then(function (response) {
         alert('Your deck was saved!');
       }).catch(function (error) {});
@@ -36815,12 +36814,6 @@ var render = function() {
                   _c("div", { staticClass: "card-header" }, [
                     _c("h4", { staticClass: "mb-0" }, [_vm._v("My Deck")]),
                     _vm._v(" "),
-                    _c(
-                      "label",
-                      { staticClass: "mt-3", attrs: { for: "name" } },
-                      [_vm._v("Deck Name")]
-                    ),
-                    _vm._v(" "),
                     _c("input", {
                       directives: [
                         {
@@ -36830,8 +36823,8 @@ var render = function() {
                           expression: "deckForm.name"
                         }
                       ],
-                      staticClass: "form-control",
-                      attrs: { name: "name" },
+                      staticClass: "form-control mt-3",
+                      attrs: { name: "name", placeholder: "Deck Name" },
                       domProps: { value: _vm.deckForm.name },
                       on: {
                         input: function($event) {
@@ -36843,12 +36836,6 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _c(
-                      "label",
-                      { staticClass: "mt-3", attrs: { for: "description" } },
-                      [_vm._v("Description")]
-                    ),
-                    _vm._v(" "),
                     _c("input", {
                       directives: [
                         {
@@ -36858,8 +36845,11 @@ var render = function() {
                           expression: "deckForm.description"
                         }
                       ],
-                      staticClass: "form-control",
-                      attrs: { name: "description" },
+                      staticClass: "form-control mt-3",
+                      attrs: {
+                        name: "description",
+                        placeholder: "Description"
+                      },
                       domProps: { value: _vm.deckForm.description },
                       on: {
                         input: function($event) {
