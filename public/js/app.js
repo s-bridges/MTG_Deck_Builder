@@ -1746,9 +1746,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+<<<<<<< HEAD
 //
 //
 //
+=======
+>>>>>>> 0090506e8a24a8464ab6d5d5b8e95e0372ab261a
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -1787,8 +1790,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       mtgSetData: {},
       searchText: "",
       paginate: ["paginatedCards"],
+<<<<<<< HEAD
       selectedCards: [],
       deckForm: {}
+=======
+      selectedCards: []
+>>>>>>> 0090506e8a24a8464ab6d5d5b8e95e0372ab261a
     };
   },
 
@@ -1811,11 +1818,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     saveDeck: function saveDeck() {
       // this is where the .post where you save selected cards to a deck
+<<<<<<< HEAD
       var deckForm = this.deckForm;
       deckForm.cards = this.selectedCards;
       axios.post("/card/save", this.deckForm).then(function (response) {
         alert('Your deck was saved!');
       }).catch(function (error) {});
+=======
+      // axios
+      //   .post(`/your-post-route`, this.selectedCards)
+      //   .then(response => {
+      //       create messaging for toast that says deck saved!
+      //   })
+      //   .catch(error => {});
+      alert('Seth or Alex add this shit');
+>>>>>>> 0090506e8a24a8464ab6d5d5b8e95e0372ab261a
     },
     addCard: function addCard(card) {
       this.selectedCards.push(card);
@@ -1829,6 +1846,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         console.log(item);
         return i !== index;
       });
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0090506e8a24a8464ab6d5d5b8e95e0372ab261a
       // let index = _.findIndex(this.selectedCards, function(c) { 
       //   return c.multiverse_id == card.multiverse_id; 
       // });
@@ -36745,7 +36766,11 @@ var render = function() {
                           attrs: {
                             name: "paginatedCards",
                             list: _vm.filteredCards,
+<<<<<<< HEAD
                             per: 15,
+=======
+                            per: 16,
+>>>>>>> 0090506e8a24a8464ab6d5d5b8e95e0372ab261a
                             tag: "div"
                           }
                         },
@@ -36811,6 +36836,7 @@ var render = function() {
           _vm.selectedCards.length > 0
             ? _c("div", { staticClass: "col-sm-3" }, [
                 _c("div", { staticClass: "card" }, [
+<<<<<<< HEAD
                   _c("div", { staticClass: "card-header" }, [
                     _c("h4", { staticClass: "mb-0" }, [_vm._v("My Deck")]),
                     _vm._v(" "),
@@ -36865,6 +36891,9 @@ var render = function() {
                       }
                     })
                   ]),
+=======
+                  _vm._m(1),
+>>>>>>> 0090506e8a24a8464ab6d5d5b8e95e0372ab261a
                   _vm._v(" "),
                   _c(
                     "div",
@@ -36976,6 +37005,17 @@ var staticRenderFns = [
     return _c("div", { staticClass: "card-header" }, [
       _c("h4", { staticClass: "mb-0" }, [_vm._v("All Cards")])
     ])
+<<<<<<< HEAD
+=======
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h4", { staticClass: "mb-0" }, [_vm._v("My Deck")])
+    ])
+>>>>>>> 0090506e8a24a8464ab6d5d5b8e95e0372ab261a
   }
 ]
 render._withStripped = true

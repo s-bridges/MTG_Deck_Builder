@@ -38,13 +38,13 @@ class DecksController extends Controller
         return response()->json(['status' => true, 'message' => 'Saved Successfully!', 'payload' => $deck->toArray()]);
     }
 
-    public function specificDeck()
-    {
-        return view('show-decks');
-    }
-
     public function myDecks()
     {
         $deck = Deck::where('user_id', Auth::user()->id)->has('cards')->with('cards')->get();
+    }    
+
+    public function specificDeck()
+    {
+        return view('show-decks');
     }
 }
