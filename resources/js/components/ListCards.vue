@@ -146,7 +146,6 @@ export default {
     },
     saveDeck() {
       // this is where the .post where you save selected cards to a deck
-<<<<<<< HEAD
       let deckForm = this.deckForm;
       deckForm.cards = this.selectedCards;
        axios
@@ -155,15 +154,6 @@ export default {
              alert('Your deck was saved!');
          })
          .catch(error => {});
-=======
-      // axios
-      //   .post(`/your-post-route`, this.selectedCards)
-      //   .then(response => {
-      //       create messaging for toast that says deck saved!
-      //   })
-      //   .catch(error => {});
-      alert('Seth or Alex add this shit');
->>>>>>> 0090506e8a24a8464ab6d5d5b8e95e0372ab261a
     },
     addCard(card) {
       this.selectedCards.push(card);
