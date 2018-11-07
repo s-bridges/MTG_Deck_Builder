@@ -26,17 +26,10 @@
                              <paginate
                                 name="paginatedCards"
                                 :list="filteredCards"
-                                :per="16"
+                                :per="15"
                                 tag="div"
                                 class="row card-body"
                                 >
-<<<<<<< HEAD
-                                        <div class="col-md-2" style="padding-bottom:1em;" v-for="card in paginated('paginatedCards')">                                 
-                                            <v-lazy-image 
-                                                v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
-                                            />
-                                        </div>
-=======
                                     <div v-for="card in paginated('paginatedCards')" class="col justify-col-center addable" style="padding-bottom:2em;" v-on:click="addCard(card)">                                 
                                         <v-lazy-image 
                                             v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
@@ -45,7 +38,6 @@
                                             <div class="text"><i class="material-icons add">add_circle</i></div>
                                         </div>
                                     </div>
->>>>>>> 79b226862cdf57a0828d544d8ec3177031ab6f59
                             </paginate>
                             <paginate-links :hide-single-page="true" for="paginatedCards" :show-step-links="true" 
                                 :classes="{
@@ -63,10 +55,17 @@
                           <div class="card">
                             <div class="card-header">
                                 <h4 class="mb-0">My Deck</h4>
+                                <label for="name" class="mt-3">Deck Name</label>
+                                <input v-model="deckForm.name" name="name" class="form-control">
+
+                                <label for="description" class="mt-3">Description</label>
+                                <input v-model="deckForm.description" name="description" class="form-control">
                             </div>
                             <div class="card-body">
                               <h5 style="margin-bottom:0.5em;"><span class="badge" v-bind:class="selectedCards.length > 60 ? 'badge-danger' : 'badge-secondary'">{{selectedCards.length}} / {{maxlength}}</span></h5>
-                              <p>Instant/Sorcery: {{instantSorceryCount}}</p>
+                              <p>Creature: {{ instantCreatureCount }}<br>
+                              Instant/Sorcery: {{instantSorceryCount}}<br>
+                              Land: {{ instantLandCount }}</p>
                               <div v-for="card in myDeck">
                                 <p class="deck-list"><i class="material-icons text-secondary" v-on:click="removeCard(card.card)">remove_circle</i> {{card.count}} <i class="material-icons text-primary" v-on:click="addCard(card.card)">add_circle</i> <span style="padding-left:0.5em;">{{card.name}}</span></p>
                               </div>
@@ -125,7 +124,8 @@ export default {
       mtgSetData: {},
       searchText: "",
       paginate: ["paginatedCards"],
-      selectedCards: []
+      selectedCards: [],
+      deckForm: {}
     };
   },
   methods: {
@@ -148,13 +148,13 @@ export default {
     },
     saveDeck() {
       // this is where the .post where you save selected cards to a deck
-      // axios
-      //   .post(`/your-post-route`, this.selectedCards)
-      //   .then(response => {
-      //       create messaging for toast that says deck saved!
-      //   })
-      //   .catch(error => {});
-      alert('Seth add this shit');
+      let deckForm = this.deckForm;
+       axios
+         .post(`/card/save`, this.deckForm)
+         .then(response => {
+             alert('Your deck was saved!');
+         })
+         .catch(error => {});
     },
     addCard(card) {
       this.selectedCards.push(card);
@@ -168,7 +168,6 @@ export default {
         console.log(item);
         return i !== index;
       });
-
       // let index = _.findIndex(this.selectedCards, function(c) { 
       //   return c.multiverse_id == card.multiverse_id; 
       // });
@@ -219,10 +218,26 @@ export default {
       });
       return i;
     },
-    creatureCount() {
-
+    instantCreatureCount() {
+      let j = 0;
+      let selectedCards = this.selectedCards;
+      _.forEach(selectedCards, function(card){
+        if(card.type.includes('Creature')){
+          j++;        
+          }
+      });
+      return j;
+    },
+    instantLandCount() {
+      let k = 0;
+      let selectedCards = this.selectedCards;
+      _.forEach(selectedCards, function(card){
+        if(card.type.includes('Land')){
+          k++;        
+          }
+      });
+      return k;
     },
   }
 };
 </script>
-

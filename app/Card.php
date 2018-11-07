@@ -13,6 +13,7 @@ class Card extends Model
      */
     protected $importable = [
         'card',
+        'id',
         'multiverse_id',
         'name',
         'mana_cost',
@@ -22,37 +23,16 @@ class Card extends Model
         'power',
         'toughness',
         'colors',
-        'sec_color',
         'set',
         'set_name',
         'collector_number',
         'rarity',
-        'flavor',
         'user_id',
     ];
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 
-        'colors',
-    ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'id',
-        'deck_id',
-        'multiverseid',
-    ];
-
-    public function decks() {
-        return $this->hasMany(Deck::class);
+    public function decks()
+    {
+        return $this->belongsToMany(Deck::class, 'cards_decks', 'card_id', 'deck_id');
     }
 
     public function users() {

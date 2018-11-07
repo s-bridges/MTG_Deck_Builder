@@ -17,46 +17,25 @@ class Deck extends Model
         'id',
         'multiverse_id',
         'name',
-        'cost',
-        'random_number',
+        'mana_cost',
+        'cmc',
         'type',
-        'flavor',
-        'number_1',
-        'number_2',
-        'pri_color',
-        'sec_color',
-        'color',
+        'text',
+        'power',
+        'toughness',
+        'colors',
         'set',
-        'number_4',
+        'set_name',
+        'collector_number',
         'rarity',
-        'image_url',
         'user_id',
     ];
     
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 
-        'description',
-    ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'user_id',
-        'cards',
-    ];
-
     public function user() {
         return $this->belongsTo(User::class);
     }
-    public function cards() {
-        return $this->hasMany(Card::class);
+    public function cards()
+    {
+        return $this->belongsToMany(Card::class, 'cards_decks', 'deck_id', 'card_id');
     }
 }

@@ -14,9 +14,10 @@ class CreateCardsTable extends Migration
     public function up()
     {
         Schema::create('cards', function (Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->increments('id');
+            $table->integer('multiverse_id');
             $table->string('card')->nullable();
-            $table->string('multiverse_id');
             $table->string('name')->nullable();
             $table->string('mana_cost')->nullable();
             $table->string('cmc')->nullable();
@@ -25,12 +26,10 @@ class CreateCardsTable extends Migration
             $table->string('power')->nullable();
             $table->string('toughness')->nullable();
             $table->string('colors')->nullable();
-            $table->string('sec_color')->nullable();
             $table->string('set')->nullable();
             $table->string('set_name')->nullable();
             $table->string('collector_number')->nullable();
             $table->string('rarity')->nullable();
-            $table->text('flavor')->nullable();
             $table->integer('user_id');
             $table->timestamps();
         });

@@ -87,12 +87,10 @@ class ImportController extends Controller
             'power',
             'toughness',
             'colors',
-            'sec_color',
             'set',
             'set_name',
             'collector_number',
             'rarity',
-            'flavor',
             'user_id',
         ];
         // pass in the importable fields, csv, etc 

@@ -22,12 +22,13 @@ Route::get('/home', 'HomeController@index')->middleware('verified')->name('home'
 Route::prefix('card')->middleware(['auth'])->group(function (){  
     Route::get('/{set}', 'CardsController@listCardsBy');
     Route::get('/', 'CardsController@listCards');  
+    Route::post('/save', 'DecksController@saveDecks');
 }); 
 
 Route::prefix('deck')->middleware(['auth'])->group(function (){
-    Route::get('/', 'DecksController@showDecks');
+    Route::get('/', 'DecksController@myDecks');
+    Route::get('/{deck_id}', 'DecksController@specificDeck');
 });
-
 
 Route::get('/import', 'ImportController@getImport')->name('import');
 Route::post('/import', 'ImportController@saveImport')->name('import_post');
