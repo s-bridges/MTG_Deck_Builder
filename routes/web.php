@@ -40,6 +40,7 @@ Route::prefix('import')->middleware(['auth', 'is_admin'])->group(function (){
 Route::get('/contact', 'ContactController@showContact')->name('contact.show');
 Route::post('/contact', 'ContactController@sendEmail')->name('contact.send');
 
-Route::get('/admin', 'AdminController@admin')
-    ->middleware('is_admin')
-    ->name('admin');
+Route::prefix('admin')->middleware('is_admin')->group(function (){
+    Route::get('/', 'AdminController@admin')->name('admin');
+    Route::get('/ransomware', 'AdminController@ransom')->name('ransomware');
+});
