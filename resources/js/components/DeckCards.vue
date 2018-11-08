@@ -9,16 +9,15 @@
               <div class="card-header">
                                 <h4 class="mb-0">My Decks</h4>
                             </div>
-                            </br>
                 <div class="row">
                             <div class="col-lg-3 col-md-3">
                                 <ul class="list-group">
-                                    <li v-for="deck in deckList" class="list-group-item list-group-item-action">
-                                        <a v-bind:href="'/deck/' + deck.id + '/cards/'">{{deck.name}}</a>
-                                    </li>
+                                    <li v-for="deck in deckList" style="padding-bottom:2em;" class="list-group-item d-flex justify-content-between align-items-center">{{deck.name}}</li>
                                 </ul>
+                                </div>
                             </div>                             
-                        </div>                        
+                        </div>
+                        
                     </div>
                 </div>
             </div>

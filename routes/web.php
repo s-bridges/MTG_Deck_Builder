@@ -21,13 +21,13 @@ Route::get('/home', 'HomeController@index')->middleware('verified')->name('home'
 
 Route::prefix('card')->middleware(['auth'])->group(function (){  
     Route::get('/{set}', 'CardsController@listCardsBy');
-    Route::get('/', 'CardsController@listCards');  
+    Route::get('/', 'CardsController@listCards')->name('cards');  
     Route::post('/save', 'DecksController@saveDecks');
 }); 
 
 Route::prefix('deck')->middleware(['auth'])->group(function (){
-    Route::get('/', 'DecksController@myDecks');
-    Route::get('/{deck_id}', 'DecksController@specificDeck');
+    Route::get('/', 'DecksController@myDecks')->name('decks');
+    Route::get('/{deck_id}/cards', 'DecksController@specificDeck');
 });
 
 Route::prefix('import')->middleware(['auth', 'is_admin'])->group(function (){

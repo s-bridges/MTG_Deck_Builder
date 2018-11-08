@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-<show-decks></show-decks>
+<show-decks :data="{{$data}}"></show-decks>
 @endsection

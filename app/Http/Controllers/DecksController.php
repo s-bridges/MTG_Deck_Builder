@@ -39,12 +39,15 @@ class DecksController extends Controller
     }
 
     public function myDecks()
-    {
-        $deck = Deck::where('user_id', Auth::user()->id)->has('cards')->with('cards')->get();
+    {                
+        $decks = Deck::where('user_id', Auth::user()->id)->has('cards')->with('cards')->get();
+        $data = collect(['decks' => $decks]);
+        return view('show-decks', ['data' => $data]);
     }    
 
-    public function specificDeck()
-    {
-        return view('show-decks');
+    public function specificDeck($deck_id) {
+        $deck = Deck::where('user_id', Auth::user()->id)->where('id', $deck_id)->with('cards')->first();
+        $data = collect(['decks' => $decks]);
+        return view('show-decks', ['data' => $data]);
     }
 }
