@@ -55,9 +55,9 @@
                           <div class="card">
                             <div class="card-header">
                                 <h4 class="mb-0">My Deck</h4>
-                                <input v-model="deckForm.name" name="name" placeholder="Deck Name" class="form-control mt-3">
+                                <input v-model="deckForm.name" name="name" placeholder="Deck Name" class="form-control mt-3" required>
 
-                                <input v-model="deckForm.description" name="description" placeholder="Description" class="form-control mt-3">
+                                <input v-model="deckForm.description" name="description" placeholder="Description" class="form-control mt-3" required>
                             </div>
                             <div class="card-body">
                               <h5 style="margin-bottom:0.5em;"><span class="badge" v-bind:class="selectedCards.length > 60 ? 'badge-danger' : 'badge-secondary'">{{selectedCards.length}} / {{maxlength}}</span></h5>
@@ -68,7 +68,8 @@
                                 <p class="deck-list"><i class="material-icons text-secondary" v-on:click="removeCard(card.card)">remove_circle</i> {{card.count}} <i class="material-icons text-primary" v-on:click="addCard(card.card)">add_circle</i> <span style="padding-left:0.5em;">{{card.name}}</span></p>
                               </div>
                               <br />
-                              <a href="#" class="btn btn-primary" v-on:click="saveDeck()">Save</a>
+                              <!-- <a href="#" class="btn btn-primary" v-on:click="saveDeck()" :disabled="deckSubmitDisabled">Save</a> -->
+                              <button type="button" class="btn btn-primary" v-on:click="saveDeck()" :disabled="deckSubmitDisabled">Save</button>
                             </div>
                           </div>
                         </div>
@@ -123,7 +124,10 @@ export default {
       searchText: "",
       paginate: ["paginatedCards"],
       selectedCards: [],
-      deckForm: {}
+      deckForm: {
+        name: '',
+        description: ''
+      }
     };
   },
   methods: {
@@ -168,6 +172,9 @@ export default {
     }
   },
   computed: {
+    deckSubmitDisabled() {
+      return this.deckForm.name.length < 1 || this.deckForm.description.length < 1;
+    },
     filteredCards() {
       let search = this.searchText;
       let cards_array = this.cards;
