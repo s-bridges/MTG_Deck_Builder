@@ -175,8 +175,8 @@ export default {
         // filter by the search field, make it lowercase
         search = search.toLowerCase();
         cards_array = _.filter(cards_array, function(card) {
-          // index of finds the string within the card.name property
-          return card.name.toLowerCase().indexOf(search) > -1;
+          // index of finds the string within the card.name property or within the card type
+          return card.name.toLowerCase().indexOf(search) > -1 || card.type.toLowerCase().indexOf(search) > -1;
         });
       }
       return cards_array;
