@@ -163,14 +163,8 @@ export default {
           return c.multiverse_id == card.multiverse_id; 
       });
       this.selectedCards = _.filter(this.selectedCards, function(item, i){
-        console.log(i);
-        console.log(item);
         return i !== index;
       });
-      // let index = _.findIndex(this.selectedCards, function(c) { 
-      //   return c.multiverse_id == card.multiverse_id; 
-      // });
-      // console.log(index);
     }
   },
   computed: {
@@ -181,7 +175,7 @@ export default {
         // filter by the search field
         cards_array = _.filter(cards_array, function(card) {
           // index of finds the string within the card.name property
-          return card.name.indexOf(search) > -1;
+          return card.name.toLowerCase().indexOf(search.toLowerCase()) > -1;
         });
       }
       return cards_array;
