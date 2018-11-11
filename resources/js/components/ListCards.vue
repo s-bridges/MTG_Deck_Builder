@@ -171,7 +171,6 @@ export default {
     filteredCards() {
       let search = this.searchText;
       let cards_array = this.cards;
-      console.log(cards_array);
       if (search != "") {
         // filter by the search field, make it lowercase
         search = search.toLowerCase();
