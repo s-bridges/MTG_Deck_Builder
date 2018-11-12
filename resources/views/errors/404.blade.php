@@ -180,12 +180,12 @@
                 border-top: 8px solid transparent;
                 border-bottom: 8px solid transparent;
             }
-.error .container-error-404
-  {
-    height: 150px;
-  }
-        /* Error Page */
-}
+            .error .container-error-404
+            {
+                height: 150px;
+            }
+                    /* Error Page */
+            }
 
 /*--------------------------------------------Framework --------------------------------*/
 
@@ -231,7 +231,7 @@
 
         <!-- Error Page -->
             <div class="error">
-                <div class="container-floud">
+                <div class="container-fluid">
                     <div class="col-xs-12 ground-color text-center">
                         <div class="container-error-404">
                             <div class="clip"><div class="shadow"><span class="digit thirdDigit"></span></div></div>
