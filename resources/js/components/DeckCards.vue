@@ -1,6 +1,7 @@
 <template>
     <div class="container">
-        <div v-if="myDeckCards" class="row justify-content-center">               
+      <div v-if="viewable || editable">
+        <div v-if="myDeckCards" class="row justify-content-center">             
             <div class="container py-3">  
               <div class="card-header">
                 <h4 class="mb-0">{{ deck.name }}</h4>
@@ -16,8 +17,9 @@
                       <span><strong>{{card.count}}x</strong></span>
                     </div>                 
                     <v-lazy-image
-                    v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
-                  />
+                      v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -41,7 +43,9 @@ export default {
   },
   data() {
     return {
-      deck: this.data.deck
+      deck: this.data.deck,
+      viewable: this.data.viewable,
+      editable: this.data.editable
     };
   },
   methods: {
@@ -62,7 +66,7 @@ export default {
         }
       }).value();
       return result;
-    },
+    }
   }
 };
 </script>
