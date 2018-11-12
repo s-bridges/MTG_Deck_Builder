@@ -228,6 +228,7 @@
 /*--------------------------------------------FrameWork------------------------*/ </style>
 </head>
 <body>
+
         <!-- Error Page -->
             <div class="error">
                 <div class="container-floud">
@@ -243,7 +244,9 @@
                 </div>
             </div>
         <!-- Error Page -->
-<script>function randomNum()
+        </body>
+<script>
+function randomNum()
         {
             "use strict";
             return Math.floor(Math.random() * 9)+1;
@@ -290,4 +293,3 @@
                 }
             }, time);
 </script>
-</body>

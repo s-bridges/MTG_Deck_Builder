@@ -37214,89 +37214,85 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _vm.viewable || _vm.editable
-      ? _c("div", [
-          _vm.myDeckCards
-            ? _c("div", { staticClass: "row justify-content-center" }, [
-                _c("div", { staticClass: "container py-3" }, [
-                  _c("div", { staticClass: "card-header" }, [
-                    _c("h4", { staticClass: "mb-0" }, [
-                      _vm._v(_vm._s(_vm.deck.name))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "row" },
-                    _vm._l(_vm.myDeckCards, function(card) {
-                      return _c(
-                        "div",
-                        {
-                          staticClass: "col col-lg-3 text-center",
-                          staticStyle: { "padding-top": ".5em" }
-                        },
-                        [
-                          card.count <= 4
-                            ? _c(
-                                "div",
-                                {
-                                  staticStyle: {
-                                    height: "40px",
-                                    display: "flex",
-                                    "justify-content": "center",
-                                    "align-items": "center"
-                                  }
-                                },
-                                _vm._l(card.count, function(item) {
-                                  return _c("span", [
-                                    _c(
-                                      "i",
-                                      {
-                                        staticClass: "material-icons",
-                                        staticStyle: { "max-width": "24px" }
-                                      },
-                                      [_vm._v("whatshot")]
-                                    )
-                                  ])
-                                })
-                              )
-                            : _c(
-                                "div",
-                                {
-                                  staticStyle: {
-                                    height: "40px",
-                                    display: "flex",
-                                    "justify-content": "center",
-                                    "align-items": "center"
-                                  }
-                                },
-                                [
-                                  _c("span", [
-                                    _c("strong", [
-                                      _vm._v(_vm._s(card.count) + "x")
-                                    ])
-                                  ])
-                                ]
-                              ),
-                          _vm._v(" "),
-                          _c("v-lazy-image", {
-                            attrs: {
-                              src:
-                                "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
-                                card.multiverse_id +
-                                "&type=card"
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    })
-                  )
+    _c("div", [
+      _vm.myDeckCards
+        ? _c("div", { staticClass: "row justify-content-center" }, [
+            _c("div", { staticClass: "container py-3" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _c("h4", { staticClass: "mb-0" }, [
+                  _vm._v(_vm._s(_vm.deck.name))
                 ])
-              ])
-            : _vm._e()
-        ])
-      : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "row" },
+                _vm._l(_vm.myDeckCards, function(card) {
+                  return _c(
+                    "div",
+                    {
+                      staticClass: "col col-lg-3 text-center",
+                      staticStyle: { "padding-top": ".5em" }
+                    },
+                    [
+                      card.count <= 4
+                        ? _c(
+                            "div",
+                            {
+                              staticStyle: {
+                                height: "40px",
+                                display: "flex",
+                                "justify-content": "center",
+                                "align-items": "center"
+                              }
+                            },
+                            _vm._l(card.count, function(item) {
+                              return _c("span", [
+                                _c(
+                                  "i",
+                                  {
+                                    staticClass: "material-icons",
+                                    staticStyle: { "max-width": "24px" }
+                                  },
+                                  [_vm._v("whatshot")]
+                                )
+                              ])
+                            })
+                          )
+                        : _c(
+                            "div",
+                            {
+                              staticStyle: {
+                                height: "40px",
+                                display: "flex",
+                                "justify-content": "center",
+                                "align-items": "center"
+                              }
+                            },
+                            [
+                              _c("span", [
+                                _c("strong", [_vm._v(_vm._s(card.count) + "x")])
+                              ])
+                            ]
+                          ),
+                      _vm._v(" "),
+                      _c("v-lazy-image", {
+                        attrs: {
+                          src:
+                            "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                            card.multiverse_id +
+                            "&type=card"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                })
+              )
+            ])
+          ])
+        : _vm._e()
+    ])
   ])
 }
 var staticRenderFns = []
