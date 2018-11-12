@@ -58,6 +58,9 @@
                                 <input v-model="deckForm.name" name="name" placeholder="Deck Name" class="form-control mt-3" required>
 
                                 <input v-model="deckForm.description" name="description" placeholder="Description" class="form-control mt-3" required>
+
+                                <input v-model="deckForm.allow_share" name="allow_share" placeholder="allow_share" class="form-control mt-3" required>
+                                <input v-model="deckForm.cover" name="cover" placeholder="cover" class="form-control mt-3" required>
                             </div>
                             <div class="card-body">
                               <h5 style="margin-bottom:0.5em;"><span class="badge" v-bind:class="selectedCards.length > 60 ? 'badge-danger' : 'badge-secondary'">{{selectedCards.length}} / {{maxlength}}</span></h5>
@@ -68,7 +71,6 @@
                                 <p class="deck-list"><i class="material-icons text-secondary" v-on:click="removeCard(card.card)">remove_circle</i> {{card.count}} <i class="material-icons text-primary" v-on:click="addCard(card.card)">add_circle</i> <span style="padding-left:0.5em;">{{card.name}}</span></p>
                               </div>
                               <br />
-                              <!-- <a href="#" class="btn btn-primary" v-on:click="saveDeck()" :disabled="deckSubmitDisabled">Save</a> -->
                               <button type="button" class="btn btn-primary" v-on:click="saveDeck()" :disabled="deckSubmitDisabled">Save</button>
                             </div>
                           </div>
@@ -126,7 +128,9 @@ export default {
       selectedCards: [],
       deckForm: {
         name: '',
-        description: ''
+        description: '',
+        allow_share: '',
+        cover: ''
       }
     };
   },

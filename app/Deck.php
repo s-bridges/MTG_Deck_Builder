@@ -30,6 +30,10 @@ class Deck extends Model
         'rarity',
         'user_id',
     ];
+
+    protected $fillable = [
+        'cover', 'allow_share', 'name', 'description'
+    ];
     
     public function user() {
         return $this->belongsTo(User::class);

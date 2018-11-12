@@ -16,8 +16,8 @@ class AddCoverToDecks extends Migration
         //
         Schema::table('decks', function($table)
         {
-            $table->integer('cover');
-            $table->boolean('allow_share');
+            $table->integer('cover')->nullable();
+            $table->boolean('allow_share')->default(0);
         });
     }
 

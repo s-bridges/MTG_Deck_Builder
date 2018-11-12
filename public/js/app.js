@@ -1667,6 +1667,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -1684,9 +1685,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   data: function data() {
     return {
-      deck: this.data.deck,
-      viewable: this.data.viewable,
-      editable: this.data.editable
+      deck: this.data.deck
     };
   },
 
@@ -1829,6 +1828,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -1870,7 +1871,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       selectedCards: [],
       deckForm: {
         name: '',
-        description: ''
+        description: '',
+        allow_share: '',
+        cover: ''
       }
     };
   },
@@ -36952,6 +36955,62 @@ var render = function() {
                             "description",
                             $event.target.value
                           )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.deckForm.allow_share,
+                          expression: "deckForm.allow_share"
+                        }
+                      ],
+                      staticClass: "form-control mt-3",
+                      attrs: {
+                        name: "allow_share",
+                        placeholder: "allow_share",
+                        required: ""
+                      },
+                      domProps: { value: _vm.deckForm.allow_share },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.deckForm,
+                            "allow_share",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.deckForm.cover,
+                          expression: "deckForm.cover"
+                        }
+                      ],
+                      staticClass: "form-control mt-3",
+                      attrs: {
+                        name: "cover",
+                        placeholder: "cover",
+                        required: ""
+                      },
+                      domProps: { value: _vm.deckForm.cover },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.deckForm, "cover", $event.target.value)
                         }
                       }
                     })

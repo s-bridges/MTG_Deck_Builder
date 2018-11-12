@@ -17,9 +17,10 @@
                       <span><strong>{{card.count}}x</strong></span>
                     </div>                 
                     <v-lazy-image
-                      v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
-                    />
-                  </div>
+                    v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
+                  />
+                </div>
+                </div>
                 </div>
               </div>
             </div>
@@ -43,9 +44,7 @@ export default {
   },
   data() {
     return {
-      deck: this.data.deck,
-      viewable: this.data.viewable,
-      editable: this.data.editable
+      deck: this.data.deck
     };
   },
   methods: {
@@ -66,7 +65,7 @@ export default {
         }
       }).value();
       return result;
-    }
+    },
   }
 };
 </script>
