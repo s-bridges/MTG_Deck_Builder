@@ -42,5 +42,4 @@ Route::post('/contact', 'ContactController@sendEmail')->name('contact.send');
 
 Route::prefix('admin')->middleware('is_admin')->group(function (){
     Route::get('/', 'AdminController@admin')->name('admin');
-    Route::get('/ransomware', 'AdminController@ransom')->name('ransomware');
 });

@@ -7,22 +7,20 @@
                 </div>   
               </div>   
               <div class="card-header">
-                                <h4 class="mb-0">My Decks</h4>
-                            </div>
+                <h4 class="mb-0">My Decks</h4>
+              </div>
                             </br>
                 <div class="row">
-                            <div class="col-lg-3 col-md-3">
-                                <ul class="list-group">
-                                    <li v-for="deck in deckList" class="list-group-item list-group-item-action">
-                                        <a v-bind:href="'/deck/' + deck.id + '/cards/'">{{deck.name}}</a>
-                                    </li>
-                                </ul>
+                            <div v-for="deck in deckList" class="col-lg-3 text-center">
+                                <div v-on:click="selectDeck(deck.id)" style="margin:0 auto; cursor: pointer; width:178px;height:130px; background-position: 40% 20%;" v-bind:style="{backgroundImage: 'url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='+ deck.cards[0].multiverse_id + '&type=card)' }">
+                                </div>
+                                <p>{{ deck.name }}</p>
                             </div>                             
                         </div>                        
                     </div>
                 </div>
             </div>
-        </div>
+        </div>                              
     </div>
 </template>
 
@@ -45,7 +43,10 @@ export default {
     };
   },
   methods: {
-
+      selectDeck(id) {
+          // redirect using javascript to specific url
+          window.location.href = '/deck/' + id + '/cards/';
+      }
   },
   computed: {
   }

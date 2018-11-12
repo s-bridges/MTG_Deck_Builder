@@ -1,5 +1,5 @@
-<html>
-<body>
-    <h1>Your deck will be displayed here.</h1>
-</body>
-</html>
+@extends('layouts.app')
+
+@section('content')
+<deck-cards :data="{{$data}}"></deck-cards>
+@endsection

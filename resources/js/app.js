@@ -24,6 +24,7 @@ Vue.use(VuePaginate);
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('list-cards', require('./components/ListCards.vue'));
 Vue.component('show-decks', require('./components/ShowDecks.vue'));
+Vue.component('deck-cards', require('./components/DeckCards.vue'));
 
 const app = new Vue({
     el: '#app'

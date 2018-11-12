@@ -1633,6 +1633,81 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/DeckCards.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    console.log(this.data);
+    // call methods here that you want done on page load, the methods are defined in the methods section below
+    // this method below here we don't need to worry about right now
+    // this.getCardsFromAPI();
+  },
+
+  props: {
+    data: {
+      type: Object,
+      required: false
+    }
+  },
+  data: function data() {
+    return {
+      deck: this.data.deck
+    };
+  },
+
+  methods: {},
+  computed: {
+    myDeckCards: function myDeckCards() {
+      var selectedCards = this.deck.cards;
+      // group the cards by the card name so we can keep track of duplicates
+      var result = _.chain(selectedCards).groupBy('name').map(function (v, i) {
+        // get first card out of group of the same cards and set the card data
+        var cardData = _.first(v);
+        return {
+          name: i,
+          multiverse_id: cardData.multiverse_id,
+          count: v.length,
+          card: cardData
+        };
+      }).value();
+      return result;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/ExampleComponent.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1937,8 +2012,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -1959,7 +2032,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
 
-  methods: {},
+  methods: {
+    selectDeck: function selectDeck(id) {
+      // redirect using javascript to specific url
+      window.location.href = '/deck/' + id + '/cards/';
+    }
+  },
   computed: {}
 });
 
@@ -37017,27 +37095,36 @@ var render = function() {
         _vm._v(" "),
         _c("br"),
         _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-lg-3 col-md-3" }, [
-            _c(
-              "ul",
-              { staticClass: "list-group" },
-              _vm._l(_vm.deckList, function(deck) {
-                return _c(
-                  "li",
-                  { staticClass: "list-group-item list-group-item-action" },
-                  [
-                    _c(
-                      "a",
-                      { attrs: { href: "/deck/" + deck.id + "/cards/" } },
-                      [_vm._v(_vm._s(deck.name))]
-                    )
-                  ]
-                )
-              })
-            )
-          ])
-        ])
+        _c(
+          "div",
+          { staticClass: "row" },
+          _vm._l(_vm.deckList, function(deck) {
+            return _c("div", { staticClass: "col-lg-3 text-center" }, [
+              _c("div", {
+                staticStyle: {
+                  margin: "0 auto",
+                  cursor: "pointer",
+                  width: "178px",
+                  height: "130px",
+                  "background-position": "40% 20%"
+                },
+                style: {
+                  backgroundImage:
+                    "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                    deck.cards[0].multiverse_id +
+                    "&type=card)"
+                },
+                on: {
+                  click: function($event) {
+                    _vm.selectDeck(deck.id)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("p", [_vm._v(_vm._s(deck.name))])
+            ])
+          })
+        )
       ])
     ])
   ])
@@ -37110,6 +37197,103 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-299e239e", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7b05795f\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/DeckCards.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _vm.myDeckCards
+      ? _c("div", { staticClass: "row justify-content-center" }, [
+          _c("div", { staticClass: "container py-3" }, [
+            _c("div", { staticClass: "card-header" }, [
+              _c("h4", { staticClass: "mb-0" }, [_vm._v(_vm._s(_vm.deck.name))])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "row" },
+              _vm._l(_vm.myDeckCards, function(card) {
+                return _c(
+                  "div",
+                  {
+                    staticClass: "col col-lg-3 text-center",
+                    staticStyle: { "padding-top": ".5em" }
+                  },
+                  [
+                    card.count <= 4
+                      ? _c(
+                          "div",
+                          {
+                            staticStyle: {
+                              height: "40px",
+                              display: "flex",
+                              "justify-content": "center",
+                              "align-items": "center"
+                            }
+                          },
+                          _vm._l(card.count, function(item) {
+                            return _c("span", [
+                              _c(
+                                "i",
+                                {
+                                  staticClass: "material-icons",
+                                  staticStyle: { "max-width": "24px" }
+                                },
+                                [_vm._v("whatshot")]
+                              )
+                            ])
+                          })
+                        )
+                      : _c(
+                          "div",
+                          {
+                            staticStyle: {
+                              height: "40px",
+                              display: "flex",
+                              "justify-content": "center",
+                              "align-items": "center"
+                            }
+                          },
+                          [
+                            _c("span", [
+                              _c("strong", [_vm._v(_vm._s(card.count) + "x")])
+                            ])
+                          ]
+                        ),
+                    _vm._v(" "),
+                    _c("v-lazy-image", {
+                      attrs: {
+                        src:
+                          "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          card.multiverse_id +
+                          "&type=card"
+                      }
+                    })
+                  ],
+                  1
+                )
+              })
+            )
+          ])
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-7b05795f", module.exports)
   }
 }
 
@@ -48775,6 +48959,7 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_1_vue_paginate___default.a);
 Vue.component('example-component', __webpack_require__("./resources/js/components/ExampleComponent.vue"));
 Vue.component('list-cards', __webpack_require__("./resources/js/components/ListCards.vue"));
 Vue.component('show-decks', __webpack_require__("./resources/js/components/ShowDecks.vue"));
+Vue.component('deck-cards', __webpack_require__("./resources/js/components/DeckCards.vue"));
 
 var app = new Vue({
   el: '#app'
@@ -48842,6 +49027,54 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/DeckCards.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/DeckCards.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7b05795f\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/DeckCards.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/DeckCards.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7b05795f", Component.options)
+  } else {
+    hotAPI.reload("data-v-7b05795f", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
 
 /***/ }),
 
