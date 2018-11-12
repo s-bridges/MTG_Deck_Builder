@@ -51,13 +51,15 @@ class DecksController extends Controller
         ->where('user_id', Auth::user()->id)
         ->orWhere('allow_share', true)
         ->with('cards')->first();
-
-        // users can edit their own small dick
-        $editable = Auth::user()->id == $deck['user_id'];
-        // if the user_id doesn't match and allow share is true, this is viewable
-        $viewable = Auth::user()->id != $deck['user_id'] && $deck['allow_share'];
-        $data = collect(['deck' => $deck, 'viewable' => $viewable, 'editable' => $editable]);
-        // conditions on where this is view or edit
-        return view('deck-cards', ['data' => $data]);
+        if ($deck) {
+            // set editable to false if this isn't the user's dick, otherwise, let them edit their own dick
+            $editable = Auth::user()->id == $deck['user_id'];
+            $data = collect(['deck' => $deck, 'editable' => $editable]);
+            // conditions on where this is view or edit
+            return view('deck-cards', ['data' => $data]);
+        }
+        dd('this is not my deck');
+        // default don't show the page, but if they were allowed to see the deck, the above gets returned in the conditional and this line never gets hit
+        return view('errors.404');
     }
 }
