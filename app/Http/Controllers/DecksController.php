@@ -58,7 +58,6 @@ class DecksController extends Controller
             // conditions on where this is view or edit
             return view('deck-cards', ['data' => $data]);
         }
-        dd('this is not my deck');
         // default don't show the page, but if they were allowed to see the deck, the above gets returned in the conditional and this line never gets hit
         return view('errors.404');
     }
