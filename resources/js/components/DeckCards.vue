@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-      <div v-if="viewable || editable">
+      <div>
         <div v-if="myDeckCards" class="row justify-content-center">             
             <div class="container py-3">  
               <div class="card-header">
