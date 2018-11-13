@@ -51,10 +51,10 @@ class DecksController extends Controller
         // need to fix this so there is an OR where clause...basically, if this is the user's deck, or the deck is allow_share, get me the deck
         $deck = Deck::where('id', $deck_id)
         ->where('user_id', Auth::user()->id)
-        ->orWhere('allow_share', true)
+        ->orWhere('allow_share', 1)
         ->with('cards')->first();
         if ($deck && $deck_id === $deck['id']) {
-            // set editable to false if this isn't the user's dick, otherwise, let them edit their own dick
+            // set editable to false if this isn't the user's deck, otherwise, let them edit their own deck
             $editable = Auth::user()->id == $deck['user_id'];
             $data = collect(['deck' => $deck, 'editable' => $editable]);
             // conditions on where this is view or edit
