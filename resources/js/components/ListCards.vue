@@ -58,9 +58,6 @@
                                 <input v-model="deckForm.name" name="name" placeholder="Deck Name" class="form-control mt-3" required>
 
                                 <input v-model="deckForm.description" name="description" placeholder="Description" class="form-control mt-3" required>
-
-                                <input v-model="deckForm.allow_share" name="allow_share" placeholder="allow_share" class="form-control mt-3" required>
-                                <input v-model="deckForm.cover" name="cover" placeholder="cover" class="form-control mt-3" required>
                             </div>
                             <div class="card-body">
                               <h5 style="margin-bottom:0.5em;"><span class="badge" v-bind:class="selectedCards.length > 60 ? 'badge-danger' : 'badge-secondary'">{{selectedCards.length}} / {{maxlength}}</span></h5>
@@ -129,8 +126,7 @@ export default {
       deckForm: {
         name: '',
         description: '',
-        allow_share: '',
-        cover: ''
+        allow_share: 'on',
       }
     };
   },
