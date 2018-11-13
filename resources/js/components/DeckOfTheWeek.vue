@@ -6,13 +6,18 @@
                 <div class="col-sm-12 col-md-9">
                 </div>   
               </div>   
-              <div class="card-header">
-                <h4 class="mb-0">My Decks</h4>
-              </div>
+              <div class="jumbotron">
+                <h1 class="display-4">Deck of the Week!</h1>
+                <p class="lead">{{deck.name}} was built by {{deck.user.name}}!</p>
+                <hr class="my-4">
+                <p>Each week, the MagicDB staff picks a deck to be featured here!</p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg text-white" v-on:click="selectDeck(deck.id)" role="button">View Deck</a>
+                </p>
+            </div>
                             </br>
                 <div class="row">
-                                
-                            <div v-for="deck in deckList" class="col-lg-3 text-center cube-wrap">
+                            <div v-if="deck" class="col-lg-3 text-center cube-wrap">
                                   <div class="cube" v-on:click="selectDeck(deck.id)">
                                       <div class="front-pane" v-bind:style="{backgroundImage: 'url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='+ deck.cards[0].multiverse_id + '&type=card)' }"></div>
                                       <div class="back-pane" v-bind:style="{backgroundImage: 'url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='+ deck.cards[0].multiverse_id + '&type=card)' }"></div>
@@ -20,9 +25,7 @@
                                       <div class="bottom-pane" v-bind:style="{backgroundImage: 'url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='+ deck.cards[0].multiverse_id + '&type=card)' }"></div>
                                       <div class="left-pane" v-bind:style="{backgroundImage: 'url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='+ deck.cards[0].multiverse_id + '&type=card)' }"></div>
                                       <div class="right-pane" v-bind:style="{backgroundImage: 'url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='+ deck.cards[0].multiverse_id + '&type=card)' }"></div>
-                              </div>
-                              <p>{{ deck.name }}</p>
-                            </div>                             
+                              </div>                         
                         </div>                        
                     </div>
                 </div>
@@ -46,7 +49,7 @@ export default {
   },
   data() {
     return {
-      deckList: this.data.decks
+      deck: this.data.deck
     };
   },
   methods: {
@@ -56,6 +59,7 @@ export default {
       }
   },
   computed: {
+      
   }
 };
 </script>

@@ -65,4 +65,13 @@ class DecksController extends Controller
         // default don't show the page, but if they were allowed to see the deck, the above gets returned in the conditional and this line never gets hit
         // return view('errors.404');
     }
+
+    public function deckOfTheWeek() {
+        $deck = Deck::where('deck_of_the_week', true)->with('cards')->with('user')->firstOrFail();
+        if ($deck) {
+            $data = collect(['deck' => $deck]);
+            return view('deck-of-the-week', ['data' => $data]);
+        }
+        return redirect('/404');
+    }
 }

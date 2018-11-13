@@ -63,3 +63,60 @@
     cursor: pointer;
   }
 }
+
+@keyframes cube-spin {
+	from { transform: rotateY(0); }
+	to { transform: rotateY(360deg); }
+}
+
+.cube-wrap {
+  perspective: 800px;
+  perspective-origin: 50% 90px;
+}
+
+.cube {
+  position: relative;
+  width: 180px;
+  margin: 0 auto;
+  transform-style: preserve-3d;
+  margin:0 auto; 
+  cursor: pointer;
+  height: 150px; 
+  width: 180px;
+  &:hover {
+    animation: cube-spin 5s infinite linear;
+  }
+}
+
+.cube div {
+    background-position: 50% 20%;
+    position: absolute;
+    width: 180px;
+    height: 130px;
+    font-size: 20px;
+    text-align: center;
+    line-height: 180px;
+    color: rgba(0,0,0,0.5);
+}
+.front-pane {
+  transform: translateZ(90px);
+}
+.back-pane {
+  transform: translateZ(-90px) rotateY(180deg);
+}
+.top-pane {
+  transform: rotateX(-90deg) translateY(-90px);
+  transform-origin: top center;
+}
+.bottom-pane {
+  transform: rotateX(90deg) translateY(90px);
+  transform-origin: bottom center;
+}
+.left-pane {
+  transform: rotateY(270deg) translateX(-90px);
+  transform-origin: center left;      
+}
+.right-pane {
+  transform: rotateY(270deg) translateX(90px);
+  transform-origin: top right;
+}

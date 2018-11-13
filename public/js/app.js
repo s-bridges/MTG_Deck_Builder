@@ -1633,6 +1633,78 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/AdminPage.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        console.log('Component mounted.');
+    },
+
+    props: {
+        data: {
+            type: Object,
+            required: false
+        }
+    },
+    data: function data() {
+        return {
+            users: this.data.users,
+            selectedDeckId: this.data.dotw,
+            admin: this.data.admin
+
+        };
+    },
+
+    methods: {
+        saveDeckOfTheWeek: function saveDeckOfTheWeek() {
+            var deckId = this.deckOfTheWeek;
+            axios.patch('/admin/save/update-dotw/', deckId).then(function (response) {
+                alert('Deck Of The Week was Saved!');
+            }).catch(function (error) {});
+        }
+    },
+    computed: {
+        totalUsers: function totalUsers() {
+            // return total user count
+            return this.users.length;
+        },
+        totalDecks: function totalDecks() {
+            var deckCount = 0;
+            // return total deck count
+            _.forEach(this.users, function (user) {
+                if (user.decks && user.decks.length > 0) {
+                    deckCount = deckCount + user.decks.length;
+                }
+            });
+            return deckCount;
+        }
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/DeckCards.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1707,6 +1779,78 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       return result;
     }
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/DeckOfTheWeek.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    // call methods here that you want done on page load, the methods are defined in the methods section below
+    // this method below here we don't need to worry about right now
+    // this.getCardsFromAPI();
+  },
+
+  props: {
+    data: {
+      type: Object,
+      required: false
+    }
+  },
+  data: function data() {
+    return {
+      deck: this.data.deck
+    };
+  },
+
+  methods: {
+    selectDeck: function selectDeck(id) {
+      // redirect using javascript to specific url
+      window.location.href = '/deck/' + id + '/cards/';
+    }
+  },
+  computed: {}
 });
 
 /***/ }),
@@ -1993,6 +2137,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -36718,6 +36869,51 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-12c0d5a3\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/AdminPage.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("html", [
+    _c("title", [_vm._v("Admin Panel")]),
+    _vm._v(" "),
+    _c("body", [
+      _c("div", { staticClass: "jumbotron" }, [
+        _c("h1", { staticClass: "display-4" }, [_vm._v(" Admin Panel ")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "lead" }, [
+          _vm._v("Hello, " + _vm._s(_vm.admin.name))
+        ]),
+        _vm._v(" "),
+        _c("hr", { staticClass: "my-4" }),
+        _vm._v(" "),
+        _vm.totalUsers
+          ? _c("p", [_vm._v("Users Registered: " + _vm._s(_vm.totalUsers))])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.totalDecks
+          ? _c("p", [_vm._v("Total Decks Built: " + _vm._s(_vm.totalDecks))])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("p", { staticClass: "lead" })
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-12c0d5a3", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1a772dec\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/ListCards.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -37162,30 +37358,86 @@ var render = function() {
           "div",
           { staticClass: "row" },
           _vm._l(_vm.deckList, function(deck) {
-            return _c("div", { staticClass: "col-lg-3 text-center" }, [
-              _c("div", {
-                staticStyle: {
-                  margin: "0 auto",
-                  cursor: "pointer",
-                  width: "178px",
-                  height: "130px",
-                  "background-position": "40% 20%"
-                },
-                style: {
-                  backgroundImage:
-                    "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
-                    deck.cards[0].multiverse_id +
-                    "&type=card)"
-                },
-                on: {
-                  click: function($event) {
-                    _vm.selectDeck(deck.id)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("p", [_vm._v(_vm._s(deck.name))])
-            ])
+            return _c(
+              "div",
+              { staticClass: "col-lg-3 text-center cube-wrap" },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "cube",
+                    on: {
+                      click: function($event) {
+                        _vm.selectDeck(deck.id)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", {
+                      staticClass: "front-pane",
+                      style: {
+                        backgroundImage:
+                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          deck.cards[0].multiverse_id +
+                          "&type=card)"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", {
+                      staticClass: "back-pane",
+                      style: {
+                        backgroundImage:
+                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          deck.cards[0].multiverse_id +
+                          "&type=card)"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", {
+                      staticClass: "top-pane",
+                      style: {
+                        backgroundImage:
+                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          deck.cards[0].multiverse_id +
+                          "&type=card)"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", {
+                      staticClass: "bottom-pane",
+                      style: {
+                        backgroundImage:
+                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          deck.cards[0].multiverse_id +
+                          "&type=card)"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", {
+                      staticClass: "left-pane",
+                      style: {
+                        backgroundImage:
+                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          deck.cards[0].multiverse_id +
+                          "&type=card)"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", {
+                      staticClass: "right-pane",
+                      style: {
+                        backgroundImage:
+                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          deck.cards[0].multiverse_id +
+                          "&type=card)"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c("p", [_vm._v(_vm._s(deck.name))])
+              ]
+            )
           })
         )
       ])
@@ -37361,6 +37613,160 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-7b05795f", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-8a121eac\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/DeckOfTheWeek.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "container py-3" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "jumbotron" }, [
+          _c("h1", { staticClass: "display-4" }, [_vm._v("Deck of the Week!")]),
+          _vm._v(" "),
+          _c("p", { staticClass: "lead" }, [
+            _vm._v(
+              _vm._s(_vm.deck.name) +
+                " was built by " +
+                _vm._s(_vm.deck.user.name) +
+                "!"
+            )
+          ]),
+          _vm._v(" "),
+          _c("hr", { staticClass: "my-4" }),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "Each week, the MagicDB staff picks a deck to be featured here!"
+            )
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "lead" }, [
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-primary btn-lg text-white",
+                attrs: { role: "button" },
+                on: {
+                  click: function($event) {
+                    _vm.selectDeck(_vm.deck.id)
+                  }
+                }
+              },
+              [_vm._v("View Deck")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _vm.deck
+            ? _c("div", { staticClass: "col-lg-3 text-center cube-wrap" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "cube",
+                    on: {
+                      click: function($event) {
+                        _vm.selectDeck(_vm.deck.id)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", {
+                      staticClass: "front-pane",
+                      style: {
+                        backgroundImage:
+                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          _vm.deck.cards[0].multiverse_id +
+                          "&type=card)"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", {
+                      staticClass: "back-pane",
+                      style: {
+                        backgroundImage:
+                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          _vm.deck.cards[0].multiverse_id +
+                          "&type=card)"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", {
+                      staticClass: "top-pane",
+                      style: {
+                        backgroundImage:
+                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          _vm.deck.cards[0].multiverse_id +
+                          "&type=card)"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", {
+                      staticClass: "bottom-pane",
+                      style: {
+                        backgroundImage:
+                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          _vm.deck.cards[0].multiverse_id +
+                          "&type=card)"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", {
+                      staticClass: "left-pane",
+                      style: {
+                        backgroundImage:
+                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          _vm.deck.cards[0].multiverse_id +
+                          "&type=card)"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", {
+                      staticClass: "right-pane",
+                      style: {
+                        backgroundImage:
+                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          _vm.deck.cards[0].multiverse_id +
+                          "&type=card)"
+                      }
+                    })
+                  ]
+                )
+              ])
+            : _vm._e()
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-sm-12 col-md-9" })
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-8a121eac", module.exports)
   }
 }
 
@@ -49027,6 +49433,8 @@ Vue.component('example-component', __webpack_require__("./resources/js/component
 Vue.component('list-cards', __webpack_require__("./resources/js/components/ListCards.vue"));
 Vue.component('show-decks', __webpack_require__("./resources/js/components/ShowDecks.vue"));
 Vue.component('deck-cards', __webpack_require__("./resources/js/components/DeckCards.vue"));
+Vue.component('deck-of-the-week', __webpack_require__("./resources/js/components/DeckOfTheWeek.vue"));
+Vue.component('admin-page', __webpack_require__("./resources/js/components/AdminPage.vue"));
 
 var app = new Vue({
   el: '#app'
@@ -49097,6 +49505,54 @@ if (token) {
 
 /***/ }),
 
+/***/ "./resources/js/components/AdminPage.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/AdminPage.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-12c0d5a3\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/AdminPage.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/AdminPage.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-12c0d5a3", Component.options)
+  } else {
+    hotAPI.reload("data-v-12c0d5a3", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/js/components/DeckCards.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -49134,6 +49590,54 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-7b05795f", Component.options)
   } else {
     hotAPI.reload("data-v-7b05795f", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/js/components/DeckOfTheWeek.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/DeckOfTheWeek.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-8a121eac\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/DeckOfTheWeek.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/DeckOfTheWeek.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-8a121eac", Component.options)
+  } else {
+    hotAPI.reload("data-v-8a121eac", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

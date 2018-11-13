@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Deck;
 use App\Card;
+use Auth;
 
 class AdminController extends Controller
 {
@@ -13,12 +14,17 @@ class AdminController extends Controller
     {
         $this->middleware('auth');
     }
+
     public function admin()
     {
-        $users = User::all();
-        $decks = Deck::all();
-        $cards = Card::all();
+        // get all users and decks if they have them, as well as a total count for decks a user has
+        $users = User::with('decks')->withCount('decks')->get();
+        $data = collect(['users' => $users, 'admin' => Auth::user()]);
+        return view('admin-page', ['data' => $data]);
+    }
 
-        return view('admin', compact('users', 'decks', 'cards'));
+    public function deckOfTheWeekSave()
+    {
+
     }
 }

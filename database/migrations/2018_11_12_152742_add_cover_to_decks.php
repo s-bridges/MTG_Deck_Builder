@@ -18,6 +18,7 @@ class AddCoverToDecks extends Migration
         {
             $table->integer('cover')->nullable();
             $table->boolean('allow_share')->default(0);
+            $table->boolean('deck_of_the_week')->default(0);
         });
     }
 
@@ -33,6 +34,7 @@ class AddCoverToDecks extends Migration
         {
             $table->dropColumn('cover');
             $table->dropColumn('allow_share');
+            $table->dropColumn('deck_of_the_week');
         });
     }
 }

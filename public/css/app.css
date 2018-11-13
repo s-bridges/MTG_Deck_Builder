@@ -10539,3 +10539,100 @@ a.text-dark:focus {
   cursor: pointer;
 }
 
+@-webkit-keyframes cube-spin {
+  from {
+    -webkit-transform: rotateY(0);
+            transform: rotateY(0);
+  }
+
+  to {
+    -webkit-transform: rotateY(360deg);
+            transform: rotateY(360deg);
+  }
+}
+
+@keyframes cube-spin {
+  from {
+    -webkit-transform: rotateY(0);
+            transform: rotateY(0);
+  }
+
+  to {
+    -webkit-transform: rotateY(360deg);
+            transform: rotateY(360deg);
+  }
+}
+
+.cube-wrap {
+  -webkit-perspective: 800px;
+          perspective: 800px;
+  -webkit-perspective-origin: 50% 90px;
+          perspective-origin: 50% 90px;
+}
+
+.cube {
+  position: relative;
+  width: 180px;
+  margin: 0 auto;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  margin: 0 auto;
+  cursor: pointer;
+  height: 150px;
+  width: 180px;
+}
+
+.cube:hover {
+  -webkit-animation: cube-spin 5s infinite linear;
+          animation: cube-spin 5s infinite linear;
+}
+
+.cube div {
+  background-position: 50% 20%;
+  position: absolute;
+  width: 180px;
+  height: 130px;
+  font-size: 20px;
+  text-align: center;
+  line-height: 180px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.front-pane {
+  -webkit-transform: translateZ(90px);
+          transform: translateZ(90px);
+}
+
+.back-pane {
+  -webkit-transform: translateZ(-90px) rotateY(180deg);
+          transform: translateZ(-90px) rotateY(180deg);
+}
+
+.top-pane {
+  -webkit-transform: rotateX(-90deg) translateY(-90px);
+          transform: rotateX(-90deg) translateY(-90px);
+  -webkit-transform-origin: top center;
+          transform-origin: top center;
+}
+
+.bottom-pane {
+  -webkit-transform: rotateX(90deg) translateY(90px);
+          transform: rotateX(90deg) translateY(90px);
+  -webkit-transform-origin: bottom center;
+          transform-origin: bottom center;
+}
+
+.left-pane {
+  -webkit-transform: rotateY(270deg) translateX(-90px);
+          transform: rotateY(270deg) translateX(-90px);
+  -webkit-transform-origin: center left;
+          transform-origin: center left;
+}
+
+.right-pane {
+  -webkit-transform: rotateY(270deg) translateX(90px);
+          transform: rotateY(270deg) translateX(90px);
+  -webkit-transform-origin: top right;
+          transform-origin: top right;
+}
+
