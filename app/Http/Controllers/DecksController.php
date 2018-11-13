@@ -47,7 +47,7 @@ class DecksController extends Controller
     }    
 
     public function specificDeck($deck_id) {
-        //$deck_id = (int) $deck_id;
+        $deck_id = (int) $deck_id;
         // need to fix this so there is an OR where clause...basically, if this is the user's deck, or the deck is allow_share, get me the deck
         $deck = Deck::where('id', $deck_id)
         ->where('user_id', Auth::user()->id)
