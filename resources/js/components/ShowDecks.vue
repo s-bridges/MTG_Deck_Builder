@@ -11,17 +11,10 @@
               </div>
                             </br>
                 <div class="row">
-                                
-                            <div v-for="deck in deckList" class="col-lg-3 text-center cube-wrap">
-                                  <div class="cube" v-on:click="selectDeck(deck.id)">
-                                      <div class="front-pane" v-bind:style="{backgroundImage: 'url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='+ deck.cards[0].multiverse_id + '&type=card)' }"></div>
-                                      <div class="back-pane" v-bind:style="{backgroundImage: 'url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='+ deck.cards[0].multiverse_id + '&type=card)' }"></div>
-                                      <div class="top-pane" v-bind:style="{backgroundImage: 'url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='+ deck.cards[0].multiverse_id + '&type=card)' }"></div>
-                                      <div class="bottom-pane" v-bind:style="{backgroundImage: 'url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='+ deck.cards[0].multiverse_id + '&type=card)' }"></div>
-                                      <div class="left-pane" v-bind:style="{backgroundImage: 'url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='+ deck.cards[0].multiverse_id + '&type=card)' }"></div>
-                                      <div class="right-pane" v-bind:style="{backgroundImage: 'url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='+ deck.cards[0].multiverse_id + '&type=card)' }"></div>
-                              </div>
-                              <p>{{ deck.name }}</p>
+                            <div v-for="deck in deckList" class="col-lg-3 text-center">
+                                <div v-on:click="selectDeck(deck.id)" style="margin:0 auto; cursor: pointer; width:178px;height:130px; background-position: 40% 20%;" v-bind:style="{backgroundImage: 'url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='+ deck.cards[0].multiverse_id + '&type=card)' }">
+                                </div>
+                                <p>{{ deck.name }}</p>
                             </div>                             
                         </div>                        
                     </div>

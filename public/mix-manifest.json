@@ -1,4 +1,9 @@
 {
+<<<<<<< HEAD
     "/js/app.js": "/js/app.js?id=6517d2b522bb953a1005",
     "/css/app.css": "/css/app.css?id=49e341058519a37cbccc"
+=======
+    "/js/app.js": "/js/app.js?id=86cdfc9cd8f66d5fab92",
+    "/css/app.css": "/css/app.css?id=92fad547afeceeab9c6e"
+>>>>>>> parent of 8c29d91... updated admin, dotw, cube card
 }

@@ -16,9 +16,14 @@ class AddCoverToDecks extends Migration
         //
         Schema::table('decks', function($table)
         {
+<<<<<<< HEAD
             $table->integer('cover')->default(195297);
             $table->string('allow_share')->default('off');
             $table->boolean('deck_of_the_week')->default(0);
+=======
+            $table->integer('cover')->nullable();
+            $table->boolean('allow_share')->default(0);
+>>>>>>> parent of 8c29d91... updated admin, dotw, cube card
         });
     }
 
@@ -34,7 +39,6 @@ class AddCoverToDecks extends Migration
         {
             $table->dropColumn('cover');
             $table->dropColumn('allow_share');
-            $table->dropColumn('deck_of_the_week');
         });
     }
 }

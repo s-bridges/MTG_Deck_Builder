@@ -86,8 +86,8 @@
 
                 <div class="links">
                     <a href="/">Home</a>
-                    <a href="/card/">Build a Deck</a>
-                    <a href="/deck/dotw">Deck of The Week</a>
+                    <a href="/card/">Cards</a>
+                    <a href="/deck/">Decks</a>
                     <a href="/contact/">Contact Us</a>
                 </div>
             </div>
