@@ -24,7 +24,6 @@ class DecksController extends Controller
         $deck = new Deck;
         $deck->name = $this->request->input('name');
         $deck->description = $this->request->input('description');
-        $deck->allow_share = $this->request->input('allow_share');
         $deck->user_id = Auth::user()->id;
         $cards = $this->request->input('cards');
         $cards = collect($cards)->map(function ($card_id, $key) {
@@ -51,7 +50,6 @@ class DecksController extends Controller
         // need to fix this so there is an OR where clause...basically, if this is the user's deck, or the deck is allow_share, get me the deck
         $deck = Deck::where('id', $deck_id)
         ->where('user_id', Auth::user()->id)
-        ->orWhere('allow_share', true)
         ->with('cards')->first();
         if ($deck && $deck_id === $deck['id']) {
             // set editable to false if this isn't the user's dick, otherwise, let them edit their own dick
