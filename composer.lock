@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "13585c8780c69a61a835889277cc3124",
+    "content-hash": "7c3c55a0244d21402317074568096a24",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -986,12 +986,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/MagicTheGathering/mtg-sdk-php.git",
-                "reference": "dbf9d9f33e49622e9158fd2f6c1eaa6ebc6f2123"
+                "reference": "73ba7e00a803b2b7d7ce6bdc13c98c30a355eb57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MagicTheGathering/mtg-sdk-php/zipball/dbf9d9f33e49622e9158fd2f6c1eaa6ebc6f2123",
-                "reference": "dbf9d9f33e49622e9158fd2f6c1eaa6ebc6f2123",
+                "url": "https://api.github.com/repos/MagicTheGathering/mtg-sdk-php/zipball/73ba7e00a803b2b7d7ce6bdc13c98c30a355eb57",
+                "reference": "73ba7e00a803b2b7d7ce6bdc13c98c30a355eb57",
                 "shasum": ""
             },
             "require-dev": {
@@ -1016,7 +1016,7 @@
                 }
             ],
             "description": "Magic: The Gathering SDK for php",
-            "time": "2017-11-14T01:11:50+00:00"
+            "time": "2018-10-12T15:26:21+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -2923,16 +2923,16 @@
         },
         {
             "name": "laravel/homestead",
-            "version": "v7.18.0",
+            "version": "v7.19.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/homestead.git",
-                "reference": "48fb3dc4f60a2a06ec7e149a22464ae484a81156"
+                "reference": "234a43bf963e659bbbcc872e153f07051c23702b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/homestead/zipball/48fb3dc4f60a2a06ec7e149a22464ae484a81156",
-                "reference": "48fb3dc4f60a2a06ec7e149a22464ae484a81156",
+                "url": "https://api.github.com/repos/laravel/homestead/zipball/234a43bf963e659bbbcc872e153f07051c23702b",
+                "reference": "234a43bf963e659bbbcc872e153f07051c23702b",
                 "shasum": ""
             },
             "require": {
@@ -2970,7 +2970,7 @@
                 }
             ],
             "description": "A virtual machine for web artisans.",
-            "time": "2018-09-29T20:46:31+00:00"
+            "time": "2018-11-11T20:06:55+00:00"
         },
         {
             "name": "mockery/mockery",
