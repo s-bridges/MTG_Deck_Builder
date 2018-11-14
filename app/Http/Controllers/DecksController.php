@@ -49,8 +49,8 @@ class DecksController extends Controller
         $deck_id = (int) $deck_id;
         // need to fix this so there is an OR where clause...basically, if this is the user's deck, or the deck is allow_share, get me the deck
         $deck = Deck::where('id', $deck_id)
-        ->where('user_id', Auth::user()->id)
         ->with('cards')->first();
+
         if ($deck && $deck_id === $deck['id']) {
             // set editable to false if this isn't the user's dick, otherwise, let them edit their own dick
             $editable = Auth::user()->id == $deck['user_id'];
@@ -65,7 +65,7 @@ class DecksController extends Controller
     }
 
     public function deckOfTheWeek() {
-        $deck = Deck::where('deck_of_the_week', true)->with('cards')->with('user')->firstOrFail();
+        $deck = Deck::where('deck_of_the_week', 1)->with('cards')->with('user')->firstOrFail();
         if ($deck) {
             $data = collect(['deck' => $deck]);
             return view('deck-of-the-week', ['data' => $data]);
