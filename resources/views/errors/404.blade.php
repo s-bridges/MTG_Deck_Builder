@@ -100,6 +100,40 @@ body {
           box-shadow: 0px 4px 15px -5px #0046d5;
 }
 
+.just-front-pane {
+  background-image: url("http://http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=366433&type=card");
+  transform: translateZ(90px);
+}
+.just-back-pane {
+  background-image: url("http://http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=366433&type=card");
+  transform: translateZ(-90px) rotateY(180deg);
+}
+.just-cube-wrap {
+  perspective: none;
+  perspective-origin: 0 0;
+}
+
+.just-cube {
+  position: relative;
+  width: 800px;
+  margin: 0 auto;
+  transform-style: preserve-3d;
+  margin:0 auto; 
+  cursor: pointer;
+  height: 800px; 
+  width: 800px;
+  animation: cube-spin 5s infinite linear;
+  
+}
+.just-cube div {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    font-size: 20px;
+    text-align: center;
+    line-height: 180px;
+    color: rgba(0,0,0,0.5);
+}
 
 @media only screen and (max-width: 767px) {
     .notfound .notfound-404 {
@@ -118,9 +152,16 @@ body {
 
 </head>
 
-<body>
-
-	<div id="notfound">
+<body> 
+  <div id="notfound">
+  <div class="row">
+  <div class="col-lg-3 text-center just-cube-wrap">
+    <div class="just-cube">
+      <div class="just-front-pane"></div>
+      <div class="just-back-pane"></div>
+    </div>                         
+  </div> 
+  </div>
 		<div class="notfound">
 			<div class="notfound-404">
 				<h1>Oops!</h1>
