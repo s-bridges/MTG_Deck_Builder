@@ -1740,6 +1740,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -1761,22 +1762,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
 
-  methods: {},
+  methods: {
+    saveDeck: function saveDeck() {
+      var _this = this;
+
+      var deck = this.deck;
+      axios.put("/deck/edit", deck).then(function (response) {
+        // get deck from the server that was added to and refresh it on the page
+        _this.deck = _this.data.payload.deck;
+      }).catch(function (error) {});
+    }
+  },
   computed: {
     myDeckCards: function myDeckCards() {
       var selectedCards = this.deck.cards;
-      // group the cards by the card name so we can keep track of duplicates
-      var result = _.chain(selectedCards).groupBy('name').map(function (v, i) {
-        // get first card out of group of the same cards and set the card data
-        var cardData = _.first(v);
-        return {
-          name: i,
-          multiverse_id: cardData.multiverse_id,
-          count: v.length,
-          card: cardData
-        };
-      }).value();
-      return result;
+      // if we add any filtering it will go in here
+      return selectedCards;
     }
   }
 });
@@ -2192,6 +2193,54 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     }
   },
   computed: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/UserPage.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        console.log('Component mounted.');
+    },
+
+    props: {
+        data: {
+            type: Object,
+            required: false
+        }
+    },
+    data: function data() {
+        return {
+            users: this.data.users
+
+        };
+    },
+
+    methods: {},
+    computed: {}
 });
 
 /***/ }),
@@ -37277,6 +37326,51 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1fa3ed65\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/UserPage.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("html", [
+    _c("title", [_vm._v("User Panel")]),
+    _vm._v(" "),
+    _c("body", [
+      _c("div", { staticClass: "jumbotron" }, [
+        _c("h1", { staticClass: "display-4" }, [_vm._v(" User Panel ")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "lead" }, [
+          _vm._v("Hello, " + _vm._s(_vm.user.name))
+        ]),
+        _vm._v(" "),
+        _c("hr", { staticClass: "my-4" }),
+        _vm._v(" "),
+        _vm.totalUsers
+          ? _c("p", [_vm._v("Users Registered: " + _vm._s(_vm.totalUsers))])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.totalDecks
+          ? _c("p", [_vm._v("Total Decks Built: " + _vm._s(_vm.totalDecks))])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("p", { staticClass: "lead" })
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1fa3ed65", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-202f0f92\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/ShowDecks.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -37485,7 +37579,7 @@ var render = function() {
                       staticStyle: { "padding-top": ".5em" }
                     },
                     [
-                      card.count <= 4
+                      card.pivot.count <= 4
                         ? _c(
                             "div",
                             {
@@ -37496,7 +37590,7 @@ var render = function() {
                                 "align-items": "center"
                               }
                             },
-                            _vm._l(card.count, function(item) {
+                            _vm._l(card.pivot.count, function(n) {
                               return _c("span", [
                                 _c(
                                   "i",
@@ -37521,7 +37615,9 @@ var render = function() {
                             },
                             [
                               _c("span", [
-                                _c("strong", [_vm._v(_vm._s(card.count) + "x")])
+                                _c("strong", [
+                                  _vm._v(_vm._s(card.pivot.count) + "x")
+                                ])
                               ])
                             ]
                           ),
@@ -37539,7 +37635,21 @@ var render = function() {
                   )
                 })
               )
-            ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    _vm.saveDeck()
+                  }
+                }
+              },
+              [_vm._v("Save")]
+            )
           ])
         : _vm._e()
     ])
@@ -49374,6 +49484,7 @@ Vue.component('show-decks', __webpack_require__("./resources/js/components/ShowD
 Vue.component('deck-cards', __webpack_require__("./resources/js/components/DeckCards.vue"));
 Vue.component('deck-of-the-week', __webpack_require__("./resources/js/components/DeckOfTheWeek.vue"));
 Vue.component('admin-page', __webpack_require__("./resources/js/components/AdminPage.vue"));
+Vue.component('user-page', __webpack_require__("./resources/js/components/UserPage.vue"));
 
 var app = new Vue({
   el: '#app'
@@ -49721,6 +49832,54 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-202f0f92", Component.options)
   } else {
     hotAPI.reload("data-v-202f0f92", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/js/components/UserPage.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/UserPage.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1fa3ed65\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/UserPage.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/UserPage.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1fa3ed65", Component.options)
+  } else {
+    hotAPI.reload("data-v-1fa3ed65", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

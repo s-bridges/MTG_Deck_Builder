@@ -8,13 +8,13 @@
               </div>
               <div class="row">
                 <div v-for="card in myDeckCards" class="col col-lg-3 text-center" style="padding-top:.5em;"> 
-                    <div v-if="card.count <= 4" style="height:40px; display:flex; justify-content:center; align-items:center">
-                      <span v-for="item in card.count">
+                    <div v-if="card.pivot.count <= 4" style="height:40px; display:flex; justify-content:center; align-items:center">
+                      <span v-for="n in card.pivot.count">
                         <i style="max-width: 24px;" class="material-icons">whatshot</i>
                       </span>
                     </div>
                     <div v-else style="height:40px; display:flex; justify-content:center; align-items:center"> 
-                      <span><strong>{{card.count}}x</strong></span>
+                      <span><strong>{{card.pivot.count}}x</strong></span>
                     </div>                 
                     <v-lazy-image
                     v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
@@ -22,6 +22,7 @@
                 </div>
                 </div>
                 </div>
+                <button type="button" class="btn btn-danger" v-on:click="saveDeck()">Save</button>
               </div>
             </div>
         </div>
@@ -48,23 +49,22 @@ export default {
     };
   },
   methods: {
-
+    saveDeck() {
+      let deck = this.deck;
+      axios
+          .put(`/deck/edit`, deck)
+          .then(response => {
+            // get deck from the server that was added to and refresh it on the page
+            this.deck = this.data.payload.deck
+          })
+          .catch(error => {});
+    }
   },
   computed: {
     myDeckCards() {
       let selectedCards = this.deck.cards;
-      // group the cards by the card name so we can keep track of duplicates
-      let result = _.chain(selectedCards).groupBy('name').map(function(v, i) {
-        // get first card out of group of the same cards and set the card data
-        let cardData = _.first(v);
-        return {
-          name: i,
-          multiverse_id: cardData.multiverse_id,
-          count: v.length,
-          card: cardData
-        }
-      }).value();
-      return result;
+      // if we add any filtering it will go in here
+      return selectedCards;
     },
   }
 };

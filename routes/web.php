@@ -33,6 +33,7 @@ Route::prefix('deck')->middleware(['auth'])->group(function (){
     Route::get('/', 'DecksController@myDecks')->name('decks');
     Route::get('/{deck_id}/cards', 'DecksController@specificDeck');
     Route::get('/dotw', 'DecksController@deckOfTheWeek');
+    Route::put('/edit', 'DecksController@editDeck');
 });
 
 Route::prefix('import')->middleware(['auth', 'is_admin'])->group(function (){
@@ -48,4 +49,8 @@ Route::post('/contact', 'ContactController@sendEmail')->name('contact.send');
 Route::prefix('admin')->middleware('is_admin')->group(function (){
     Route::get('/', 'AdminController@admin')->name('admin');
     Route::post('/save/deck{deck_id}', 'AdminController@deckOfTheWeekSave');
+});
+
+Route::prefix('user')->middleware(['auth'])->group(function() {
+    Route::get('/', 'UserController@profile')->name('profile');
 });

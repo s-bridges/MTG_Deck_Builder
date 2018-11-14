@@ -27,6 +27,7 @@ Vue.component('show-decks', require('./components/ShowDecks.vue'));
 Vue.component('deck-cards', require('./components/DeckCards.vue'));
 Vue.component('deck-of-the-week', require('./components/DeckOfTheWeek.vue'));
 Vue.component('admin-page', require('./components/AdminPage.vue'));
+Vue.component('user-page', require('./components/UserPage.vue'));
 
 const app = new Vue({
     el: '#app'

@@ -26,15 +26,28 @@ class DecksController extends Controller
         $deck->description = $this->request->input('description');
         $deck->user_id = Auth::user()->id;
         $cards = $this->request->input('cards');
-        $cards = collect($cards)->map(function ($card_id, $key) {
-            return $card_id['id'];
+        // save deck model with data from above
+        $deck->save();
+        
+        $cards_array = [];
+        // loop through all of the cards to set the counts
+        $cards = collect($cards)->each(function ($card, $key) use (&$cards_array) {
+            if (array_has($cards_array, $card['id'])) {
+                // get current card count
+                $current_count = (int) $cards_array[$card['id']]['count'];
+                // take the current count and add a card to it
+                $cards_array[$card['id']] = ['count' => $current_count + 1];
+            } else {
+                $cards_array[$card['id']] = ['count' => 1];
+            }
+            return $card;
         });
 
-        $deck->save();
-        foreach ($cards as $card_id)
-        {
-            $deck->cards()->attach($card_id);
-        }
+        // $cards = [3 => ['count' => 4], 6 => ['count' => 4], 8 => ['count' => 4]];
+
+        // attach the list of cards to the deck potentially make this a sync?
+        $attached = $deck->cards()->attach($cards_array);
+
         return response()->json(['status' => true, 'message' => 'Saved Successfully!', 'payload' => $deck->toArray()]);
     }
 
@@ -71,5 +84,38 @@ class DecksController extends Controller
             return view('deck-of-the-week', ['data' => $data]);
         }
         return redirect('/404');
+    }
+
+    public function editDeck() {
+        $deck_request = $this->request->all();
+        $deck_id = (int) $deck_request['id'];
+        // query for deck by id
+        $deck = Deck::where('id', $deck_id)
+        ->with('cards')->first();
+        // make sure only deck owner can edit and that a deck existed with that id
+        $can_edit = $deck && Auth::user()->id == $deck->user_id ? true: false;
+        if ($can_edit) {
+            // get all of the cards
+            $cards = $deck_request['cards'];
+            // loop through all of the cards to create an array of just the card ids from the DB
+            $cards = collect($cards)->map(function ($card, $key) {
+                return [
+                    $card['id'] => ['count' => $card['count']]
+                ];
+            })->toArray();
+            // $cards = [3 => ['count' => 4], 6 => ['count' => 4], 8 => ['count' => 4]];
+
+            // using cards variable, sync all of the cards to the deck which is essentially removing any relationship with card ids not included in the array, and adding non existant ones
+            $synced = $deck->cards()->sync($cards);
+            
+            if ($synced) {
+                // messaging that the shit actually happened, for now we can just take a dump
+                dd($synced);
+            }
+            
+        } else {
+            // redirect or throw unauthorize message
+            return redirect('/404');
+        }
     }
 }
