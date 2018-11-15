@@ -1804,6 +1804,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -1871,15 +1873,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }).catch(function (error) {});
     },
     addCard: function addCard(card) {
-      this.selectedCards.push(card);
-    },
-    removeCard: function removeCard(card) {
-      var index = _.findIndex(this.selectedCards, function (c) {
+      // loop through the cards to see if the card exists within the deck cards array, if not found index = -1
+      var index = _.findIndex(this.deck.cards, function (c) {
         return c.multiverse_id == card.multiverse_id;
       });
-      this.selectedCards = _.filter(this.selectedCards, function (item, i) {
-        return i !== index;
-      });
+      // if card does not exist in deck, add it into this.deck.cards array using array push
+      if (index == -1) {
+        card.pivot = {
+          count: 1
+        };
+        // now you push that card with its newly created pivot object with card property count set to 1 into your deck.cards array
+        this.deck.cards.push(card);
+      } else {
+        this.deck.cards[index].pivot.count += 1;
+      }
+    },
+    removeCard: function removeCard(card) {
+      // tick the card count down
+      card.pivot.count -= 1;
+      // remove card entirely if it is 0
+      if (card.pivot.count <= 0) {
+        // find the card index in deck cards by the multiverse_id
+        var index = _.findIndex(this.deck.cards, function (c) {
+          return c.multiverse_id == card.multiverse_id;
+        });
+        // filter out the card
+        this.deck.cards = _.filter(this.deck.cards, function (item, i) {
+          return i !== index;
+        });
+      }
     }
   },
   computed: {
@@ -37859,13 +37881,24 @@ var render = function() {
                                   }),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "overlay" }, [
-                                    _c("div", { staticClass: "text" }, [
-                                      _c(
-                                        "i",
-                                        { staticClass: "material-icons add" },
-                                        [_vm._v("add_circle")]
-                                      )
-                                    ])
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "text",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.addCard(card)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "i",
+                                          { staticClass: "material-icons add" },
+                                          [_vm._v("add_circle")]
+                                        )
+                                      ]
+                                    )
                                   ])
                                 ],
                                 1
@@ -37896,109 +37929,112 @@ var render = function() {
               : _vm._e()
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "card col-lg-12" }, [
-              _c("div", { staticClass: "card-header" }, [
-                _c("h4", { staticClass: "mb-0" }, [
-                  _vm._v(_vm._s(_vm.deck.name))
-                ])
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "row" },
-                _vm._l(_vm.myDeckCards, function(card) {
-                  return _c(
-                    "div",
-                    {
-                      staticClass: "col col-lg-3 text-center addable removable",
-                      staticStyle: { "padding-top": ".5em" }
-                    },
-                    [
-                      card.pivot.count <= 4
-                        ? _c(
-                            "div",
-                            {
-                              staticStyle: {
-                                height: "40px",
-                                display: "flex",
-                                "justify-content": "center",
-                                "align-items": "center"
-                              }
-                            },
-                            _vm._l(card.pivot.count, function(n) {
-                              return _c("span", [
-                                _c(
-                                  "i",
-                                  {
-                                    staticClass: "material-icons",
-                                    staticStyle: { "max-width": "24px" }
-                                  },
-                                  [_vm._v("whatshot")]
-                                )
-                              ])
-                            })
-                          )
-                        : _c(
-                            "div",
-                            {
-                              staticStyle: {
-                                height: "40px",
-                                display: "flex",
-                                "justify-content": "center",
-                                "align-items": "center"
-                              }
-                            },
-                            [
-                              _c("span", [
-                                _c("strong", [
-                                  _vm._v(_vm._s(card.pivot.count) + "x")
+          _c("div", { staticClass: "col-lg-12" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "card col-lg-12" }, [
+                _c("div", { staticClass: "card-header" }, [
+                  _c("h4", { staticClass: "mb-0" }, [
+                    _vm._v(_vm._s(_vm.deck.name))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "row" },
+                  _vm._l(_vm.myDeckCards, function(card) {
+                    return _c(
+                      "div",
+                      {
+                        staticClass:
+                          "col col-lg-3 text-center addable removable",
+                        staticStyle: { "padding-top": ".5em" }
+                      },
+                      [
+                        card.pivot.count <= 4
+                          ? _c(
+                              "div",
+                              {
+                                staticStyle: {
+                                  height: "40px",
+                                  display: "flex",
+                                  "justify-content": "center",
+                                  "align-items": "center"
+                                }
+                              },
+                              _vm._l(card.pivot.count, function(n) {
+                                return _c("span", [
+                                  _c(
+                                    "i",
+                                    {
+                                      staticClass: "material-icons",
+                                      staticStyle: { "max-width": "24px" }
+                                    },
+                                    [_vm._v("whatshot")]
+                                  )
                                 ])
-                              ])
-                            ]
-                          ),
-                      _vm._v(" "),
-                      _c("v-lazy-image", {
-                        attrs: {
-                          src:
-                            "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
-                            card.multiverse_id +
-                            "&type=card"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c(
-                          "i",
-                          {
-                            staticClass: "material-icons clickable",
-                            on: {
-                              click: function($event) {
-                                card.pivot.count -= 1
-                              }
-                            }
-                          },
-                          [_vm._v("remove_circle")]
-                        ),
+                              })
+                            )
+                          : _c(
+                              "div",
+                              {
+                                staticStyle: {
+                                  height: "40px",
+                                  display: "flex",
+                                  "justify-content": "center",
+                                  "align-items": "center"
+                                }
+                              },
+                              [
+                                _c("span", [
+                                  _c("strong", [
+                                    _vm._v(_vm._s(card.pivot.count) + "x")
+                                  ])
+                                ])
+                              ]
+                            ),
                         _vm._v(" "),
-                        _c(
-                          "i",
-                          {
-                            staticClass: "material-icons clickable",
-                            on: {
-                              click: function($event) {
-                                card.pivot.count += 1
+                        _c("v-lazy-image", {
+                          attrs: {
+                            src:
+                              "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                              card.multiverse_id +
+                              "&type=card"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("div", [
+                          _c(
+                            "i",
+                            {
+                              staticClass: "material-icons clickable",
+                              on: {
+                                click: function($event) {
+                                  _vm.removeCard(card)
+                                }
                               }
-                            }
-                          },
-                          [_vm._v("add_circle")]
-                        )
-                      ])
-                    ],
-                    1
-                  )
-                })
-              )
+                            },
+                            [_vm._v("remove_circle")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "i",
+                            {
+                              staticClass: "material-icons clickable",
+                              on: {
+                                click: function($event) {
+                                  _vm.addCard(card)
+                                }
+                              }
+                            },
+                            [_vm._v("add_circle")]
+                          )
+                        ])
+                      ],
+                      1
+                    )
+                  })
+                )
+              ])
             ])
           ])
         ])
