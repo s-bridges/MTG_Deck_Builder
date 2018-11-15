@@ -1804,10 +1804,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -37923,51 +37919,18 @@ var render = function() {
                                 "align-items": "center"
                               }
                             },
-                            [
-                              _c("div", { staticClass: "text" }, [
+                            _vm._l(card.pivot.count, function(n) {
+                              return _c("span", [
                                 _c(
                                   "i",
                                   {
                                     staticClass: "material-icons",
-                                    on: {
-                                      click: function($event) {
-                                        card.pivot.count + 1
-                                      }
-                                    }
+                                    staticStyle: { "max-width": "24px" }
                                   },
-                                  [_vm._v("add_circle")]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _vm._l(card.pivot.count, function(n) {
-                                return _c("span", [
-                                  _c(
-                                    "i",
-                                    {
-                                      staticClass: "material-icons",
-                                      staticStyle: { "max-width": "24px" }
-                                    },
-                                    [_vm._v("whatshot")]
-                                  )
-                                ])
-                              }),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "text" }, [
-                                _c(
-                                  "i",
-                                  {
-                                    staticClass: "material-icons",
-                                    on: {
-                                      click: function($event) {
-                                        card.pivot.count - 1
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("remove_circle")]
+                                  [_vm._v("whatshot")]
                                 )
                               ])
-                            ],
-                            2
+                            })
                           )
                         : _c(
                             "div",
@@ -37980,40 +37943,10 @@ var render = function() {
                               }
                             },
                             [
-                              _c("div", { staticClass: "text" }, [
-                                _c(
-                                  "i",
-                                  {
-                                    staticClass: "material-icons",
-                                    on: {
-                                      click: function($event) {
-                                        card.pivot.count + 1
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("add_circle")]
-                                )
-                              ]),
-                              _vm._v(" "),
                               _c("span", [
                                 _c("strong", [
                                   _vm._v(_vm._s(card.pivot.count) + "x")
                                 ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "text" }, [
-                                _c(
-                                  "i",
-                                  {
-                                    staticClass: "material-icons",
-                                    on: {
-                                      click: function($event) {
-                                        card.pivot.count - 1
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("remove_circle")]
-                                )
                               ])
                             ]
                           ),

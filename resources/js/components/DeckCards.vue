@@ -69,16 +69,12 @@
             <div class="row">
               <div v-for="card in myDeckCards" class="col col-lg-3 text-center addable removable" style="padding-top:.5em;"> 
                 <div v-if="card.pivot.count <= 4" style="height:40px; display:flex; justify-content:center; align-items:center">
-                  <div class="text"><i v-on:click="card.pivot.count + 1" class="material-icons">add_circle</i></div>
                   <span v-for="n in card.pivot.count">
                     <i style="max-width: 24px;" class="material-icons">whatshot</i>
                   </span>
-                  <div class="text"><i v-on:click="card.pivot.count - 1" class="material-icons">remove_circle</i></div>
                 </div>
                 <div v-else style="height:40px; display:flex; justify-content:center; align-items:center"> 
-                  <div class="text"><i v-on:click="card.pivot.count + 1" class="material-icons">add_circle</i></div>
                   <span><strong>{{card.pivot.count}}x</strong></span>
-                  <div class="text"><i v-on:click="card.pivot.count - 1" class="material-icons">remove_circle</i></div>
                 </div>                 
                 <v-lazy-image
                     v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
