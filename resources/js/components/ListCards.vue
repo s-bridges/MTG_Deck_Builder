@@ -39,16 +39,18 @@
                                         </div>
                                     </div>
                             </paginate>
-                            <paginate-links :hide-single-page="true" for="paginatedCards" :show-step-links="true" 
-                                :classes="{
-                                    'ul': ['pagination', 'justify-content-center'],
+                            <paginate-links
+                              for="paginatedCards"
+                              :classes="{
+                                'ul': ['pagination', 'justify-content-center'],
                                     'li': 'page-item',
-                                    'a': 'page-link',
-                                    '.next > a': 'next-link',
-                                    '.prev > a': ['prev-link', 'another-class'],
-                                    '.active': 'teal'
-                                }">
-                            </paginate-links>
+                                    'a': 'page-link'
+                              }"
+                              :simple="{
+                                prev: 'Previous',
+                                next: 'Next'
+                              }"
+                            ></paginate-links>
                             </div>                             
                         </div>
                         <div v-if="selectedCards.length > 0" class="col-sm-3">
