@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div v-if="myDeckCards" class="row justify-content-center">               
+    <div v-if="myDeckCards" class="row">               
       <div class="container py-3">
         <div class="row">
           <div class="col-lg-3 col-md-3">
@@ -23,7 +23,7 @@
         <div v-if="unHide == true && cards.length > 0" class="row">
           <div class="col-lg-12">
             <div class="row">
-              <div class="card">
+              <div class="card col-lg-12">
                 <div class="card-header">
                   <h4 class="mb-0">All Cards</h4>
                 </div>
@@ -62,7 +62,7 @@
         </div>
         <div class="row">                
           <div class="col-lg-12">
-            <div class="card-header d-flex justify-content-between">
+            <div class="card-header">
               <h4 class="mb-0">{{ deck.name }}</h4>          
             </div>
             <div class="row">
@@ -165,7 +165,7 @@ export default {
       this.selectedCards.push(card);
     },
     removeCard(card) {
-      let index = _.findIndex(this.selectedCards, function(c) { 
+      let index = _.findIndex(this.selectedCards, function(c) {
           return c.multiverse_id == card.multiverse_id; 
       });
       this.selectedCards = _.filter(this.selectedCards, function(item, i){
