@@ -37967,7 +37967,7 @@ var render = function() {
                             staticClass: "material-icons clickable",
                             on: {
                               click: function($event) {
-                                card.pivot.count - 1
+                                card.pivot.count -= 1
                               }
                             }
                           },
@@ -37980,7 +37980,7 @@ var render = function() {
                             staticClass: "material-icons clickable",
                             on: {
                               click: function($event) {
-                                card.pivot.count + 1
+                                card.pivot.count += 1
                               }
                             }
                           },

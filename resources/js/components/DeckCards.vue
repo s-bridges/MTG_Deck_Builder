@@ -80,8 +80,8 @@
                     v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
                 />
                 <div>
-                  <i v-on:click="card.pivot.count - 1" class="material-icons clickable">remove_circle</i>
-                  <i v-on:click="card.pivot.count + 1" class="material-icons clickable">add_circle</i>
+                  <i v-on:click="card.pivot.count -= 1" class="material-icons clickable">remove_circle</i>
+                  <i v-on:click="card.pivot.count += 1" class="material-icons clickable">add_circle</i>
                 </div>
               </div>
             </div>
