@@ -97,16 +97,19 @@ class DecksController extends Controller
         if ($can_edit) {
             // get all of the cards
             $cards = $deck_request['cards'];
+            $cards_array = [];
             // loop through all of the cards to create an array of just the card ids from the DB
-            $cards = collect($cards)->map(function ($card, $key) {
-                return [
-                    $card['id'] => ['count' => $card['count']]
-                ];
+            $cards = collect($cards)->each(function ($card, $key) use (&$cards_array) {
+                // push card pivot into cards_array for sync
+                $count = (int) $card['pivot']['count'];
+                $cards_array[$card['id']] = ['count' => $count];
+                return $card;
             })->toArray();
+
             // $cards = [3 => ['count' => 4], 6 => ['count' => 4], 8 => ['count' => 4]];
 
             // using cards variable, sync all of the cards to the deck which is essentially removing any relationship with card ids not included in the array, and adding non existant ones
-            $synced = $deck->cards()->sync($cards);
+            $synced = $deck->cards()->sync($cards_array);
             
             if ($synced) {
                 // messaging that the shit actually happened, for now we can just take a dump
