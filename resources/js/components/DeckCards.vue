@@ -1,6 +1,6 @@
-<template>
+<template>            
   <div class="container">
-    <div v-if="myDeckCards" class="row">               
+    <div v-if="myDeckCards" class="row"> 
       <div class="container py-3">
         <div class="row">
           <div class="col-lg-3 col-md-3">
@@ -61,12 +61,12 @@
           </div>
         </div>
         <div class="row">                
-          <div class="col-lg-12">
+          <div class="card col-lg-12">
             <div class="card-header">
               <h4 class="mb-0">{{ deck.name }}</h4>          
             </div>
             <div class="row">
-              <div v-for="card in myDeckCards" class="col col-lg-3 text-center" style="padding-top:.5em;"> 
+              <div v-for="card in myDeckCards" class="col col-lg-3 text-center addable removable" style="padding-top:.5em;"> 
                 <div v-if="card.pivot.count <= 4" style="height:40px; display:flex; justify-content:center; align-items:center">
                   <span v-for="n in card.pivot.count">
                     <i style="max-width: 24px;" class="material-icons">whatshot</i>
@@ -78,6 +78,10 @@
                 <v-lazy-image
                     v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
                 />
+                <div class="overlay">
+                        <div class="text"><i class="material-icons">add_circle</i></div>
+                        <div class="text"><i class="material-icons">remove_circle</i></div>
+                </div>
               </div>
             </div>
           </div>

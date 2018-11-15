@@ -1799,6 +1799,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -37911,7 +37915,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-lg-12" }, [
+            _c("div", { staticClass: "card col-lg-12" }, [
               _c("div", { staticClass: "card-header" }, [
                 _c("h4", { staticClass: "mb-0" }, [
                   _vm._v(_vm._s(_vm.deck.name))
@@ -37925,7 +37929,7 @@ var render = function() {
                   return _c(
                     "div",
                     {
-                      staticClass: "col col-lg-3 text-center",
+                      staticClass: "col col-lg-3 text-center addable removable",
                       staticStyle: { "padding-top": ".5em" }
                     },
                     [
@@ -37979,7 +37983,9 @@ var render = function() {
                             card.multiverse_id +
                             "&type=card"
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _vm._m(1, true)
                     ],
                     1
                   )
@@ -37998,6 +38004,20 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("h4", { staticClass: "mb-0" }, [_vm._v("All Cards")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "overlay" }, [
+      _c("div", { staticClass: "text" }, [
+        _c("i", { staticClass: "material-icons" }, [_vm._v("add_circle")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "text" }, [
+        _c("i", { staticClass: "material-icons" }, [_vm._v("remove_circle")])
+      ])
     ])
   }
 ]
