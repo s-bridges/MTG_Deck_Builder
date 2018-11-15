@@ -17,7 +17,8 @@
             </form>
           </div>
           <div class="col-sm-12 col-md-3">            
-            <button type="button" class="btn btn-danger float-right" v-on:click="unHide = !unHide"><span v-if="!unHide">Add Cards</span><span v-else>Close</span></button>
+            <button type="button" class="btn btn-primary float-right" v-on:click="saveDeck()">Save</button>
+            <button type="button" class="btn btn-danger justify-float-right" v-on:click="unHide = !unHide"><span v-if="!unHide">Add Cards</span><span v-else>Close</span></button>
           </div>
         </div>
         <div v-if="unHide == true && cards.length > 0" class="row">
@@ -78,9 +79,9 @@
                 <v-lazy-image
                     v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
                 />
-                <div class="overlay">
-                        <div class="text"><i class="material-icons">add_circle</i></div>
-                        <div class="text"><i class="material-icons">remove_circle</i></div>
+                <div>
+                  <i v-on:click="card.pivot.count - 1" class="material-icons clickable">remove_circle</i>
+                  <i v-on:click="card.pivot.count + 1" class="material-icons clickable">add_circle</i>
                 </div>
               </div>
             </div>
@@ -137,10 +138,6 @@ export default {
       searchText: "",
       paginate: ["paginatedCards"],
       selectedCards: [],
-      deckForm: {
-        name: '',
-        description: ''
-      },
       unHide: false
     };
   },
@@ -182,42 +179,6 @@ export default {
       let selectedCards = this.deck.cards;
       // if we add any filtering it will go in here
       return selectedCards;
-    },
-    instantSorceryCount() {
-      let i = 0;
-      let selectedCards = this.selectedCards;
-      _.forEach(selectedCards, function(card) {
-        if (card.type == 'Instant' || card.type == 'Sorcery') {
-          // increase the count of i if instant or sorcery
-          i++;
-        }
-      });
-      return i;
-    },
-    instantCreatureCount() {
-      let j = 0;
-      let selectedCards = this.selectedCards;
-      _.forEach(selectedCards, function(card){
-        if(card.type.includes('Creature')){
-          j++;        
-          }
-      });
-      return j;
-    },
-    instantLandCount() {
-      let k = 0;
-      let selectedCards = this.selectedCards;
-      _.forEach(selectedCards, function(card){
-        if(card.type.includes('Land')){
-          k++;        
-          }
-      });
-      return k;
-    },
-    maxlength() {
-      let selectedCards = this.selectedCards;
-      // if card length is higher than 60, let max length be higher otherwise set it to 60
-      return selectedCards.length > 60 ? selectedCards.length: 60;
     },
     filteredCards() {
       let search = this.searchText;
