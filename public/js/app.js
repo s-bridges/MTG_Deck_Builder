@@ -1803,6 +1803,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -1844,10 +1849,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       searchText: "",
       paginate: ["paginatedCards"],
       selectedCards: [],
-      deckForm: {
-        name: '',
-        description: ''
-      },
       unHide: false
     };
   },
@@ -1888,42 +1889,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var selectedCards = this.deck.cards;
       // if we add any filtering it will go in here
       return selectedCards;
-    },
-    instantSorceryCount: function instantSorceryCount() {
-      var i = 0;
-      var selectedCards = this.selectedCards;
-      _.forEach(selectedCards, function (card) {
-        if (card.type == 'Instant' || card.type == 'Sorcery') {
-          // increase the count of i if instant or sorcery
-          i++;
-        }
-      });
-      return i;
-    },
-    instantCreatureCount: function instantCreatureCount() {
-      var j = 0;
-      var selectedCards = this.selectedCards;
-      _.forEach(selectedCards, function (card) {
-        if (card.type.includes('Creature')) {
-          j++;
-        }
-      });
-      return j;
-    },
-    instantLandCount: function instantLandCount() {
-      var k = 0;
-      var selectedCards = this.selectedCards;
-      _.forEach(selectedCards, function (card) {
-        if (card.type.includes('Land')) {
-          k++;
-        }
-      });
-      return k;
-    },
-    maxlength: function maxlength() {
-      var selectedCards = this.selectedCards;
-      // if card length is higher than 60, let max length be higher otherwise set it to 60
-      return selectedCards.length > 60 ? selectedCards.length : 60;
     },
     filteredCards: function filteredCards() {
       var search = this.searchText;
@@ -37814,7 +37779,21 @@ var render = function() {
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-danger float-right",
+                    staticClass: "btn btn-primary float-right",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.saveDeck()
+                      }
+                    }
+                  },
+                  [_vm._v("Save")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger justify-float-right",
                     attrs: { type: "button" },
                     on: {
                       click: function($event) {
@@ -37944,18 +37923,51 @@ var render = function() {
                                 "align-items": "center"
                               }
                             },
-                            _vm._l(card.pivot.count, function(n) {
-                              return _c("span", [
+                            [
+                              _c("div", { staticClass: "text" }, [
                                 _c(
                                   "i",
                                   {
                                     staticClass: "material-icons",
-                                    staticStyle: { "max-width": "24px" }
+                                    on: {
+                                      click: function($event) {
+                                        card.pivot.count + 1
+                                      }
+                                    }
                                   },
-                                  [_vm._v("whatshot")]
+                                  [_vm._v("add_circle")]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _vm._l(card.pivot.count, function(n) {
+                                return _c("span", [
+                                  _c(
+                                    "i",
+                                    {
+                                      staticClass: "material-icons",
+                                      staticStyle: { "max-width": "24px" }
+                                    },
+                                    [_vm._v("whatshot")]
+                                  )
+                                ])
+                              }),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "text" }, [
+                                _c(
+                                  "i",
+                                  {
+                                    staticClass: "material-icons",
+                                    on: {
+                                      click: function($event) {
+                                        card.pivot.count - 1
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("remove_circle")]
                                 )
                               ])
-                            })
+                            ],
+                            2
                           )
                         : _c(
                             "div",
@@ -37968,10 +37980,40 @@ var render = function() {
                               }
                             },
                             [
+                              _c("div", { staticClass: "text" }, [
+                                _c(
+                                  "i",
+                                  {
+                                    staticClass: "material-icons",
+                                    on: {
+                                      click: function($event) {
+                                        card.pivot.count + 1
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("add_circle")]
+                                )
+                              ]),
+                              _vm._v(" "),
                               _c("span", [
                                 _c("strong", [
                                   _vm._v(_vm._s(card.pivot.count) + "x")
                                 ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "text" }, [
+                                _c(
+                                  "i",
+                                  {
+                                    staticClass: "material-icons",
+                                    on: {
+                                      click: function($event) {
+                                        card.pivot.count - 1
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("remove_circle")]
+                                )
                               ])
                             ]
                           ),
@@ -37985,7 +38027,33 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
-                      _vm._m(1, true)
+                      _c("div", [
+                        _c(
+                          "i",
+                          {
+                            staticClass: "material-icons clickable",
+                            on: {
+                              click: function($event) {
+                                card.pivot.count - 1
+                              }
+                            }
+                          },
+                          [_vm._v("remove_circle")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "i",
+                          {
+                            staticClass: "material-icons clickable",
+                            on: {
+                              click: function($event) {
+                                card.pivot.count + 1
+                              }
+                            }
+                          },
+                          [_vm._v("add_circle")]
+                        )
+                      ])
                     ],
                     1
                   )
@@ -38004,20 +38072,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("h4", { staticClass: "mb-0" }, [_vm._v("All Cards")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "overlay" }, [
-      _c("div", { staticClass: "text" }, [
-        _c("i", { staticClass: "material-icons" }, [_vm._v("add_circle")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "text" }, [
-        _c("i", { staticClass: "material-icons" }, [_vm._v("remove_circle")])
-      ])
     ])
   }
 ]
