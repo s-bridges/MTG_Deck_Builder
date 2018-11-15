@@ -1741,6 +1741,64 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -1758,19 +1816,67 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   data: function data() {
     return {
-      deck: this.data.deck
+      deck: this.data.deck,
+      cards: [],
+      paginatedCards: [],
+      filterBySet: "",
+      setOptions: [{
+        label: "Guilds of Ravnica",
+        set: "GRN"
+      }, {
+        label: "Core Set 2019",
+        set: "M19"
+      }, {
+        label: "Dominaria",
+        set: "DOM"
+      }, {
+        label: "Rivals of Ixalan",
+        set: "RIX"
+      }, {
+        label: "Ixalan",
+        set: "XLN"
+      }],
+      mtgSetData: {},
+      searchText: "",
+      paginate: ["paginatedCards"],
+      selectedCards: [],
+      deckForm: {
+        name: '',
+        description: ''
+      },
+      unHide: false
     };
   },
 
   methods: {
-    saveDeck: function saveDeck() {
+    setAPI: function setAPI() {
       var _this = this;
+
+      // use the filterBySet value which the select option if the v-model of
+      axios.get("/card/" + this.filterBySet).then(function (response) {
+        // be able to see your response to make sure you know what to set the mtgsetdata to
+        _this.cards = response.data.payload;
+      }).catch(function (error) {});
+    },
+    saveDeck: function saveDeck() {
+      var _this2 = this;
 
       var deck = this.deck;
       axios.put("/deck/edit", deck).then(function (response) {
         // get deck from the server that was added to and refresh it on the page
-        _this.deck = _this.data.payload.deck;
+        _this2.deck = _this2.data.payload.deck;
       }).catch(function (error) {});
+    },
+    addCard: function addCard(card) {
+      this.selectedCards.push(card);
+    },
+    removeCard: function removeCard(card) {
+      var index = _.findIndex(this.selectedCards, function (c) {
+        return c.multiverse_id == card.multiverse_id;
+      });
+      this.selectedCards = _.filter(this.selectedCards, function (item, i) {
+        return i !== index;
+      });
     }
   },
   computed: {
@@ -1778,6 +1884,55 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var selectedCards = this.deck.cards;
       // if we add any filtering it will go in here
       return selectedCards;
+    },
+    instantSorceryCount: function instantSorceryCount() {
+      var i = 0;
+      var selectedCards = this.selectedCards;
+      _.forEach(selectedCards, function (card) {
+        if (card.type == 'Instant' || card.type == 'Sorcery') {
+          // increase the count of i if instant or sorcery
+          i++;
+        }
+      });
+      return i;
+    },
+    instantCreatureCount: function instantCreatureCount() {
+      var j = 0;
+      var selectedCards = this.selectedCards;
+      _.forEach(selectedCards, function (card) {
+        if (card.type.includes('Creature')) {
+          j++;
+        }
+      });
+      return j;
+    },
+    instantLandCount: function instantLandCount() {
+      var k = 0;
+      var selectedCards = this.selectedCards;
+      _.forEach(selectedCards, function (card) {
+        if (card.type.includes('Land')) {
+          k++;
+        }
+      });
+      return k;
+    },
+    maxlength: function maxlength() {
+      var selectedCards = this.selectedCards;
+      // if card length is higher than 60, let max length be higher otherwise set it to 60
+      return selectedCards.length > 60 ? selectedCards.length : 60;
+    },
+    filteredCards: function filteredCards() {
+      var search = this.searchText;
+      var cards_array = this.cards;
+      if (search != "") {
+        // filter by the search field, make it lowercase
+        search = search.toLowerCase();
+        cards_array = _.filter(cards_array, function (card) {
+          // index of finds the string within the card.name property or within the card type
+          return card.name.toLowerCase().indexOf(search) > -1 || card.type.toLowerCase().indexOf(search) > -1;
+        });
+      }
+      return cards_array;
     }
   }
 });
@@ -1891,6 +2046,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -37117,16 +37274,15 @@ var render = function() {
                       _vm._v(" "),
                       _c("paginate-links", {
                         attrs: {
-                          "hide-single-page": true,
                           for: "paginatedCards",
-                          "show-step-links": true,
                           classes: {
                             ul: ["pagination", "justify-content-center"],
                             li: "page-item",
-                            a: "page-link",
-                            ".next > a": "next-link",
-                            ".prev > a": ["prev-link", "another-class"],
-                            ".active": "teal"
+                            a: "page-link"
+                          },
+                          simple: {
+                            prev: "Previous",
+                            next: "Next"
                           }
                         }
                       })
@@ -37558,15 +37714,213 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", [
-      _vm.myDeckCards
-        ? _c("div", { staticClass: "row justify-content-center" }, [
-            _c("div", { staticClass: "container py-3" }, [
-              _c("div", { staticClass: "card-header" }, [
-                _c("h4", { staticClass: "mb-0" }, [
-                  _vm._v(_vm._s(_vm.deck.name))
-                ])
+    _vm.myDeckCards
+      ? _c("div", { staticClass: "row justify-content-center" }, [
+          _c("div", { staticClass: "container py-3" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-3 col-md-3" }, [
+                _vm.unHide == true
+                  ? _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.filterBySet,
+                            expression: "filterBySet"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { id: "sets" },
+                        on: {
+                          change: [
+                            function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.filterBySet = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            },
+                            function($event) {
+                              _vm.setAPI()
+                            }
+                          ]
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { disabled: "", value: "" } }, [
+                          _vm._v("Search By Set")
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.setOptions, function(option) {
+                          return _c(
+                            "option",
+                            { domProps: { value: option.set } },
+                            [_vm._v(_vm._s(option.label))]
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  : _vm._e()
               ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-12 col-md-6" }, [
+                _vm.unHide == true
+                  ? _c("form", [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.searchText,
+                              expression: "searchText"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "search",
+                            id: "search",
+                            placeholder: "Search by Name"
+                          },
+                          domProps: { value: _vm.searchText },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.searchText = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-12 col-md-3" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger float-right",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.unHide = !_vm.unHide
+                      }
+                    }
+                  },
+                  [
+                    !_vm.unHide
+                      ? _c("span", [_vm._v("Add Cards")])
+                      : _c("span", [_vm._v("Close")])
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm.unHide == true && _vm.cards.length > 0
+              ? _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-lg-12" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c(
+                        "div",
+                        { staticClass: "card" },
+                        [
+                          _vm._m(0),
+                          _vm._v(" "),
+                          _c(
+                            "paginate",
+                            {
+                              staticClass: "row card-body",
+                              attrs: {
+                                name: "paginatedCards",
+                                list: _vm.filteredCards,
+                                per: 8,
+                                tag: "div"
+                              }
+                            },
+                            _vm._l(_vm.paginated("paginatedCards"), function(
+                              card
+                            ) {
+                              return _c(
+                                "div",
+                                {
+                                  staticClass: "col justify-col-center addable",
+                                  staticStyle: { "padding-bottom": "2em" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.addCard(card)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("v-lazy-image", {
+                                    attrs: {
+                                      src:
+                                        "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                                        card.multiverse_id +
+                                        "&type=card"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "overlay" }, [
+                                    _c("div", { staticClass: "text" }, [
+                                      _c(
+                                        "i",
+                                        { staticClass: "material-icons add" },
+                                        [_vm._v("add_circle")]
+                                      )
+                                    ])
+                                  ])
+                                ],
+                                1
+                              )
+                            })
+                          ),
+                          _vm._v(" "),
+                          _c("paginate-links", {
+                            attrs: {
+                              for: "paginatedCards",
+                              classes: {
+                                ul: ["pagination", "justify-content-center"],
+                                li: "page-item",
+                                a: "page-link"
+                              },
+                              simple: {
+                                prev: "Previous",
+                                next: "Next"
+                              }
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ])
+                  ])
+                ])
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c(
+                "div",
+                { staticClass: "card-header d-flex justify-content-between" },
+                [
+                  _c("h4", { staticClass: "mb-0" }, [
+                    _vm._v(_vm._s(_vm.deck.name))
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "div",
@@ -37635,27 +37989,22 @@ var render = function() {
                   )
                 })
               )
-            ]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-danger",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    _vm.saveDeck()
-                  }
-                }
-              },
-              [_vm._v("Save")]
-            )
+            ])
           ])
-        : _vm._e()
-    ])
+        ])
+      : _vm._e()
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h4", { staticClass: "mb-0" }, [_vm._v("All Cards")])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
