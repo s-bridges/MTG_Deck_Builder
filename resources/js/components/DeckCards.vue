@@ -2,7 +2,7 @@
   <div class="container">
     <div v-if="myDeckCards" class="row"> 
       <div class="container py-3">
-        <div class="row">
+        <div v-if="editable" class="row">
           <div class="col-lg-3 col-md-3">
             <select v-if="unHide == true" id="sets" class="form-control" v-model="filterBySet" v-on:change="setAPI()">
               <option disabled value="">Search By Set</option>
@@ -109,6 +109,7 @@ export default {
   data() {
     return {
       deck: this.data.deck,
+      editable: this.data.editable,
       cards: [],
       paginatedCards: [],
       filterBySet: "",
@@ -154,6 +155,7 @@ export default {
     },
     saveDeck() {
       let deck = this.deck;
+      console.log(deck);
       axios
           .put(`/deck/edit`, deck)
           .then(response => {

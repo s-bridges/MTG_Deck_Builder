@@ -1822,6 +1822,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   data: function data() {
     return {
       deck: this.data.deck,
+      editable: this.data.editable,
       cards: [],
       paginatedCards: [],
       filterBySet: "",
@@ -1863,6 +1864,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this2 = this;
 
       var deck = this.deck;
+      console.log(deck);
       axios.put("/deck/edit", deck).then(function (response) {
         // get deck from the server that was added to and refresh it on the page
         _this2.deck = _this2.data.payload.deck;
@@ -37682,129 +37684,134 @@ var render = function() {
     _vm.myDeckCards
       ? _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "container py-3" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-lg-3 col-md-3" }, [
-                _vm.unHide == true
-                  ? _c(
-                      "select",
-                      {
-                        directives: [
+            _vm.editable
+              ? _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-lg-3 col-md-3" }, [
+                    _vm.unHide == true
+                      ? _c(
+                          "select",
                           {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.filterBySet,
-                            expression: "filterBySet"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { id: "sets" },
-                        on: {
-                          change: [
-                            function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.filterBySet = $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            },
-                            function($event) {
-                              _vm.setAPI()
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.filterBySet,
+                                expression: "filterBySet"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { id: "sets" },
+                            on: {
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.filterBySet = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                },
+                                function($event) {
+                                  _vm.setAPI()
+                                }
+                              ]
                             }
-                          ]
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { disabled: "", value: "" } },
+                              [_vm._v("Search By Set")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.setOptions, function(option) {
+                              return _c(
+                                "option",
+                                { domProps: { value: option.set } },
+                                [_vm._v(_vm._s(option.label))]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-12 col-md-6" }, [
+                    _vm.unHide == true
+                      ? _c("form", [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.searchText,
+                                  expression: "searchText"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "search",
+                                id: "search",
+                                placeholder: "Search by Name"
+                              },
+                              domProps: { value: _vm.searchText },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.searchText = $event.target.value
+                                }
+                              }
+                            })
+                          ])
+                        ])
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-12 col-md-3" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary float-right",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.saveDeck()
+                          }
+                        }
+                      },
+                      [_vm._v("Save")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger justify-float-right",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.unHide = !_vm.unHide
+                          }
                         }
                       },
                       [
-                        _c("option", { attrs: { disabled: "", value: "" } }, [
-                          _vm._v("Search By Set")
-                        ]),
-                        _vm._v(" "),
-                        _vm._l(_vm.setOptions, function(option) {
-                          return _c(
-                            "option",
-                            { domProps: { value: option.set } },
-                            [_vm._v(_vm._s(option.label))]
-                          )
-                        })
-                      ],
-                      2
+                        !_vm.unHide
+                          ? _c("span", [_vm._v("Add Cards")])
+                          : _c("span", [_vm._v("Close")])
+                      ]
                     )
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-sm-12 col-md-6" }, [
-                _vm.unHide == true
-                  ? _c("form", [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.searchText,
-                              expression: "searchText"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "search",
-                            id: "search",
-                            placeholder: "Search by Name"
-                          },
-                          domProps: { value: _vm.searchText },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.searchText = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ])
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-sm-12 col-md-3" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary float-right",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        _vm.saveDeck()
-                      }
-                    }
-                  },
-                  [_vm._v("Save")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger justify-float-right",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        _vm.unHide = !_vm.unHide
-                      }
-                    }
-                  },
-                  [
-                    !_vm.unHide
-                      ? _c("span", [_vm._v("Add Cards")])
-                      : _c("span", [_vm._v("Close")])
-                  ]
-                )
-              ])
-            ]),
+                  ])
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _vm.unHide == true && _vm.cards.length > 0
               ? _c("div", { staticClass: "row" }, [
