@@ -2,7 +2,7 @@
   <div class="container">
     <div v-if="myDeckCards" class="row"> 
       <div class="container py-3">
-        <div class="row">
+        <div v-if="editable" class="row">
           <div class="col-lg-3 col-md-3">
             <select v-if="unHide == true" id="sets" class="form-control" v-model="filterBySet" v-on:change="setAPI()">
               <option disabled value="">Search By Set</option>
@@ -80,8 +80,8 @@
                     v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
                 />
                 <div>
-                  <i v-on:click="card.pivot.count - 1" class="material-icons clickable">remove_circle</i>
-                  <i v-on:click="card.pivot.count + 1" class="material-icons clickable">add_circle</i>
+                  <i v-on:click="card.pivot.count -= 1" class="material-icons clickable">remove_circle</i>
+                  <i v-on:click="card.pivot.count += 1" class="material-icons clickable">add_circle</i>
                 </div>
               </div>
             </div>
@@ -109,6 +109,7 @@ export default {
   data() {
     return {
       deck: this.data.deck,
+      editable: this.data.editable,
       cards: [],
       paginatedCards: [],
       filterBySet: "",
@@ -154,6 +155,7 @@ export default {
     },
     saveDeck() {
       let deck = this.deck;
+      console.log(deck);
       axios
           .put(`/deck/edit`, deck)
           .then(response => {
