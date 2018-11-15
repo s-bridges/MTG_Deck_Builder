@@ -95,6 +95,17 @@ class DecksController extends Controller
         // make sure only deck owner can edit and that a deck existed with that id
         $can_edit = $deck && Auth::user()->id == $deck->user_id ? true: false;
         if ($can_edit) {
+            // check to see if deck name or description is different, if it is then update the fields
+            if ($name_changed = $deck->name != $deck_request['name'] || $des_changed = $deck->description != $deck_request['description']) {
+                if ($name_changed) {
+                    $deck->name = $deck_request['name'];
+                }
+                if ($des_changed) {
+                    $deck->description = $deck_request['description'];
+                }
+                // update if one of the two is different
+                $deck->save();
+            }
             // get all of the cards
             $cards = $deck_request['cards'];
             $cards_array = [];
