@@ -24,7 +24,7 @@
         <div v-if="unHide == true && cards.length > 0" class="row">
           <div class="col-lg-12">
             <div class="row">
-              <div class="card full-width">
+              <div class="card col-lg-12">
                 <div class="card-header">
                   <h4 class="mb-0">All Cards</h4>
                 </div>
@@ -63,7 +63,7 @@
         </div>
         <div class="col-lg-12">
         <div class="row">                
-          <div class="card full-width">
+          <div class="card col-lg-12">
             <div class="card-header">
               <h4 class="mb-0">{{ deck.name }}</h4>          
             </div>
@@ -177,7 +177,7 @@ export default {
           count: 1
         };
         // now you push that card with its newly created pivot object with card property count set to 1 into your deck.cards array
-        this.deck.cards.push(card);        
+        this.deck.cards.push(card);                                                        
       } else {
         this.deck.cards[index].pivot.count += 1; 
       }
