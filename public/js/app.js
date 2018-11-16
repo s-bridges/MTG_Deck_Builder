@@ -2077,11 +2077,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
         //https://www.youtube.com/watch?v=jhFDyDgMVUI 1 second video
+        // the below can pretty much stay as it calls a function every second
         this.$nextTick(function () {
             var _this = this;
 
             window.setInterval(function () {
                 var someLink = document.querySelector('#fakeClick');
+                // thiis is potentially what we change and the function we need called every second
                 _this.simulateClick(someLink);
             }, 1000);
         });
@@ -2103,6 +2105,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         simulateClick: function simulateClick(elem) {
             try {
+                console.log('is this working');
                 var evt = document.createEvent('UIEvent');
                 evt.initUIEvent('touchstart', true, true);
                 // document.createEvent('TouchEvent');
@@ -37862,7 +37865,7 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass: "btn btn-danger",
+                        staticClass: "btn btn-danger btn-lg",
                         staticStyle: { "margin-right": "2em" },
                         attrs: { type: "button" },
                         on: {
@@ -37877,7 +37880,7 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass: "btn btn-success",
+                        staticClass: "btn btn-success btn-lg",
                         attrs: { type: "button" },
                         on: {
                           click: function($event) {
@@ -37943,7 +37946,7 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass: "btn btn-danger",
+                        staticClass: "btn btn-danger btn-lg",
                         staticStyle: { "margin-right": "2em" },
                         attrs: { type: "button" },
                         on: {
@@ -37958,7 +37961,7 @@ var render = function() {
                     _c(
                       "button",
                       {
-                        staticClass: "btn btn-success",
+                        staticClass: "btn btn-success btn-lg",
                         attrs: { type: "button" },
                         on: {
                           click: function($event) {
