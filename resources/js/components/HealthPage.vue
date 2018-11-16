@@ -12,8 +12,8 @@
                         </div>
                     </div>
                     <div style="flex: 1; display: flex; flex-direction: row; justify-content: space-between;">
-                        <button type="button" class="btn btn-danger" style="margin-right:2em;" v-on:click="topHealth -= 1">-</button>
-                        <button type="button" class="btn btn-success" v-on:click="topHealth += 1">+</button>
+                        <button type="button" class="btn btn-danger btn-lg" style="margin-right:2em;" v-on:click="topHealth -= 1">-</button>
+                        <button type="button" class="btn btn-success btn-lg" v-on:click="topHealth += 1">+</button>
                     </div>
                 </div>
                 <div class="card" style="flex: 1; display:flex; flex-direction:column;padding:2em;">
@@ -26,8 +26,8 @@
                         </div>
                     </div>
                     <div style="flex: 1; display: flex; flex-direction: row; justify-content: space-between;">
-                        <button type="button" class="btn btn-danger" style="margin-right:2em;" v-on:click="bottomHealth -= 1">-</button>
-                        <button type="button" class="btn btn-success" v-on:click="bottomHealth += 1">+</button>
+                        <button type="button" class="btn btn-danger btn-lg" style="margin-right:2em;" v-on:click="bottomHealth -= 1">-</button>
+                        <button type="button" class="btn btn-success btn-lg" v-on:click="bottomHealth += 1">+</button>
                     </div>
                 </div>
                 <span id="fakeClick"></span>
@@ -40,9 +40,11 @@
 export default {
   mounted() {
       //https://www.youtube.com/watch?v=jhFDyDgMVUI 1 second video
+      // the below can pretty much stay as it calls a function every second
         this.$nextTick(function () {
             window.setInterval(() => {
                 let someLink = document.querySelector('#fakeClick');
+                // thiis is potentially what we change and the function we need called every second
                 this.simulateClick(someLink);
             },1000);
         });
@@ -63,13 +65,14 @@ export default {
   methods: {
       simulateClick(elem) {
         try {
+            console.log('is this working');
             var evt = document.createEvent('UIEvent');
             evt.initUIEvent('touchstart', true, true);
             // document.createEvent('TouchEvent');
         } catch (e) {
             console.log('No touching!');
         }
-      }
+      },      
   },
   computed: {
       

@@ -25,6 +25,15 @@ class AdminController extends Controller
 
     public function deckOfTheWeekSave()
     {
+        // before adding new DOTW, loop through all decks and set all DOTW to 0
+        $decks = Deck::where('id', $deck_id)->with('cards')->first();
+        //set deck_of_the_week = 0; probably in vue though
+        // provide deck number, and change DOTW to 1
+        
+    }
 
+    public function changeUserType()
+    {
+        //here is the function to get all users, and then select specific user and give/revoke admin access
     }
 }
