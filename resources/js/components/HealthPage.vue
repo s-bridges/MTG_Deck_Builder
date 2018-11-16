@@ -30,7 +30,9 @@
                         <button type="button" class="btn btn-success btn-lg" v-on:click="bottomHealth += 1">+</button>
                     </div>
                 </div>
-                <span id="fakeClick"></span>
+                <span id="fakeClick" style="display:none;">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/jhFDyDgMVUI?loop=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </span>
             </div>
         </div>
     </div>   
