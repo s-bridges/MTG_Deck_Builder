@@ -2073,6 +2073,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
@@ -37976,14 +37978,37 @@ var render = function() {
               ]
             ),
             _vm._v(" "),
-            _c("span", { attrs: { id: "fakeClick" } })
+            _vm._m(0)
           ]
         )
       ])
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      { staticStyle: { display: "none" }, attrs: { id: "fakeClick" } },
+      [
+        _c("iframe", {
+          attrs: {
+            width: "560",
+            height: "315",
+            src: "https://www.youtube.com/embed/jhFDyDgMVUI?loop=1",
+            frameborder: "0",
+            allow:
+              "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
+            allowfullscreen: ""
+          }
+        })
+      ]
+    )
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
