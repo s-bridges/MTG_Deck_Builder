@@ -40,7 +40,7 @@
                         v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
                     />
                     <div class="overlay">
-                        <div class="text"><i class="material-icons add">add_circle</i></div>
+                        <div v-on:click="addCard(card)" class="text"><i class="material-icons add">add_circle</i></div>
                     </div>
                 </div>
                 </paginate>
@@ -61,6 +61,7 @@
             </div>
           </div>
         </div>
+        <div class="col-lg-12">
         <div class="row">                
           <div class="card full-width">
             <div class="card-header">
@@ -80,8 +81,9 @@
                     v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
                 />
                 <div>
-                  <i v-on:click="card.pivot.count -= 1" class="material-icons clickable">remove_circle</i>
-                  <i v-on:click="card.pivot.count += 1" class="material-icons clickable">add_circle</i>
+                  <i v-on:click="removeCard(card)" class="material-icons clickable">remove_circle</i>
+                  <i v-on:click="addCard(card)" class="material-icons clickable">add_circle</i>
+                </div>
                 </div>
               </div>
             </div>
@@ -165,15 +167,35 @@ export default {
           .catch(error => {});
     },
     addCard(card) {
-      this.selectedCards.push(card);
+      // loop through the cards to see if the card exists within the deck cards array, if not found index = -1
+      let index = _.findIndex(this.deck.cards, function(c) {
+        return c.multiverse_id == card.multiverse_id; 
+      });
+      // if card does not exist in deck, add it into this.deck.cards array using array push
+      if (index == -1) {
+        card.pivot = {
+          count: 1
+        };
+        // now you push that card with its newly created pivot object with card property count set to 1 into your deck.cards array
+        this.deck.cards.push(card);        
+      } else {
+        this.deck.cards[index].pivot.count += 1; 
+      }
     },
     removeCard(card) {
-      let index = _.findIndex(this.selectedCards, function(c) {
+      // tick the card count down
+      card.pivot.count -= 1;
+      // remove card entirely if it is 0
+      if (card.pivot.count <= 0) {
+        // find the card index in deck cards by the multiverse_id
+        let index = _.findIndex(this.deck.cards, function(c) {
           return c.multiverse_id == card.multiverse_id; 
-      });
-      this.selectedCards = _.filter(this.selectedCards, function(item, i){
-        return i !== index;
-      });
+        });
+        // filter out the card
+        this.deck.cards = _.filter(this.deck.cards, function(item, i){
+          return i !== index;
+        });
+      }
     },
   },
   computed: {

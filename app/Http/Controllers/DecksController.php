@@ -95,18 +95,32 @@ class DecksController extends Controller
         // make sure only deck owner can edit and that a deck existed with that id
         $can_edit = $deck && Auth::user()->id == $deck->user_id ? true: false;
         if ($can_edit) {
+            // check to see if deck name or description is different, if it is then update the fields
+            if ($name_changed = $deck->name != $deck_request['name'] || $des_changed = $deck->description != $deck_request['description']) {
+                if ($name_changed) {
+                    $deck->name = $deck_request['name'];
+                }
+                if ($des_changed) {
+                    $deck->description = $deck_request['description'];
+                }
+                // update if one of the two is different
+                $deck->save();
+            }
             // get all of the cards
             $cards = $deck_request['cards'];
+            $cards_array = [];
             // loop through all of the cards to create an array of just the card ids from the DB
-            $cards = collect($cards)->map(function ($card, $key) {
-                return [
-                    $card['id'] => ['count' => $card['count']]
-                ];
+            $cards = collect($cards)->each(function ($card, $key) use (&$cards_array) {
+                // push card pivot into cards_array for sync
+                $count = (int) $card['pivot']['count'];
+                $cards_array[$card['id']] = ['count' => $count];
+                return $card;
             })->toArray();
+
             // $cards = [3 => ['count' => 4], 6 => ['count' => 4], 8 => ['count' => 4]];
 
             // using cards variable, sync all of the cards to the deck which is essentially removing any relationship with card ids not included in the array, and adding non existant ones
-            $synced = $deck->cards()->sync($cards);
+            $synced = $deck->cards()->sync($cards_array);
             
             if ($synced) {
                 // messaging that the shit actually happened, for now we can just take a dump
