@@ -130,3 +130,12 @@
   transform: rotateY(270deg) translateX(90px);
   transform-origin: top right;
 }
+
+.health-flip {
+  -webkit-transform:rotate(-180deg);
+  -moz-transform:rotate(-180deg);
+  -o-transform:rotate(-180deg);
+  transform:rotate(-180deg);
+  ms-filter:"progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
+  filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+}

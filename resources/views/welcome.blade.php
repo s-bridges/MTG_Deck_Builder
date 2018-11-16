@@ -88,6 +88,7 @@
                     <a href="/">Home</a>
                     <a href="/card/">Build a Deck</a>
                     <a href="/deck/dotw">Deck of The Week</a>
+                    <a href="/health">Game Health</a>
                     <a href="/contact/">Contact Us</a>
                 </div>
             </div>

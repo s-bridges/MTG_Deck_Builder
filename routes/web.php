@@ -54,3 +54,5 @@ Route::prefix('admin')->middleware('is_admin')->group(function (){
 Route::prefix('user')->middleware(['auth'])->group(function() {
     Route::get('/', 'UserController@profile')->name('profile');
 });
+
+Route::get('/health', 'HealthController@health');
