@@ -7,6 +7,9 @@
                         <div v-if="topHealth <= 5">
                             <h1 class="card-title font-weight-bold text-danger">{{topHealth}}</h1>
                         </div>
+                        <div v-else-if="bottomHealth <= 0">
+                            <h1 class="card-title font-weight-bold text-success">You Win!</h1>
+                        </div>
                         <div v-else>                        
                             <h1 class="card-title font-weight-bold">{{topHealth}}</h1>
                         </div>
@@ -20,6 +23,9 @@
                     <div style="flex: 5; text-align: center;">
                         <div v-if="bottomHealth <= 5">
                             <h1 class="card-title font-weight-bold text-danger">{{bottomHealth}}</h1>
+                        </div>
+                        <div v-else-if="topHealth <= 0">
+                            <h1 class="card-title font-weight-bold text-success">You Win!</h1>
                         </div>
                         <div v-else>                        
                             <h1 class="card-title font-weight-bold">{{bottomHealth}}</h1>

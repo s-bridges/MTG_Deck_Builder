@@ -2075,6 +2075,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
@@ -37843,13 +37849,24 @@ var render = function() {
                             [_vm._v(_vm._s(_vm.topHealth))]
                           )
                         ])
-                      : _c("div", [
-                          _c(
-                            "h1",
-                            { staticClass: "card-title font-weight-bold" },
-                            [_vm._v(_vm._s(_vm.topHealth))]
-                          )
-                        ])
+                      : _vm.bottomHealth <= 0
+                        ? _c("div", [
+                            _c(
+                              "h1",
+                              {
+                                staticClass:
+                                  "card-title font-weight-bold text-success"
+                              },
+                              [_vm._v("You Win!")]
+                            )
+                          ])
+                        : _c("div", [
+                            _c(
+                              "h1",
+                              { staticClass: "card-title font-weight-bold" },
+                              [_vm._v(_vm._s(_vm.topHealth))]
+                            )
+                          ])
                   ]
                 ),
                 _vm._v(" "),
@@ -37924,13 +37941,24 @@ var render = function() {
                             [_vm._v(_vm._s(_vm.bottomHealth))]
                           )
                         ])
-                      : _c("div", [
-                          _c(
-                            "h1",
-                            { staticClass: "card-title font-weight-bold" },
-                            [_vm._v(_vm._s(_vm.bottomHealth))]
-                          )
-                        ])
+                      : _vm.topHealth <= 0
+                        ? _c("div", [
+                            _c(
+                              "h1",
+                              {
+                                staticClass:
+                                  "card-title font-weight-bold text-success"
+                              },
+                              [_vm._v("You Win!")]
+                            )
+                          ])
+                        : _c("div", [
+                            _c(
+                              "h1",
+                              { staticClass: "card-title font-weight-bold" },
+                              [_vm._v(_vm._s(_vm.bottomHealth))]
+                            )
+                          ])
                   ]
                 ),
                 _vm._v(" "),
