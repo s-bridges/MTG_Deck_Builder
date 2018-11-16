@@ -2102,14 +2102,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         simulateClick: function simulateClick(elem) {
-            var evt = new MouseEvent('click', {
-                bubbles: true,
-                cancelable: true,
-                view: window
-            });
-            console.log('clicked');
-            // If cancelled, don't dispatch our event
-            var canceled = !elem.dispatchEvent(evt);
+            try {
+                var evt = document.createEvent('UIEvent');
+                evt.initUIEvent('touchstart', true, true);
+                // document.createEvent('TouchEvent');
+            } catch (e) {
+                console.log('No touching!');
+            }
         }
     },
     computed: {}
