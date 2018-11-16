@@ -30,6 +30,7 @@
                         <button type="button" class="btn btn-success" v-on:click="bottomHealth += 1">+</button>
                     </div>
                 </div>
+                <span id="fakeClick"></span>
             </div>
         </div>
     </div>   
@@ -39,6 +40,13 @@
 export default {
   mounted() {
       //https://www.youtube.com/watch?v=jhFDyDgMVUI 1 second video
+        this.$nextTick(function () {
+            window.setInterval(() => {
+                let someLink = document.querySelector('#fakeClick');
+                this.simulateClick(someLink);
+            },1000);
+        });
+      
   },
   props: {
     data: {
@@ -53,6 +61,16 @@ export default {
     };
   }, 
   methods: {
+      simulateClick(elem) {
+        var evt = new MouseEvent('click', {
+            bubbles: true,
+            cancelable: true,
+            view: window
+        });
+        console.log('clicked');
+        // If cancelled, don't dispatch our event
+        var canceled = !elem.dispatchEvent(evt);
+      }
   },
   computed: {
       
