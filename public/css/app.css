@@ -10490,6 +10490,10 @@ a.text-dark:focus {
           transform: scale(1.1);
 }
 
+.card.full-width {
+  width: 100%;
+}
+
 .clickable {
   cursor: pointer;
 }

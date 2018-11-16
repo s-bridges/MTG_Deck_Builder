@@ -37819,7 +37819,7 @@ var render = function() {
                     _c("div", { staticClass: "row" }, [
                       _c(
                         "div",
-                        { staticClass: "card col-lg-12" },
+                        { staticClass: "card full-width" },
                         [
                           _vm._m(0),
                           _vm._v(" "),
@@ -37897,7 +37897,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "card col-lg-12" }, [
+            _c("div", { staticClass: "card full-width" }, [
               _c("div", { staticClass: "card-header" }, [
                 _c("h4", { staticClass: "mb-0" }, [
                   _vm._v(_vm._s(_vm.deck.name))
