@@ -2072,27 +2072,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    //https://www.youtube.com/watch?v=jhFDyDgMVUI 1 second video
-  },
+    mounted: function mounted() {
+        //https://www.youtube.com/watch?v=jhFDyDgMVUI 1 second video
+        this.$nextTick(function () {
+            var _this = this;
 
-  props: {
-    data: {
-      type: Object,
-      required: false
-    }
-  },
-  data: function data() {
-    return {
-      topHealth: 20,
-      bottomHealth: 20
-    };
-  },
+            window.setInterval(function () {
+                var someLink = document.querySelector('#fakeClick');
+                _this.simulateClick(someLink);
+            }, 1000);
+        });
+    },
 
-  methods: {},
-  computed: {}
+    props: {
+        data: {
+            type: Object,
+            required: false
+        }
+    },
+    data: function data() {
+        return {
+            topHealth: 20,
+            bottomHealth: 20
+        };
+    },
+
+    methods: {
+        simulateClick: function simulateClick(elem) {
+            var evt = new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true,
+                view: window
+            });
+            console.log('clicked');
+            // If cancelled, don't dispatch our event
+            var canceled = !elem.dispatchEvent(evt);
+        }
+    },
+    computed: {}
 });
 
 /***/ }),
@@ -37952,7 +37972,9 @@ var render = function() {
                   ]
                 )
               ]
-            )
+            ),
+            _vm._v(" "),
+            _c("span", { attrs: { id: "fakeClick" } })
           ]
         )
       ])
