@@ -8,7 +8,7 @@
               </div>   
               <div class="jumbotron">
                 <h1 class="display-4">Deck of the Week!</h1>
-                <p class="lead">{{deck.name}} was built by {{deck.user.name}}!</p>
+                <p class="lead">{{deck.name}} was built by {{deck.user.username}}!</p>
                 <hr class="my-4">
                 <p>Each week, the MagicDB staff picks a deck to be featured here!</p>
                 <p class="lead">

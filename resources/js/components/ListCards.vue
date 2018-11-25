@@ -5,11 +5,18 @@
               <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <select id="sets" class="form-control" v-model="filterBySet" v-on:change="setAPI()">
-                    <option disabled value="">Search By Set</option>
+                    <option disabled value="">Search By Standard Sets</option>
                     <option v-for="option in setOptions" :value="option.set">{{option.label}}</option>
                     </select>
                 </div>
-                <div class="col-sm-12 col-md-9">
+                <!-- Second Drop Down for Non-standard -->
+                <div class="col-lg-3 col-md-3">
+                    <select id="sets" class="form-control" v-model="filterBySet" v-on:change="setAPI()">
+                    <option disabled value="">Search By Non-Standard Sets</option>
+                    <option v-for="option in setOptionsNS" :value="option.set">{{option.label}}</option>
+                    </select>
+                </div>
+                <div class="col-sm-12 col-md-6">
                   <form>
                     <div class="form-group">
                         <input v-model="searchText" type="search" class="form-control" id="search" placeholder="Search by Name">
@@ -120,6 +127,924 @@ export default {
           label: "Ixalan",
           set: "XLN"
         }
+      ],
+      setOptionsNS: [
+        {
+          label: "15th Anniversary",
+          set: "15A"
+        },
+        {
+          label: "Aether Revolt",
+          set: "AER"
+        },
+        {
+          label: "Alara Reborn",
+          set: "ARB"
+        },
+        {
+          label: "Alliances",
+          set: "AL"
+        },
+        {
+          label: "Amonkhet",
+          set: "AKH"
+        },
+        {
+          label: "Anthologies",
+          set: "ANT"
+        },
+        {
+          label: "Antiquities",
+          set: "AQ"
+        },
+        {
+          label: "Apocalypse",
+          set: "AP"
+        },
+        {
+          label: "Arabian Nights",
+          set: "AN"
+        },
+        {
+          label: "Archenemy",
+          set: "ARC"
+        },
+        {
+          label: "Archenemy 'Schemes'",
+          set: "ARS"
+        },
+        {
+          label: "Archenemy: Nicol Bolas E01",
+          set: "E01"
+        },
+        {
+          label: "Archenemy: Nicol Bolas E01S",
+          set: "E01S"
+        },
+        {
+          label: "Arena League",
+          set: "ARE"
+        },
+        {
+          label: "Asia Pacific Land Progr",
+          set: "APAC"
+        },
+        {
+          label: "Avacyn Restored",
+          set: "AVR"
+        },
+        {
+          label: "Battle for Zendikar",
+          set: "BFZ"
+        },
+        {
+          label: "Battle Royale Box Set",
+          set: "BR"
+        },
+        {
+          label: "Battle the Horde",
+          set: "TBTH"
+        },
+        {
+          label: "Battlebond",
+          set: "BBD"
+        },
+        {
+          label: "Beatdown Box Set",
+          set: "BD"
+        },
+        {
+          label: "Betrayers of Kamigawa",
+          set: "BOK"
+        },
+        {
+          label: "Born of the Gods",
+          set: "BNG"
+        },
+        {
+          label: "Celebration Cards",
+          set: "CC"
+        },
+        {
+          label: "Champions of Kamigawa",
+          set: "CHK"
+        },
+        {
+          label: "Champs",
+          set: "CHA"
+        },
+        {
+          label: "Chronicles",
+          set: "CH"
+        },
+        {
+          label: "Coldsnap",
+          set: "CS"
+        },
+        {
+          label: "Coldsnap Theme Decks",
+          set: "CST"
+        },
+        {
+          label: "Commander",
+          set: "CMD"
+        },
+        {
+          label: "Commander 2013 Edition",
+          set: "C13"
+        },
+        {
+          label: "Commander 2014 Edition",
+          set: "C14"
+        },
+        {
+          label: "Commander 2015 Edition",
+          set: "C15"
+        },
+        {
+          label: "Commander 2016 Edition",
+          set: "C16"
+        },
+        {
+          label: "Commander 2017 Edition",
+          set: "C17"
+        },
+        {
+          label: "Commander 2018 Edition",
+          set: "C18"
+        },
+        {
+          label: "Commander Anthology",
+          set: "CMA"
+        },
+        {
+          label: "Commander Anthology ...",
+          set: "CM2"
+        },
+        {
+          label: "Commander's Arsenal",
+          set: "CRS"
+        },
+        {
+          label: "Conflux",
+          set: "CFX"
+        },
+        {
+          label: "Conspiracy",
+          set: "CNS"
+        },
+        {
+          label: "Conspiracy 'Conspiraci...'",
+          set: "CNSC"
+        },
+        {
+          label: "Conspiracy: Take the C...",
+          set: "CN2"
+        },
+        {
+          label: "Conspiracy: Take the C...",
+          set: "CN2C"
+        },
+        {
+          label: "Dark Ascension",
+          set: "DKA"
+        },
+        {
+          label: "Darksteel",
+          set: "DS"
+        },
+        {
+          label: "Deckmasters",
+          set: "DM"
+        },
+        {
+          label: "Defeat a God",
+          set: "TDAG"
+        },
+        {
+          label: "Dissension",
+          set: "DIS"
+        },
+        {
+          label: "Dragon's Maze",
+          set: "DGM"
+        },
+        {
+          label: "ADVD",
+          set: "ADVD"
+        },
+        {
+          label: "AEVG",
+          set: "AEVG"
+        },
+        {
+          label: "AGVL",
+          set: "AGVL"
+        },
+        {
+          label: "AJVC",
+          set: "AJVC"
+        },
+        {
+          label: "AVB",
+          set: "AVB"
+        },
+        {
+          label: "BVC",
+          set: "BVC"
+        },
+        {
+          label: "DVD",
+          set: "DVD"
+        },
+        {
+          label: "EVK",
+          set: "EVK"
+        },
+        {
+          label: "EVT",
+          set: "EVT"
+        },
+        {
+          label: "EVG",
+          set: "EVG"
+        },
+        {
+          label: "EVI",
+          set: "EVI"
+        },
+        {
+          label: "GVL",
+          set: "GVL"
+        },
+        {
+          label: "HVM",
+          set: "HVM"
+        },
+        {
+          label: "IVG",
+          set: "IVG"
+        },
+        {
+          label: "JVC",
+          set: "JVC"
+        },
+        {
+          label: "",
+          set: "JVV"
+        },
+        {
+          label: "",
+          set: "KVD"
+        },
+        {
+          label: "",
+          set: "MVG"
+        },
+        {
+          label: "",
+          set: "MVM"
+        },
+        {
+          label: "",
+          set: "NVO"
+        },
+        {
+          label: "",
+          set: "PVC"
+        },
+        {
+          label: "",
+          set: "SVT"
+        },
+        {
+          label: "",
+          set: "SVC"
+        },
+        {
+          label: "",
+          set: "VVK"
+        },
+        {
+          label: "",
+          set: "ZVE"
+        },
+        {
+          label: "Duels of the Planeswalker",
+          set: "DPW"
+        },
+        {
+          label: "Eighth Edition",
+          set: "8E"
+        },
+        {
+          label: "Eldritch Moon",
+          set: "EMN"
+        },
+        {
+          label: "Eternal Masters",
+          set: "EMA"
+        },
+        {
+          label: "European Land Program",
+          set: "EUR"
+        },
+        {
+          label: "Eventide",
+          set: "EVE"
+        },
+        {
+          label: "Exodus",
+          set: "EX"
+        },
+        {
+          label: "Explorers of Ixalan",
+          set: "E02"
+        },
+        {
+          label: "Face the Hydra",
+          set: "TFTH"
+        },
+        {
+          label: "Fallen Empires",
+          set: "FE"
+        },
+        {
+          label: "Fate Reforged",
+          set: "FRF"
+        },
+        {
+          label: "Fifth Dawn",
+          set: "FD"
+        },
+        {
+          label: "Fifth Edition",
+          set: "5E"
+        },
+        {
+          label: "Fourth Edition",
+          set: "4E"
+        },
+        {
+          label: "Friday Night Magic",
+          set: "FNM"
+        },
+        {
+          label: "From the Vault: Angels",
+          set: "V15"
+        },
+        {
+          label: "",
+          set: "V14"
+        },
+        {
+          label: "",
+          set: "V08"
+        },
+        {
+          label: "",
+          set: "V09"
+        },
+        {
+          label: "",
+          set: "V11"
+        },
+        {
+          label: "",
+          set: "V16"
+        },
+        {
+          label: "",
+          set: "V12"
+        },
+        {
+          label: "",
+          set: "V10"
+        },
+        {
+          label: "",
+          set: "V17"
+        },
+        {
+          label: "",
+          set: "V13"
+        },
+        {
+          label: "Future Sight",
+          set: "FUT"
+        },
+        {
+          label: "Game Night",
+          set: "GNT"
+        },
+        {
+          label: "Gatecrash",
+          set: "GTC"
+        },
+        {
+          label: "Gateway",
+          set: "GTW"
+        },
+        {
+          label: "Global Series: Jiang Ya",
+          set: "GS1"
+        },
+        {
+          label: "Grand Prix",
+          set: "GPX"
+        },
+        {
+          label: "Guildpact",
+          set: "GP"
+        },
+        {
+          label: "Guilds of Ravnica GK1",
+          set: "GK1"
+        },
+        {
+          label: "GNR MED",
+          set: "MED"
+        },
+        {
+          label: "Guru",
+          set: "GUR"
+        },
+        {
+          label: "Hachette UK",
+          set: "PHUK"
+        },
+        {
+          label: "Happy Holidays",
+          set: "HHO"
+        },
+        {
+          label: "Heroes of the Realm",
+          set: "HTR"
+        },
+        {
+          label: "Hero's Path",
+          set: "THP"
+        },
+        {
+          label: "Homelands",
+          set: "HL"
+        },
+        {
+          label: "Hour of Devastation",
+          set: "HOU"
+        },
+        {
+          label: "Ice Age",
+          set: "IA"
+        },
+        {
+          label: "Iconic Masters",
+          set: "IMA"
+        },
+        {
+          label: "Innistrad",
+          set: "ISD"
+        },
+        {
+          label: "Invasion",
+          set: "IN"
+        },
+        {
+          label: "Ixalan Treasure Chest",
+          set: "PXTC"
+        },
+        {
+          label: "Journey into Nyx",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
+        {
+          label: "",
+          set: ""
+        },
       ],
       mtgSetData: {},
       searchText: "",
