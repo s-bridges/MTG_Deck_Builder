@@ -1656,6 +1656,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
@@ -1678,6 +1692,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        // set all DOTW to 0, then assign deckId = 1;
         saveDeckOfTheWeek: function saveDeckOfTheWeek() {
             var deckId = this.deckOfTheWeek;
             axios.patch('/admin/save/update-dotw/', deckId).then(function (response) {
@@ -1699,6 +1714,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             });
             return deckCount;
+        },
+        dotwID: function dotwID() {
+            // return deckId of DOTW
+            return this.data.deckID;
         }
     }
 });
@@ -37167,29 +37186,76 @@ var render = function() {
     _c("title", [_vm._v("Admin Panel")]),
     _vm._v(" "),
     _c("body", [
-      _c("div", { staticClass: "jumbotron" }, [
-        _c("h1", { staticClass: "display-4" }, [_vm._v(" Admin Panel ")]),
-        _vm._v(" "),
-        _c("p", { staticClass: "lead" }, [
-          _vm._v("Hello, " + _vm._s(_vm.admin.name))
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "jumbotron" }, [
+          _c("h1", { staticClass: "display-4" }, [_vm._v("Admin Panel")]),
+          _vm._v(" "),
+          _c("p", { staticClass: "lead" }, [
+            _vm._v("Hello, " + _vm._s(_vm.admin.name))
+          ]),
+          _vm._v(" "),
+          _c("hr", { staticClass: "my-4" }),
+          _vm._v(" "),
+          _vm.totalUsers
+            ? _c("p", [_vm._v("Users Registered: " + _vm._s(_vm.totalUsers))])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.totalDecks
+            ? _c("p", [_vm._v("Total Decks Built: " + _vm._s(_vm.totalDecks))])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("p", { staticClass: "lead" })
         ]),
         _vm._v(" "),
-        _c("hr", { staticClass: "my-4" }),
+        _c("div", { staticClass: "row" }, [
+          _c("p", [_vm._v("Deck of the Week is " + _vm._s(_vm.dotwID))])
+        ]),
         _vm._v(" "),
-        _vm.totalUsers
-          ? _c("p", [_vm._v("Users Registered: " + _vm._s(_vm.totalUsers))])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.totalDecks
-          ? _c("p", [_vm._v("Total Decks Built: " + _vm._s(_vm.totalDecks))])
-          : _vm._e(),
-        _vm._v(" "),
-        _c("p", { staticClass: "lead" })
+        _c("div", { staticClass: "row" }, [
+          _c("form", [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { type: "submit" },
+                on: {
+                  click: function($event) {
+                    _vm.saveDeckOfTheWeek(_vm.deckId)
+                  }
+                }
+              },
+              [_vm._v("Submit")]
+            )
+          ])
+        ])
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", { attrs: { for: "dotw" } }, [
+        _vm._v("Change Deck of the Week")
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: {
+          type: "text",
+          id: "dotw",
+          "aria-describedby": "Change Deck of the Week",
+          placeholder: "Enter Deck ID #"
+        }
+      })
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -38355,33 +38421,35 @@ var render = function() {
                           }
                         }),
                         _vm._v(" "),
-                        _c("div", [
-                          _c(
-                            "i",
-                            {
-                              staticClass: "material-icons clickable",
-                              on: {
-                                click: function($event) {
-                                  _vm.removeCard(card)
-                                }
-                              }
-                            },
-                            [_vm._v("remove_circle")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "i",
-                            {
-                              staticClass: "material-icons clickable",
-                              on: {
-                                click: function($event) {
-                                  _vm.addCard(card)
-                                }
-                              }
-                            },
-                            [_vm._v("add_circle")]
-                          )
-                        ])
+                        _vm.editable
+                          ? _c("div", [
+                              _c(
+                                "i",
+                                {
+                                  staticClass: "material-icons clickable",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.removeCard(card)
+                                    }
+                                  }
+                                },
+                                [_vm._v("remove_circle")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "i",
+                                {
+                                  staticClass: "material-icons clickable",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.addCard(card)
+                                    }
+                                  }
+                                },
+                                [_vm._v("add_circle")]
+                              )
+                            ])
+                          : _vm._e()
                       ],
                       1
                     )

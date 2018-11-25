@@ -80,7 +80,7 @@
                 <v-lazy-image
                     v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
                 />
-                <div>
+                <div v-if="editable">
                   <i v-on:click="removeCard(card)" class="material-icons clickable">remove_circle</i>
                   <i v-on:click="addCard(card)" class="material-icons clickable">add_circle</i>
                 </div>
