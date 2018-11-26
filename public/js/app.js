@@ -1826,6 +1826,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -2311,16 +2318,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         label: "Archenemy 'Schemes'",
         set: "ARS"
       }, {
-        label: "Archenemy: Nicol Bolas E01",
+        label: "Archenemy: Nicol Bolas / E01",
         set: "E01"
       }, {
-        label: "Archenemy: Nicol Bolas E01S",
+        label: "Archenemy: Nicol Bolas / E01S",
         set: "E01S"
       }, {
         label: "Arena League",
         set: "ARE"
       }, {
-        label: "Asia Pacific Land Progr",
+        label: "Asia Pacific Land Progr...",
         set: "APAC"
       }, {
         label: "Avacyn Restored",
@@ -2389,7 +2396,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         label: "Commander Anthology",
         set: "CMA"
       }, {
-        label: "Commander Anthology ...",
+        label: "Commander Anthology Volume II",
         set: "CM2"
       }, {
         label: "Commander's Arsenal",
@@ -2404,7 +2411,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         label: "Conspiracy 'Conspiraci...'",
         set: "CNSC"
       }, {
-        label: "Conspiracy: Take the C...",
+        label: "Conspiracy: Take the Crown",
         set: "CN2"
       }, {
         label: "Conspiracy: Take the C...",
@@ -38957,7 +38964,64 @@ var render = function() {
                       : _vm._e()
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-12 col-md-6" }, [
+                  _c("div", { staticClass: "col-lg-3 col-md-3" }, [
+                    _vm.unHide == true
+                      ? _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.filterBySet,
+                                expression: "filterBySet"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { id: "sets" },
+                            on: {
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.filterBySet = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                },
+                                function($event) {
+                                  _vm.setAPI()
+                                }
+                              ]
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { disabled: "", value: "" } },
+                              [_vm._v("Search By Non-Standard Sets")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.setOptionsNS, function(option) {
+                              return _c(
+                                "option",
+                                { domProps: { value: option.set } },
+                                [_vm._v(_vm._s(option.label))]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-sm-12 col-md-3" }, [
                     _vm.unHide == true
                       ? _c("form", [
                           _c("div", { staticClass: "form-group" }, [

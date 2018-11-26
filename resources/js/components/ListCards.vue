@@ -174,11 +174,11 @@ export default {
           set: "ARS"
         },
         {
-          label: "Archenemy: Nicol Bolas E01",
+          label: "Archenemy: Nicol Bolas / E01",
           set: "E01"
         },
         {
-          label: "Archenemy: Nicol Bolas E01S",
+          label: "Archenemy: Nicol Bolas / E01S",
           set: "E01S"
         },
         {
@@ -186,7 +186,7 @@ export default {
           set: "ARE"
         },
         {
-          label: "Asia Pacific Land Progr",
+          label: "Asia Pacific Land Progr...",
           set: "APAC"
         },
         {
@@ -278,7 +278,7 @@ export default {
           set: "CMA"
         },
         {
-          label: "Commander Anthology ...",
+          label: "Commander Anthology Volume II",
           set: "CM2"
         },
         {
@@ -298,7 +298,7 @@ export default {
           set: "CNSC"
         },
         {
-          label: "Conspiracy: Take the C...",
+          label: "Conspiracy: Take the Crown",
           set: "CN2"
         },
         {
