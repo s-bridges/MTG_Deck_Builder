@@ -18,13 +18,13 @@
           </div>
           <div class="col-sm-12 col-md-3" style="display:flex; justify-content: space-between;">
             <button type="button" class="btn btn-danger float-right" v-on:click="unHide = !unHide">
-              <span v-if="!unHide">Add Cards</span>
+              <span v-if="!unHide" title="Add Cards">Add Cards</span>
               <span v-else>Close</span>
             </button>            
-            <button type="button" class="btn btn-primary float-right" v-on:click="saveDeck()">Save</button>
+            <button type="button" class="btn btn-primary float-right" v-on:click="saveDeck()" title="Save">Save</button>
             <div class="mat-btn btn-primary" v-on:click="toggleView = !toggleView">
-              <i v-if="!toggleView" class="material-icons">swap_horiz</i>
-              <i v-else class="material-icons">swap_vert</i>
+              <i v-if="!toggleView" class="material-icons" title="List Mode">swap_horiz</i>
+              <i v-else class="material-icons" title="Image Mode">swap_vert</i>
             </div>
           </div>
         </div>

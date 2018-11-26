@@ -70,7 +70,7 @@
                                 <p class="deck-list"><i class="material-icons text-secondary" v-on:click="removeCard(card.card)">remove_circle</i> {{card.count}} <i class="material-icons text-primary" v-on:click="addCard(card.card)">add_circle</i> <span style="padding-left:0.5em;">{{card.name}}</span></p>
                               </div>
                               <br />
-                              <button type="button" class="btn btn-primary" v-on:click="saveDeck()" :disabled="deckSubmitDisabled">Save</button>
+                              <button type="button" class="btn btn-primary" title="save" v-on:click="saveDeck()" :disabled="deckSubmitDisabled">Save</button>
                             </div>
                           </div>
                         </div>
