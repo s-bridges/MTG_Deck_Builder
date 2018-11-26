@@ -9,21 +9,14 @@
               <option v-for="option in setOptions" :value="option.set">{{option.label}}</option>
             </select>
           </div>
-          <!-- Second Drop Down for Non-standard -->
-          <div class="col-lg-3 col-md-3">
-              <select v-if="unHide == true" id="sets" class="form-control" v-model="filterBySet" v-on:change="setAPI()">
-              <option disabled value="">Search By Non-Standard Sets</option>
-              <option v-for="option in setOptionsNS" :value="option.set">{{option.label}}</option>
-              </select>
-          </div>
-          <div class="col-sm-12 col-md-3">
+          <div class="col-sm-12 col-md-6">
             <form v-if="unHide == true">
               <div class="form-group">
                 <input v-model="searchText" type="search" class="form-control" id="search" placeholder="Search by Name">
               </div>  
             </form>
           </div>
-          <div class="col-sm-12 col-md-3" style="display:flex;justify-content: space-between;">
+          <div class="col-sm-12 col-md-3" style="display:flex; justify-content: space-between;">
             <button type="button" class="btn btn-danger float-right" v-on:click="unHide = !unHide">
               <span v-if="!unHide">Add Cards</span>
               <span v-else>Close</span>
