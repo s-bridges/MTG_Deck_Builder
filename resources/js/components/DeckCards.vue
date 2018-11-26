@@ -9,7 +9,14 @@
               <option v-for="option in setOptions" :value="option.set">{{option.label}}</option>
             </select>
           </div>
-          <div class="col-sm-12 col-md-6">
+          <!-- Second Drop Down for Non-standard -->
+          <div class="col-lg-3 col-md-3">
+              <select v-if="unHide == true" id="sets" class="form-control" v-model="filterBySet" v-on:change="setAPI()">
+              <option disabled value="">Search By Non-Standard Sets</option>
+              <option v-for="option in setOptionsNS" :value="option.set">{{option.label}}</option>
+              </select>
+          </div>
+          <div class="col-sm-12 col-md-3">
             <form v-if="unHide == true">
               <div class="form-group">
                 <input v-model="searchText" type="search" class="form-control" id="search" placeholder="Search by Name">
@@ -29,6 +36,7 @@
           </div>
         </div>
           <div class="row">
+            <!-- first col -->
             <div v-bind:class="toggleView ? 'col-lg-9' : 'col-lg-12'">
               <div class="card full-width" v-if="unHide == true && cards.length > 0">
                 <div class="card-header">
@@ -65,6 +73,7 @@
                 </paginate-links>
               </div>                             
             </div>
+            <!-- end first col -->
             <!-- second col -->
             <div v-bind:class="toggleView ? 'col-lg-3' : 'col-lg-12'">
               <div class="card full-width">
@@ -86,7 +95,7 @@
                       <v-lazy-image
                         v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
                       />
-                      <div>
+                      <div v-if="editable">
                         <i v-on:click="removeCard(card)" class="material-icons clickable">remove_circle</i>
                         <i v-on:click="addCard(card)" class="material-icons clickable">add_circle</i>
                       </div>

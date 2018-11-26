@@ -65,7 +65,7 @@ class DecksController extends Controller
         ->with('cards')->first();
 
         if ($deck && $deck_id === $deck['id']) {
-            // set editable to false if this isn't the user's dick, otherwise, let them edit their own dick
+            // set editable to false if this isn't the user's deck, otherwise, let them edit their own deck
             $editable = Auth::user()->id == $deck['user_id'];
             $data = collect(['deck' => $deck, 'editable' => $editable]);
             // conditions on where this is view or edit
