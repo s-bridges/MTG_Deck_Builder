@@ -1806,10 +1806,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    console.log(this.data);
     // call methods here that you want done on page load, the methods are defined in the methods section below
     // this method below here we don't need to worry about right now
     // this.getCardsFromAPI();
@@ -1828,6 +1851,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       cards: [],
       paginatedCards: [],
       filterBySet: "",
+      toggleView: false,
+      activeImage: false,
       setOptions: [{
         label: "Guilds of Ravnica",
         set: "GRN"
@@ -1853,6 +1878,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   methods: {
+    popOff: function popOff(id) {
+      // always reset active image
+      this.activeImage = false;
+    },
+    popOn: function popOn(id) {
+      // need to add set timeout?
+      // setTimeout(() => { 
+      //   if (this.activeImage != id) {
+      //     this.activeImage = id;
+      //   }
+      // }, 1000);
+      if (this.activeImage != id) {
+        this.activeImage = id;
+      }
+    },
     setAPI: function setAPI() {
       var _this = this;
 
@@ -38055,9 +38095,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _vm.myDeckCards
-      ? _c("div", { staticClass: "row" }, [
+  return _vm.myDeckCards
+    ? _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "container py-3" }, [
             _vm.editable
               ? _c("div", { staticClass: "row" }, [
@@ -38152,78 +38192,235 @@ var render = function() {
                       : _vm._e()
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-12 col-md-3" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary float-right",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            _vm.saveDeck()
+                  _c(
+                    "div",
+                    {
+                      staticClass: "col-sm-12 col-md-3",
+                      staticStyle: {
+                        display: "flex",
+                        "justify-content": "space-between"
+                      }
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger float-right",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.unHide = !_vm.unHide
+                            }
                           }
-                        }
-                      },
-                      [_vm._v("Save")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger justify-float-right",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            _vm.unHide = !_vm.unHide
+                        },
+                        [
+                          !_vm.unHide
+                            ? _c("span", [_vm._v("Add Cards")])
+                            : _c("span", [_vm._v("Close")])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary float-right",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.saveDeck()
+                            }
                           }
-                        }
-                      },
-                      [
-                        !_vm.unHide
-                          ? _c("span", [_vm._v("Add Cards")])
-                          : _c("span", [_vm._v("Close")])
-                      ]
-                    )
-                  ])
+                        },
+                        [_vm._v("Save")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "mat-btn btn-primary",
+                          on: {
+                            click: function($event) {
+                              _vm.toggleView = !_vm.toggleView
+                            }
+                          }
+                        },
+                        [
+                          !_vm.toggleView
+                            ? _c("i", { staticClass: "material-icons" }, [
+                                _vm._v("swap_horiz")
+                              ])
+                            : _c("i", { staticClass: "material-icons" }, [
+                                _vm._v("swap_vert")
+                              ])
+                        ]
+                      )
+                    ]
+                  )
                 ])
               : _vm._e(),
             _vm._v(" "),
-            _vm.unHide == true && _vm.cards.length > 0
-              ? _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-lg-12" }, [
-                    _c("div", { staticClass: "row" }, [
-                      _c(
-                        "div",
-                        { staticClass: "card full-width" },
-                        [
-                          _vm._m(0),
-                          _vm._v(" "),
-                          _c(
-                            "paginate",
-                            {
-                              staticClass: "row card-body",
-                              attrs: {
-                                name: "paginatedCards",
-                                list: _vm.filteredCards,
-                                per: 8,
-                                tag: "div"
-                              }
-                            },
-                            _vm._l(_vm.paginated("paginatedCards"), function(
-                              card
-                            ) {
-                              return _c(
-                                "div",
-                                {
-                                  staticClass: "col justify-col-center addable",
-                                  staticStyle: { "padding-bottom": "2em" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.addCard(card)
-                                    }
+            _c("div", { staticClass: "row" }, [
+              _c("div", { class: _vm.toggleView ? "col-lg-9" : "col-lg-12" }, [
+                _vm.unHide == true && _vm.cards.length > 0
+                  ? _c(
+                      "div",
+                      { staticClass: "card full-width" },
+                      [
+                        _vm._m(0),
+                        _vm._v(" "),
+                        _c(
+                          "paginate",
+                          {
+                            staticClass: "row card-body",
+                            attrs: {
+                              name: "paginatedCards",
+                              list: _vm.filteredCards,
+                              per: 8,
+                              tag: "div"
+                            }
+                          },
+                          _vm._l(_vm.paginated("paginatedCards"), function(
+                            card
+                          ) {
+                            return _c(
+                              "div",
+                              {
+                                staticClass: "col justify-col-center addable",
+                                staticStyle: { "padding-bottom": "2em" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.addCard(card)
                                   }
-                                },
+                                }
+                              },
+                              [
+                                _c("v-lazy-image", {
+                                  attrs: {
+                                    src:
+                                      "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                                      card.multiverse_id +
+                                      "&type=card"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "overlay" }, [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "text",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.addCard(card)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "i",
+                                        { staticClass: "material-icons add" },
+                                        [_vm._v("add_circle")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ],
+                              1
+                            )
+                          })
+                        ),
+                        _vm._v(" "),
+                        _c("paginate-links", {
+                          attrs: {
+                            for: "paginatedCards",
+                            classes: {
+                              ul: ["pagination", "justify-content-center"],
+                              li: "page-item",
+                              a: "page-link"
+                            },
+                            simple: {
+                              prev: "Previous",
+                              next: "Next"
+                            }
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("div", { class: _vm.toggleView ? "col-lg-3" : "col-lg-12" }, [
+                _c("div", { staticClass: "card full-width" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _c("h4", { staticClass: "mb-0" }, [
+                      _vm._v(_vm._s(_vm.deck.name))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { class: !_vm.toggleView ? "row" : "card-body" },
+                    _vm._l(_vm.myDeckCards, function(card) {
+                      return _c(
+                        "div",
+                        {
+                          class: !_vm.toggleView
+                            ? "col col-lg-3 text-center addable removable"
+                            : "",
+                          staticStyle: { "padding-top": ".5em" }
+                        },
+                        [
+                          !_vm.toggleView
+                            ? _c(
+                                "span",
                                 [
+                                  card.pivot.count <= 4
+                                    ? _c(
+                                        "div",
+                                        {
+                                          staticStyle: {
+                                            height: "40px",
+                                            display: "flex",
+                                            "justify-content": "center",
+                                            "align-items": "center"
+                                          }
+                                        },
+                                        _vm._l(card.pivot.count, function(n) {
+                                          return _c("span", [
+                                            _c(
+                                              "i",
+                                              {
+                                                staticClass: "material-icons",
+                                                staticStyle: {
+                                                  "max-width": "24px"
+                                                }
+                                              },
+                                              [_vm._v("whatshot")]
+                                            )
+                                          ])
+                                        })
+                                      )
+                                    : _c(
+                                        "div",
+                                        {
+                                          staticStyle: {
+                                            height: "40px",
+                                            display: "flex",
+                                            "justify-content": "center",
+                                            "align-items": "center"
+                                          }
+                                        },
+                                        [
+                                          _c("span", [
+                                            _c("strong", [
+                                              _vm._v(
+                                                _vm._s(card.pivot.count) + "x"
+                                              )
+                                            ])
+                                          ])
+                                        ]
+                                      ),
+                                  _vm._v(" "),
                                   _c("v-lazy-image", {
                                     attrs: {
                                       src:
@@ -38233,166 +38430,129 @@ var render = function() {
                                     }
                                   }),
                                   _vm._v(" "),
-                                  _c("div", { staticClass: "overlay" }, [
+                                  _c("div", [
                                     _c(
-                                      "div",
+                                      "i",
                                       {
-                                        staticClass: "text",
+                                        staticClass: "material-icons clickable",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.removeCard(card)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("remove_circle")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "i",
+                                      {
+                                        staticClass: "material-icons clickable",
                                         on: {
                                           click: function($event) {
                                             _vm.addCard(card)
                                           }
                                         }
                                       },
-                                      [
-                                        _c(
-                                          "i",
-                                          { staticClass: "material-icons add" },
-                                          [_vm._v("add_circle")]
-                                        )
-                                      ]
+                                      [_vm._v("add_circle")]
                                     )
                                   ])
                                 ],
                                 1
                               )
-                            })
-                          ),
-                          _vm._v(" "),
-                          _c("paginate-links", {
-                            attrs: {
-                              for: "paginatedCards",
-                              classes: {
-                                ul: ["pagination", "justify-content-center"],
-                                li: "page-item",
-                                a: "page-link"
-                              },
-                              simple: {
-                                prev: "Previous",
-                                next: "Next"
-                              }
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    ])
-                  ])
-                ])
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-12" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "card full-width" }, [
-                _c("div", { staticClass: "card-header" }, [
-                  _c("h4", { staticClass: "mb-0" }, [
-                    _vm._v(_vm._s(_vm.deck.name))
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "row" },
-                  _vm._l(_vm.myDeckCards, function(card) {
-                    return _c(
-                      "div",
-                      {
-                        staticClass:
-                          "col col-lg-3 text-center addable removable",
-                        staticStyle: { "padding-top": ".5em" }
-                      },
-                      [
-                        card.pivot.count <= 4
-                          ? _c(
-                              "div",
-                              {
-                                staticStyle: {
-                                  height: "40px",
-                                  display: "flex",
-                                  "justify-content": "center",
-                                  "align-items": "center"
-                                }
-                              },
-                              _vm._l(card.pivot.count, function(n) {
-                                return _c("span", [
+                            : _c("span", [
+                                _c(
+                                  "span",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "show",
+                                        rawName: "v-show",
+                                        value:
+                                          _vm.activeImage == card.multiverse_id,
+                                        expression:
+                                          "activeImage == card.multiverse_id"
+                                      }
+                                    ],
+                                    staticClass: "modal-image"
+                                  },
+                                  [
+                                    _c("v-lazy-image", {
+                                      attrs: {
+                                        src:
+                                          "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                                          card.multiverse_id +
+                                          "&type=card"
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "deck-list" }, [
                                   _c(
                                     "i",
                                     {
-                                      staticClass: "material-icons",
-                                      staticStyle: { "max-width": "24px" }
+                                      staticClass:
+                                        "material-icons text-secondary",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.removeCard(card)
+                                        }
+                                      }
                                     },
-                                    [_vm._v("whatshot")]
+                                    [_vm._v("remove_circle")]
+                                  ),
+                                  _vm._v(
+                                    " \n                        " +
+                                      _vm._s(card.pivot.count) +
+                                      " \n                      "
+                                  ),
+                                  _c(
+                                    "i",
+                                    {
+                                      staticClass:
+                                        "material-icons text-primary",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.addCard(card)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("add_circle")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    {
+                                      staticStyle: {
+                                        "padding-left": "0.5em",
+                                        cursor: "pointer"
+                                      },
+                                      on: {
+                                        mouseover: function($event) {
+                                          _vm.popOn(card.multiverse_id)
+                                        },
+                                        mouseout: function($event) {
+                                          _vm.popOff(card.multiverse_id)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v(_vm._s(card.name))]
                                   )
                                 ])
-                              })
-                            )
-                          : _c(
-                              "div",
-                              {
-                                staticStyle: {
-                                  height: "40px",
-                                  display: "flex",
-                                  "justify-content": "center",
-                                  "align-items": "center"
-                                }
-                              },
-                              [
-                                _c("span", [
-                                  _c("strong", [
-                                    _vm._v(_vm._s(card.pivot.count) + "x")
-                                  ])
-                                ])
-                              ]
-                            ),
-                        _vm._v(" "),
-                        _c("v-lazy-image", {
-                          attrs: {
-                            src:
-                              "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
-                              card.multiverse_id +
-                              "&type=card"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("div", [
-                          _c(
-                            "i",
-                            {
-                              staticClass: "material-icons clickable",
-                              on: {
-                                click: function($event) {
-                                  _vm.removeCard(card)
-                                }
-                              }
-                            },
-                            [_vm._v("remove_circle")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "i",
-                            {
-                              staticClass: "material-icons clickable",
-                              on: {
-                                click: function($event) {
-                                  _vm.addCard(card)
-                                }
-                              }
-                            },
-                            [_vm._v("add_circle")]
-                          )
-                        ])
-                      ],
-                      1
-                    )
-                  })
-                )
+                              ])
+                        ]
+                      )
+                    })
+                  )
+                ])
               ])
             ])
           ])
         ])
-      : _vm._e()
-  ])
+      ])
+    : _vm._e()
 }
 var staticRenderFns = [
   function() {

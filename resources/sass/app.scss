@@ -139,3 +139,26 @@
   ms-filter:"progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
   filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
 }
+
+// used for materialize icon buttons like change layout
+div {
+  &.mat-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 50px;
+    border-radius: 0.25rem;
+    color: #fff;
+    cursor: pointer;
+    .material-icons {
+      text-align: center;
+    }
+  }
+}
+
+// for hovering on card names
+.modal-image {
+  position: absolute;
+  transform: translateY(-50%) translateX(-105%);
+  z-index: 9999;
+}

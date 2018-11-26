@@ -1,6 +1,6 @@
 <template>            
-  <div class="container">
-    <div v-if="myDeckCards" class="row"> 
+  <div v-if="myDeckCards" class="container">
+    <div class="row"> 
       <div class="container py-3">
         <div v-if="editable" class="row">
           <div class="col-lg-3 col-md-3">
@@ -16,15 +16,21 @@
               </div>  
             </form>
           </div>
-          <div class="col-sm-12 col-md-3">            
+          <div class="col-sm-12 col-md-3" style="display:flex;justify-content: space-between;">
+            <button type="button" class="btn btn-danger float-right" v-on:click="unHide = !unHide">
+              <span v-if="!unHide">Add Cards</span>
+              <span v-else>Close</span>
+            </button>            
             <button type="button" class="btn btn-primary float-right" v-on:click="saveDeck()">Save</button>
-            <button type="button" class="btn btn-danger justify-float-right" v-on:click="unHide = !unHide"><span v-if="!unHide">Add Cards</span><span v-else>Close</span></button>
+            <div class="mat-btn btn-primary" v-on:click="toggleView = !toggleView">
+              <i v-if="!toggleView" class="material-icons">swap_horiz</i>
+              <i v-else class="material-icons">swap_vert</i>
+            </div>
           </div>
         </div>
-        <div v-if="unHide == true && cards.length > 0" class="row">
-          <div class="col-lg-12">
-            <div class="row">
-              <div class="card full-width">
+          <div class="row">
+            <div v-bind:class="toggleView ? 'col-lg-9' : 'col-lg-12'">
+              <div class="card full-width" v-if="unHide == true && cards.length > 0">
                 <div class="card-header">
                   <h4 class="mb-0">All Cards</h4>
                 </div>
@@ -33,16 +39,17 @@
                   :list="filteredCards"
                   :per="8"
                   tag="div"
-                  class="row card-body"
-                >
-                <div v-for="card in paginated('paginatedCards')" class="col justify-col-center addable" style="padding-bottom:2em;" v-on:click="addCard(card)">                                 
+                  class="row card-body">
+                  <div v-for="card in paginated('paginatedCards')" class="col justify-col-center addable" style="padding-bottom:2em;" v-on:click="addCard(card)">                                 
                     <v-lazy-image 
                         v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
                     />
                     <div class="overlay">
-                        <div v-on:click="addCard(card)" class="text"><i class="material-icons add">add_circle</i></div>
+                      <div v-on:click="addCard(card)" class="text">
+                        <i class="material-icons add">add_circle</i>
+                      </div>
                     </div>
-                </div>
+                  </div>
                 </paginate>
                 <paginate-links
                   for="paginatedCards"
@@ -54,39 +61,55 @@
                   :simple="{
                     prev: 'Previous',
                     next: 'Next'
-                  }"
-                ></paginate-links>
-                  </div>                             
-                </div>
+                  }">
+                </paginate-links>
+              </div>                             
             </div>
-          </div>
-        </div>
-        <div class="col-lg-12">
-        <div class="row">                
-          <div class="card full-width">
-            <div class="card-header">
-              <h4 class="mb-0">{{ deck.name }}</h4>          
-            </div>
-            <div class="row">
-              <div v-for="card in myDeckCards" class="col col-lg-3 text-center addable removable" style="padding-top:.5em;"> 
-                <div v-if="card.pivot.count <= 4" style="height:40px; display:flex; justify-content:center; align-items:center">
-                  <span v-for="n in card.pivot.count">
-                    <i style="max-width: 24px;" class="material-icons">whatshot</i>
-                  </span>
+            <!-- second col -->
+            <div v-bind:class="toggleView ? 'col-lg-3' : 'col-lg-12'">
+              <div class="card full-width">
+                <div class="card-header">
+                  <h4 class="mb-0">{{ deck.name }}</h4>          
                 </div>
-                <div v-else style="height:40px; display:flex; justify-content:center; align-items:center"> 
-                  <span><strong>{{card.pivot.count}}x</strong></span>
-                </div>                 
-                <v-lazy-image
-                    v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
-                />
-                <div>
-                  <i v-on:click="removeCard(card)" class="material-icons clickable">remove_circle</i>
-                  <i v-on:click="addCard(card)" class="material-icons clickable">add_circle</i>
-                </div>
+                <div v-bind:class="!toggleView ? 'row' : 'card-body'">
+                  <div v-for="card in myDeckCards" v-bind:class="!toggleView ? 'col col-lg-3 text-center addable removable': ''" style="padding-top:.5em;"> 
+                    <!-- when the deck is in card view -->
+                    <span v-if="!toggleView"> 
+                      <div v-if="card.pivot.count <= 4" style="height:40px; display:flex; justify-content:center; align-items:center">
+                        <span v-for="n in card.pivot.count">
+                          <i style="max-width: 24px;" class="material-icons">whatshot</i>
+                        </span>
+                      </div>
+                      <div v-else style="height:40px; display:flex; justify-content:center; align-items:center"> 
+                        <span><strong>{{card.pivot.count}}x</strong></span>
+                      </div>                 
+                      <v-lazy-image
+                        v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
+                      />
+                      <div>
+                        <i v-on:click="removeCard(card)" class="material-icons clickable">remove_circle</i>
+                        <i v-on:click="addCard(card)" class="material-icons clickable">add_circle</i>
+                      </div>
+                    </span>
+                    <span v-else>
+                      <span v-show="activeImage == card.multiverse_id" class="modal-image">
+                        <v-lazy-image
+                          v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
+                      /></span>
+                      <!-- this is what shows when the deck is in list view -->
+                      <!-- <p style="margin: 0;">{{card.pivot.count}}x {{card.name}}</p> -->
+                      <p class="deck-list">
+                        <i class="material-icons text-secondary" v-on:click="removeCard(card)">remove_circle</i> 
+                          {{card.pivot.count}} 
+                        <i class="material-icons text-primary" v-on:click="addCard(card)">add_circle</i> 
+                        <span v-on:mouseover="popOn(card.multiverse_id)" v-on:mouseout="popOff(card.multiverse_id)" style="padding-left:0.5em; cursor:pointer;">{{card.name}}</span>
+                      </p>
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
+            <!-- end second col -->
           </div>
         </div>
       </div>
@@ -97,7 +120,6 @@
 <script>
 export default {
   mounted() {
-    console.log(this.data);
     // call methods here that you want done on page load, the methods are defined in the methods section below
     // this method below here we don't need to worry about right now
     // this.getCardsFromAPI();
@@ -115,6 +137,8 @@ export default {
       cards: [],
       paginatedCards: [],
       filterBySet: "",
+      toggleView: false,
+      activeImage: false,
       setOptions: [
         {
           label: "Guilds of Ravnica",
@@ -145,6 +169,21 @@ export default {
     };
   },
   methods: {
+    popOff(id) {
+      // always reset active image
+      this.activeImage = false;
+    },
+    popOn(id) {
+      // need to add set timeout?
+      // setTimeout(() => { 
+      //   if (this.activeImage != id) {
+      //     this.activeImage = id;
+      //   }
+      // }, 1000);
+      if (this.activeImage != id) {
+        this.activeImage = id;
+      }
+    },
     setAPI() {
       // use the filterBySet value which the select option if the v-model of
       axios
@@ -157,19 +196,18 @@ export default {
     },
     saveDeck() {
       let deck = this.deck;
-      console.log(deck);
       axios
-          .put(`/deck/edit`, deck)
-          .then(response => {
-            // get deck from the server that was added to and refresh it on the page
-            this.deck = this.data.payload.deck
-          })
-          .catch(error => {});
+        .put(`/deck/edit`, deck)
+        .then(response => {
+          // get deck from the server that was added to and refresh it on the page
+          this.deck = this.data.payload.deck;
+        })
+        .catch(error => {});
     },
     addCard(card) {
       // loop through the cards to see if the card exists within the deck cards array, if not found index = -1
       let index = _.findIndex(this.deck.cards, function(c) {
-        return c.multiverse_id == card.multiverse_id; 
+        return c.multiverse_id == card.multiverse_id;
       });
       // if card does not exist in deck, add it into this.deck.cards array using array push
       if (index == -1) {
@@ -177,9 +215,9 @@ export default {
           count: 1
         };
         // now you push that card with its newly created pivot object with card property count set to 1 into your deck.cards array
-        this.deck.cards.push(card);                                                        
+        this.deck.cards.push(card);
       } else {
-        this.deck.cards[index].pivot.count += 1; 
+        this.deck.cards[index].pivot.count += 1;
       }
     },
     removeCard(card) {
@@ -189,14 +227,14 @@ export default {
       if (card.pivot.count <= 0) {
         // find the card index in deck cards by the multiverse_id
         let index = _.findIndex(this.deck.cards, function(c) {
-          return c.multiverse_id == card.multiverse_id; 
+          return c.multiverse_id == card.multiverse_id;
         });
         // filter out the card
-        this.deck.cards = _.filter(this.deck.cards, function(item, i){
+        this.deck.cards = _.filter(this.deck.cards, function(item, i) {
           return i !== index;
         });
       }
-    },
+    }
   },
   computed: {
     myDeckCards() {
@@ -212,11 +250,14 @@ export default {
         search = search.toLowerCase();
         cards_array = _.filter(cards_array, function(card) {
           // index of finds the string within the card.name property or within the card type
-          return card.name.toLowerCase().indexOf(search) > -1 || card.type.toLowerCase().indexOf(search) > -1;
+          return (
+            card.name.toLowerCase().indexOf(search) > -1 ||
+            card.type.toLowerCase().indexOf(search) > -1
+          );
         });
       }
       return cards_array;
-    },
+    }
   }
 };
 </script>
