@@ -37648,6 +37648,7 @@ var render = function() {
                           staticClass: "btn btn-primary",
                           attrs: {
                             type: "button",
+                            title: "save",
                             disabled: _vm.deckSubmitDisabled
                           },
                           on: {
@@ -38297,7 +38298,9 @@ var render = function() {
                         },
                         [
                           !_vm.unHide
-                            ? _c("span", [_vm._v("Add Cards")])
+                            ? _c("span", { attrs: { title: "Add Cards" } }, [
+                                _vm._v("Add Cards")
+                              ])
                             : _c("span", [_vm._v("Close")])
                         ]
                       ),
@@ -38306,7 +38309,7 @@ var render = function() {
                         "button",
                         {
                           staticClass: "btn btn-primary float-right",
-                          attrs: { type: "button" },
+                          attrs: { type: "button", title: "Save" },
                           on: {
                             click: function($event) {
                               _vm.saveDeck()
@@ -38328,12 +38331,22 @@ var render = function() {
                         },
                         [
                           !_vm.toggleView
-                            ? _c("i", { staticClass: "material-icons" }, [
-                                _vm._v("swap_horiz")
-                              ])
-                            : _c("i", { staticClass: "material-icons" }, [
-                                _vm._v("swap_vert")
-                              ])
+                            ? _c(
+                                "i",
+                                {
+                                  staticClass: "material-icons",
+                                  attrs: { title: "List Mode" }
+                                },
+                                [_vm._v("swap_horiz")]
+                              )
+                            : _c(
+                                "i",
+                                {
+                                  staticClass: "material-icons",
+                                  attrs: { title: "Image Mode" }
+                                },
+                                [_vm._v("swap_vert")]
+                              )
                         ]
                       )
                     ]
