@@ -1670,6 +1670,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
@@ -2641,328 +2642,340 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         set: "PXTC"
       }, {
         label: "Journey into Nyx",
-        set: ""
+        set: "JOU"
       }, {
-        label: "",
-        set: ""
+        label: "Judge Gift Program",
+        set: "JGP"
       }, {
-        label: "",
-        set: ""
+        label: "Judgment",
+        set: "JU"
       }, {
-        label: "",
-        set: ""
+        label: "Kaladesh",
+        set: "KLD"
       }, {
-        label: "",
-        set: ""
+        label: "Khans of Tarkir",
+        set: "KTK"
       }, {
-        label: "",
-        set: ""
+        label: "Legacy Championship",
+        set: "OLGC"
       }, {
-        label: "",
-        set: ""
+        label: "Legendary Cube",
+        set: "PZ1"
       }, {
-        label: "",
-        set: ""
+        label: "Legends",
+        set: "LG"
       }, {
-        label: "",
-        set: ""
+        label: "Legions",
+        set: "LE"
       }, {
-        label: "",
-        set: ""
+        label: "Limited Edition Alpha",
+        set: "A"
       }, {
-        label: "",
-        set: ""
+        label: "Limited Edition Beta",
+        set: "B"
       }, {
-        label: "",
-        set: ""
+        label: "Lorwyn",
+        set: "LRW"
       }, {
-        label: "",
-        set: ""
+        label: "Magic 2010 Core Set",
+        set: "M10"
       }, {
-        label: "",
-        set: ""
+        label: "Magic 2011 Core Set",
+        set: "M11"
       }, {
-        label: "",
-        set: ""
+        label: "Magic 2012 Core Set",
+        set: "M12"
       }, {
-        label: "",
-        set: ""
+        label: "Magic 2013 Core Set",
+        set: "M13"
       }, {
-        label: "",
-        set: ""
+        label: "Magic 2014 Core Set",
+        set: "M14"
       }, {
-        label: "",
-        set: ""
+        label: "Magic 2015 Core Set",
+        set: "M15"
       }, {
-        label: "",
-        set: ""
+        label: "Magic Online Promos",
+        set: "PRM"
       }, {
-        label: "",
-        set: ""
+        label: "Magic Origins",
+        set: "ORI"
       }, {
-        label: "",
-        set: ""
+        label: "Magic Player Rewards",
+        set: "REW"
       }, {
-        label: "",
-        set: ""
+        label: "Magic Premier Shop",
+        set: "MPSH"
       }, {
         label: "",
-        set: ""
+        set: "AKHM"
       }, {
         label: "",
-        set: ""
+        set: "KLDM"
       }, {
         label: "",
-        set: ""
+        set: "ZENM"
       }, {
-        label: "",
-        set: ""
+        label: "Masters 25",
+        set: "A25"
       }, {
-        label: "",
-        set: ""
+        label: "Masters Edition",
+        set: "ME1"
       }, {
-        label: "",
-        set: ""
+        label: "Masters Edition II",
+        set: "ME2"
       }, {
-        label: "",
-        set: ""
+        label: "Masters Edition III",
+        set: "ME3"
       }, {
-        label: "",
-        set: ""
+        label: "Masters Edition IV",
+        set: "ME4"
       }, {
-        label: "",
-        set: ""
+        label: "Media Inserts",
+        set: "MDI"
       }, {
-        label: "",
-        set: ""
+        label: "Mercadian Masques",
+        set: "MM"
       }, {
-        label: "",
-        set: ""
+        label: "Mirage",
+        set: "MI"
       }, {
-        label: "",
-        set: ""
+        label: "Mirrodin",
+        set: "MR"
       }, {
-        label: "",
-        set: ""
+        label: "Mirrodin Besieged",
+        set: "MBS"
       }, {
-        label: "",
-        set: ""
+        label: "Modern Event Deck 20...",
+        set: "MD1"
       }, {
-        label: "",
-        set: ""
+        label: "Modern Masters",
+        set: "MMA"
       }, {
-        label: "",
-        set: ""
+        label: "Modern Masters 2015 ...",
+        set: "MM2"
       }, {
-        label: "",
-        set: ""
+        label: "Modern ...",
+        set: "MM3"
       }, {
-        label: "",
-        set: ""
+        label: "Morningtide",
+        set: "MOR"
       }, {
-        label: "",
-        set: ""
+        label: "Nemesis",
+        set: "NE"
       }, {
-        label: "",
-        set: ""
+        label: "New Phyrexia",
+        set: "NPH"
       }, {
-        label: "",
-        set: ""
+        label: "Ninth Edition",
+        set: "9E"
       }, {
-        label: "",
-        set: ""
+        label: "Oath of the Gatewatch",
+        set: "OGW"
       }, {
-        label: "",
-        set: ""
+        label: "Odyssey",
+        set: "OD"
       }, {
-        label: "",
-        set: ""
+        label: "Onslaught",
+        set: "ON"
       }, {
-        label: "",
-        set: ""
+        label: "Planar Chaos",
+        set: "PLC"
       }, {
-        label: "",
-        set: ""
+        label: "Planechase",
+        set: "PCH"
       }, {
         label: "",
-        set: ""
+        set: "PCP"
       }, {
         label: "",
-        set: ""
+        set: "PC2"
       }, {
         label: "",
-        set: ""
+        set: "PP2"
       }, {
         label: "",
-        set: ""
+        set: "PCA"
       }, {
         label: "",
-        set: ""
+        set: "PCAP"
       }, {
-        label: "",
-        set: ""
+        label: "Planeshift",
+        set: "PS"
       }, {
-        label: "",
-        set: ""
+        label: "Portal",
+        set: "PT"
       }, {
-        label: "",
-        set: ""
+        label: "Portal Second Age",
+        set: "P2"
       }, {
-        label: "",
-        set: ""
+        label: "Portal Three Kingdoms",
+        set: "P3"
       }, {
         label: "",
-        set: ""
+        set: "PD2"
       }, {
         label: "",
-        set: ""
+        set: "PD3"
       }, {
         label: "",
-        set: ""
+        set: "PD1"
       }, {
-        label: "",
-        set: ""
+        label: "Pro Tour Promos",
+        set: "PRO"
       }, {
-        label: "",
-        set: ""
+        label: "Prophecy",
+        set: "PY"
       }, {
-        label: "",
-        set: ""
+        label: "Ravnica: City of Guilds",
+        set: "RAV"
       }, {
-        label: "",
-        set: ""
+        label: "Release Promos",
+        set: "RLS"
       }, {
-        label: "",
-        set: ""
+        label: "Renaissance",
+        set: "REN"
       }, {
-        label: "",
-        set: ""
+        label: "Return to Ravnica",
+        set: "RTR"
       }, {
-        label: "",
-        set: ""
+        label: "Revised Edition",
+        set: "R"
       }, {
-        label: "",
-        set: ""
+        label: "Rise of the Eldrazi",
+        set: "ROE"
       }, {
-        label: "",
-        set: ""
+        label: "Saviors of Kamigawa",
+        set: "SOK"
       }, {
-        label: "",
-        set: ""
+        label: "Scards of Mirrodin",
+        set: "SOM"
       }, {
-        label: "",
-        set: ""
+        label: "Scourge",
+        set: "SC"
       }, {
-        label: "",
-        set: ""
+        label: "Seventh Edition",
+        set: "7E"
       }, {
-        label: "",
-        set: ""
+        label: "Shadowmoor",
+        set: "SHM"
       }, {
-        label: "",
-        set: ""
+        label: "Shadows over Innistrad",
+        set: "SOI"
       }, {
-        label: "",
-        set: ""
+        label: "Shards of Alara",
+        set: "ALA"
       }, {
         label: "",
-        set: ""
+        set: "SS1"
       }, {
-        label: "",
-        set: ""
+        label: "Sixth Edition",
+        set: "6E"
       }, {
-        label: "",
-        set: ""
+        label: "Starter 1999",
+        set: "ST"
       }, {
-        label: "",
-        set: ""
+        label: "Starter 2000",
+        set: "S2"
       }, {
-        label: "",
-        set: ""
+        label: "Stronghold",
+        set: "SH"
       }, {
-        label: "",
-        set: ""
+        label: "Summer of Magic",
+        set: "SUM"
       }, {
-        label: "",
-        set: ""
+        label: "Super Series",
+        set: "SS"
       }, {
-        label: "",
-        set: ""
+        label: "Tempest",
+        set: "TE"
       }, {
-        label: "",
-        set: ""
+        label: "Tempest Remastered",
+        set: "TPR"
       }, {
-        label: "",
-        set: ""
+        label: "Tenth Edition",
+        set: "10E"
       }, {
-        label: "",
-        set: ""
+        label: "The Dark",
+        set: "DK"
       }, {
-        label: "",
-        set: ""
+        label: "Theros",
+        set: "THS"
       }, {
         label: "",
-        set: ""
+        set: "3EB"
       }, {
-        label: "",
-        set: ""
+        label: "Time Spiral",
+        set: "TSP"
       }, {
-        label: "",
-        set: ""
+        label: "Time Spiral 'Timeshifted'",
+        set: "TSB"
       }, {
-        label: "",
-        set: ""
+        label: "Torment",
+        set: "TO"
       }, {
         label: "",
-        set: ""
+        set: "2HG"
       }, {
-        label: "",
-        set: ""
+        label: "Ugin's Fate Promos",
+        set: "UGIN"
       }, {
-        label: "",
-        set: ""
+        label: "Unglued",
+        set: "UG"
       }, {
-        label: "",
-        set: ""
+        label: "Unhinged",
+        set: "UNH"
       }, {
-        label: "",
-        set: ""
+        label: "Unlimited Edition",
+        set: "U"
       }, {
-        label: "",
-        set: ""
+        label: "Unstable",
+        set: "UST"
       }, {
-        label: "",
-        set: ""
+        label: "Urza's Destiny",
+        set: "UD"
       }, {
-        label: "",
-        set: ""
+        label: "Urza's Legacy",
+        set: "UL"
       }, {
-        label: "",
-        set: ""
+        label: "Urza's Saga",
+        set: "US"
       }, {
-        label: "",
-        set: ""
+        label: "Vintage Championship",
+        set: "OVNC"
       }, {
-        label: "",
-        set: ""
+        label: "Vintage Masters",
+        set: "VMA"
       }, {
-        label: "",
-        set: ""
+        label: "Visions",
+        set: "VI"
       }, {
-        label: "",
-        set: ""
+        label: "Weatherlight",
+        set: "WL"
       }, {
-        label: "",
-        set: ""
+        label: "Welcome Deck 2016",
+        set: "W16"
       }, {
-        label: "",
-        set: ""
+        label: "Welcome Deck 2017",
+        set: "W17"
       }, {
-        label: "",
-        set: ""
+        label: "Wizards Play Network",
+        set: "WPN"
       }, {
         label: "",
-        set: ""
+        set: "WCQ"
+      }, {
+        label: "Worlds",
+        set: "WRL"
+      }, {
+        label: "Worldwake",
+        set: "WWK"
+      }, {
+        label: "You make the Cube",
+        set: "PZ2"
+      }, {
+        label: "Zendikar",
+        set: "ZEN"
       }],
       mtgSetData: {},
       searchText: "",
@@ -37886,10 +37899,17 @@ var render = function() {
           _c("h1", { staticClass: "display-4" }, [_vm._v("Admin Panel")]),
           _vm._v(" "),
           _c("p", { staticClass: "lead" }, [
-            _vm._v("Hello, " + _vm._s(_vm.admin.name))
+            _vm._v(
+              "Hello, " +
+                _vm._s(_vm.admin.name) +
+                " / " +
+                _vm._s(_vm.admin.username)
+            )
           ]),
           _vm._v(" "),
           _c("hr", { staticClass: "my-4" }),
+          _vm._v(" "),
+          _vm._m(0),
           _vm._v(" "),
           _vm.totalUsers
             ? _c("p", [_vm._v("Users Registered: " + _vm._s(_vm.totalUsers))])
@@ -37908,7 +37928,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
           _c("form", [
-            _vm._m(0),
+            _vm._m(1),
             _vm._v(" "),
             _c(
               "button",
@@ -37930,6 +37950,14 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _c("a", { attrs: { href: "/import" } }, [_vm._v("Import CSV")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

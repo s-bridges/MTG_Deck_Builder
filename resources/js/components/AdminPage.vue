@@ -5,8 +5,9 @@
     <div class="container">    
         <div class="jumbotron">
         <h1 class="display-4">Admin Panel</h1>
-        <p class="lead">Hello, {{ admin.name }}</p>
+        <p class="lead">Hello, {{ admin.name }} / {{admin.username}}</p>
         <hr class="my-4">
+        <p><a href="/import">Import CSV</a></p>
         <p v-if="totalUsers">Users Registered: {{ totalUsers }}</p>
         <p v-if="totalDecks">Total Decks Built: {{ totalDecks }}</p>
         <p class="lead">
