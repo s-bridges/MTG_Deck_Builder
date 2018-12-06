@@ -37508,7 +37508,7 @@ var render = function() {
                               }
                             },
                             [
-                              _c("v-lazy-image", {
+                              _c("img", {
                                 attrs: {
                                   src:
                                     "/images/cards/" +
@@ -37526,8 +37526,7 @@ var render = function() {
                                   )
                                 ])
                               ])
-                            ],
-                            1
+                            ]
                           )
                         })
                       ),
@@ -38441,7 +38440,7 @@ var render = function() {
                                 }
                               },
                               [
-                                _c("v-lazy-image", {
+                                _c("img", {
                                   attrs: {
                                     src:
                                       "/images/cards/" +
@@ -38470,8 +38469,7 @@ var render = function() {
                                     ]
                                   )
                                 ])
-                              ],
-                              1
+                              ]
                             )
                           })
                         ),
@@ -38518,99 +38516,95 @@ var render = function() {
                         },
                         [
                           !_vm.toggleView
-                            ? _c(
-                                "span",
-                                [
-                                  card.pivot.count <= 4
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticStyle: {
-                                            height: "40px",
-                                            display: "flex",
-                                            "justify-content": "center",
-                                            "align-items": "center"
-                                          }
-                                        },
-                                        _vm._l(card.pivot.count, function(n) {
-                                          return _c("span", [
-                                            _c(
-                                              "i",
-                                              {
-                                                staticClass: "material-icons",
-                                                staticStyle: {
-                                                  "max-width": "24px"
-                                                }
-                                              },
-                                              [_vm._v("whatshot")]
+                            ? _c("span", [
+                                card.pivot.count <= 4
+                                  ? _c(
+                                      "div",
+                                      {
+                                        staticStyle: {
+                                          height: "40px",
+                                          display: "flex",
+                                          "justify-content": "center",
+                                          "align-items": "center"
+                                        }
+                                      },
+                                      _vm._l(card.pivot.count, function(n) {
+                                        return _c("span", [
+                                          _c(
+                                            "i",
+                                            {
+                                              staticClass: "material-icons",
+                                              staticStyle: {
+                                                "max-width": "24px"
+                                              }
+                                            },
+                                            [_vm._v("whatshot")]
+                                          )
+                                        ])
+                                      })
+                                    )
+                                  : _c(
+                                      "div",
+                                      {
+                                        staticStyle: {
+                                          height: "40px",
+                                          display: "flex",
+                                          "justify-content": "center",
+                                          "align-items": "center"
+                                        }
+                                      },
+                                      [
+                                        _c("span", [
+                                          _c("strong", [
+                                            _vm._v(
+                                              _vm._s(card.pivot.count) + "x"
                                             )
                                           ])
-                                        })
-                                      )
-                                    : _c(
-                                        "div",
+                                        ])
+                                      ]
+                                    ),
+                                _vm._v(" "),
+                                _c("img", {
+                                  attrs: {
+                                    src:
+                                      "/images/cards/" +
+                                      card.multiverse_id +
+                                      ".jpg"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _vm.editable
+                                  ? _c("div", [
+                                      _c(
+                                        "i",
                                         {
-                                          staticStyle: {
-                                            height: "40px",
-                                            display: "flex",
-                                            "justify-content": "center",
-                                            "align-items": "center"
+                                          staticClass:
+                                            "material-icons clickable",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.removeCard(card)
+                                            }
                                           }
                                         },
-                                        [
-                                          _c("span", [
-                                            _c("strong", [
-                                              _vm._v(
-                                                _vm._s(card.pivot.count) + "x"
-                                              )
-                                            ])
-                                          ])
-                                        ]
+                                        [_vm._v("remove_circle")]
                                       ),
-                                  _vm._v(" "),
-                                  _c("v-lazy-image", {
-                                    attrs: {
-                                      src:
-                                        "/images/cards/" +
-                                        card.multiverse_id +
-                                        ".jpg"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.editable
-                                    ? _c("div", [
-                                        _c(
-                                          "i",
-                                          {
-                                            staticClass:
-                                              "material-icons clickable",
-                                            on: {
-                                              click: function($event) {
-                                                _vm.removeCard(card)
-                                              }
+                                      _vm._v(" "),
+                                      _c(
+                                        "i",
+                                        {
+                                          staticClass:
+                                            "material-icons clickable",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.addCard(card)
                                             }
-                                          },
-                                          [_vm._v("remove_circle")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "i",
-                                          {
-                                            staticClass:
-                                              "material-icons clickable",
-                                            on: {
-                                              click: function($event) {
-                                                _vm.addCard(card)
-                                              }
-                                            }
-                                          },
-                                          [_vm._v("add_circle")]
-                                        )
-                                      ])
-                                    : _vm._e()
-                                ],
-                                1
-                              )
+                                          }
+                                        },
+                                        [_vm._v("add_circle")]
+                                      )
+                                    ])
+                                  : _vm._e()
+                              ])
                             : _c("span", [
                                 _c(
                                   "span",
@@ -38628,7 +38622,7 @@ var render = function() {
                                     staticClass: "modal-image"
                                   },
                                   [
-                                    _c("v-lazy-image", {
+                                    _c("img", {
                                       attrs: {
                                         src:
                                           "/images/cards/" +
@@ -38636,8 +38630,7 @@ var render = function() {
                                           ".jpg"
                                       }
                                     })
-                                  ],
-                                  1
+                                  ]
                                 ),
                                 _vm._v(" "),
                                 _c("p", { staticClass: "deck-list" }, [
