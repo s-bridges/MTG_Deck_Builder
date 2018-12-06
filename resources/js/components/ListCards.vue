@@ -32,7 +32,7 @@
                                 class="row card-body"
                                 >
                                     <div v-for="card in paginated('paginatedCards')" class="col justify-col-center addable" style="padding-bottom:2em;" v-on:click="addCard(card)">                                 
-                                        <v-lazy-image 
+                                        <img
                                             v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
                                         />
                                         <div class="overlay">
