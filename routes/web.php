@@ -25,7 +25,7 @@ Route::get('/home', 'HomeController@index')->middleware('verified')->name('home'
 
 Route::prefix('card')->middleware(['auth'])->group(function (){  
     Route::get('/{set}', 'CardsController@listCardsBy');
-    Route::get('/', 'CardsController@listCards')->name('cards');  
+    Route::get('/', 'CardsController@listCards')->name('cards');
     Route::post('/save', 'DecksController@saveDecks');
 }); 
 
@@ -48,7 +48,8 @@ Route::post('/contact', 'ContactController@sendEmail')->name('contact.send');
 
 Route::prefix('admin')->middleware('is_admin')->group(function (){
     Route::get('/', 'AdminController@admin')->name('admin');
-    Route::post('/save/deck{deck_id}', 'AdminController@deckOfTheWeekSave');
+    Route::patch('/save/update-dotw/', 'AdminController@deckOfTheWeekSave')->name('update-dotw');
+    Route::get('/import-cards', 'AdminController@importCards');
 });
 
 Route::prefix('user')->middleware(['auth'])->group(function() {

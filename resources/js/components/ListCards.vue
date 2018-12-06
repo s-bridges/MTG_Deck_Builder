@@ -4,7 +4,8 @@
             <div class="container py-3">
               <div class="row">
                 <div class="col-lg-3 col-md-3">
-                    <select id="sets" class="form-control" v-model="filterBySet" v-on:change="setAPI()">
+                  <!-- remove set API -->
+                    <select id="sets" class="form-control" v-model="filterBySet">
                     <option disabled value="">Search By Standard Sets</option>
                     <option v-for="option in setOptions" :value="option.set">{{option.label}}</option>
                     </select>
@@ -32,7 +33,7 @@
                                 >
                                     <div v-for="card in paginated('paginatedCards')" class="col justify-col-center addable" style="padding-bottom:2em;" v-on:click="addCard(card)">                                 
                                         <v-lazy-image 
-                                            v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
+                                            v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
                                         />
                                         <div class="overlay">
                                             <div class="text"><i class="material-icons add">add_circle</i></div>
@@ -70,7 +71,7 @@
                                 <p class="deck-list"><i class="material-icons text-secondary" v-on:click="removeCard(card.card)">remove_circle</i> {{card.count}} <i class="material-icons text-primary" v-on:click="addCard(card.card)">add_circle</i> <span style="padding-left:0.5em;">{{card.name}}</span></p>
                               </div>
                               <br />
-                              <button type="button" class="btn btn-primary" title="save" v-on:click="saveDeck()" :disabled="deckSubmitDisabled">Save</button>
+                              <button type="button" class="btn btn-primary" title="Save" v-on:click="saveDeck()" :disabled="deckSubmitDisabled">Save</button>
                             </div>
                           </div>
                         </div>
@@ -85,8 +86,9 @@
 export default {
   mounted() {
     // call methods here that you want done on page load, the methods are defined in the methods section below
-    // this method below here we don't need to worry about right now
-    // this.getCardsFromAPI();
+    // call a function here that you put the code you are writing right now in down below
+    // console logging all of the cards that your grabbed from the DB in your controller function
+  console.log(this.cards);
   },
   props: {
     data: {
@@ -96,10 +98,14 @@ export default {
   },
   data() {
     return {
-      cards: [],
+      cards: this.data.cards, // here we put what we have from our Controller function data like data.cards YUP yeah so that worked great, however we need to add the view itself back haha
       paginatedCards: [],
       filterBySet: "",
       setOptions: [
+        {
+          label: "All Standard Sets",
+          set: "ALL"
+        },
         {
           label: "Guilds of Ravnica",
           set: "GRN"
@@ -132,13 +138,14 @@ export default {
     };
   },
   methods: {
-    // getCardsFromAPI() {
-    //     // API stuff to mtgo for all cards
-    //     axios.get({{ /card }})
-    //     .then(response => {
-    //         this.cards = response.data.cards;
-    //     })
-    // },
+    //  getCardsFromAPI() {
+    //      // API stuff to mtgo for all cards this should work right? Yeah, let's check your routes for the right route
+    // this only gets used if we are calling to our API after page load ok
+    //      axios.get({{ /card }})
+    //      .then(response => {
+    //          this.cards = response.data.cards;
+    //      })
+    //  },
     setAPI() {
       // use the filterBySet value which the select option if the v-model of
       axios
@@ -176,10 +183,31 @@ export default {
     deckSubmitDisabled() {
       return this.deckForm.name.length < 1 || this.deckForm.description.length < 1;
     },
-    filteredCards() {
-      let search = this.searchText;
+    cardsBySet() {
+      // create a copy of this.cards to manipulate
       let cards_array = this.cards;
+      let set = this.filterBySet;
+      if (set && set != 'ALL' ) {
+        cards_array = _.filter(cards_array, function(card) {
+          // index of finds the string within the card.name property or within the card type
+          return card.set == set;
+        });
+      }
+      // return an empty array of cards if we aren't filtering by set
+      return [];
+    },
+    filteredCards() {
+      // check the select option that the v-model was set like this.selectedSet or whatever
+      // use that down below when you are filtering, or set up separate filter. using one filter with many conditions makes it so
+      // you only go through the loop once
+      let search = this.searchText;
+      // if cards have been filtered by set, use them, otherwise just use all the cards
+      let cards_array = this.cardsBySet.length > 0 ? this.cardsBySet : this.cards;
+      // get set cards here or check for them
+      
       if (search != "") {
+        // check if there was a select set option 
+
         // filter by the search field, make it lowercase
         search = search.toLowerCase();
         cards_array = _.filter(cards_array, function(card) {

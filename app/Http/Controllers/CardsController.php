@@ -29,7 +29,9 @@ class CardsController extends Controller
 
     public function listCards()
     {
-        return view('list-cards');
+        $cards = Card::all();
+        $data = collect(['cards' => $cards]);
+        return view('list-cards', ['data' => $data]);
     }
     
     public function saveCards()
