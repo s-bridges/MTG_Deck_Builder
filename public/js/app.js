@@ -1671,11 +1671,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
-    },
+    mounted: function mounted() {},
 
     props: {
         data: {
@@ -1687,17 +1689,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             users: this.data.users,
             selectedDeckId: this.data.dotw,
-            admin: this.data.admin
-
+            admin: this.data.admin,
+            deckId: ''
         };
     },
 
     methods: {
         // set all DOTW to 0, then assign deckId = 1;
         saveDeckOfTheWeek: function saveDeckOfTheWeek() {
-            var deckId = this.deckOfTheWeek;
-            axios.patch('/admin/save/update-dotw/', deckId).then(function (response) {
-                alert('Deck Of The Week was Saved!');
+            var _this = this;
+
+            var deckId = this.deckId;
+            axios.patch('/admin/save/update-dotw/', { deck_id: deckId }).then(function (response) {
+                // set the deck id that loaded with the page
+                _this.selectedDeckId = deckId;
+                // reset the deck id
+                _this.deckId = '';
             }).catch(function (error) {});
         }
     },
@@ -1718,7 +1725,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         dotwID: function dotwID() {
             // return deckId of DOTW
-            return this.data.deckID;
+            return this.deckId ? this.deckId : 'Not Set';
         }
     }
 });
@@ -2275,12 +2282,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     // call methods here that you want done on page load, the methods are defined in the methods section below
-    // this method below here we don't need to worry about right now
-    // this.getCardsFromAPI();
+    // call a function here that you put the code you are writing right now in down below
+    // console logging all of the cards that your grabbed from the DB in your controller function
+    console.log(this.cards);
   },
 
   props: {
@@ -2291,10 +2300,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   data: function data() {
     return {
-      cards: [],
+      cards: this.data.cards, // here we put what we have from our Controller function data like data.cards YUP yeah so that worked great, however we need to add the view itself back haha
       paginatedCards: [],
       filterBySet: "",
       setOptions: [{
+        label: "All Standard Sets",
+        set: "ALL"
+      }, {
         label: "Guilds of Ravnica",
         set: "GRN"
       }, {
@@ -2322,13 +2334,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   methods: {
-    // getCardsFromAPI() {
-    //     // API stuff to mtgo for all cards
-    //     axios.get({{ /card }})
-    //     .then(response => {
-    //         this.cards = response.data.cards;
-    //     })
-    // },
+    //  getCardsFromAPI() {
+    //      // API stuff to mtgo for all cards this should work right? Yeah, let's check your routes for the right route
+    // this only gets used if we are calling to our API after page load ok
+    //      axios.get({{ /card }})
+    //      .then(response => {
+    //          this.cards = response.data.cards;
+    //      })
+    //  },
     setAPI: function setAPI() {
       var _this = this;
 
@@ -2362,10 +2375,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     deckSubmitDisabled: function deckSubmitDisabled() {
       return this.deckForm.name.length < 1 || this.deckForm.description.length < 1;
     },
-    filteredCards: function filteredCards() {
-      var search = this.searchText;
+    cardsBySet: function cardsBySet() {
+      // create a copy of this.cards to manipulate
       var cards_array = this.cards;
+      var set = this.filterBySet;
+      if (set && set != 'ALL') {
+        cards_array = _.filter(cards_array, function (card) {
+          // index of finds the string within the card.name property or within the card type
+          return card.set == set;
+        });
+      }
+      // return an empty array of cards if we aren't filtering by set
+      return [];
+    },
+    filteredCards: function filteredCards() {
+      // check the select option that the v-model was set like this.selectedSet or whatever
+      // use that down below when you are filtering, or set up separate filter. using one filter with many conditions makes it so
+      // you only go through the loop once
+      var search = this.searchText;
+      // if cards have been filtered by set, use them, otherwise just use all the cards
+      var cards_array = this.cardsBySet.length > 0 ? this.cardsBySet : this.cards;
+      // get set cards here or check for them
+
       if (search != "") {
+        // check if there was a select set option 
+
         // filter by the search field, make it lowercase
         search = search.toLowerCase();
         cards_array = _.filter(cards_array, function (card) {
@@ -37244,6 +37278,8 @@ var render = function() {
           _vm._v(" "),
           _vm._m(0),
           _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
           _vm.totalUsers
             ? _c("p", [_vm._v("Users Registered: " + _vm._s(_vm.totalUsers))])
             : _vm._e(),
@@ -37256,25 +37292,56 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
-          _c("p", [_vm._v("Deck of the Week is " + _vm._s(_vm.dotwID))])
+          _c("p", [_vm._v("Deck of the Week is " + _vm._s(_vm.selectedDeckId))])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
           _c("form", [
-            _vm._m(1),
-            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "dotw" } }, [
+                _vm._v("Change Deck of the Week")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.deckId,
+                    expression: "deckId"
+                  }
+                ],
+                staticClass: "mt-3",
+                attrs: {
+                  type: "number",
+                  name: "deckId",
+                  placeholder: "Enter Deck ID #"
+                },
+                domProps: { value: _vm.deckId },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.deckId = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("p", [
             _c(
               "button",
               {
                 staticClass: "btn btn-primary",
-                attrs: { type: "submit" },
                 on: {
                   click: function($event) {
-                    _vm.saveDeckOfTheWeek(_vm.deckId)
+                    _vm.saveDeckOfTheWeek()
                   }
                 }
               },
-              [_vm._v("Submit")]
+              [_vm._v("Update")]
             )
           ])
         ])
@@ -37295,20 +37362,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { attrs: { for: "dotw" } }, [
-        _vm._v("Change Deck of the Week")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          id: "dotw",
-          "aria-describedby": "Change Deck of the Week",
-          placeholder: "Enter Deck ID #"
-        }
-      })
+    return _c("p", [
+      _c("a", { attrs: { href: "/admin/import-cards" } }, [
+        _vm._v("Import Cards")
+      ])
     ])
   }
 ]
@@ -37349,24 +37406,19 @@ var render = function() {
                 staticClass: "form-control",
                 attrs: { id: "sets" },
                 on: {
-                  change: [
-                    function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.filterBySet = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    },
-                    function($event) {
-                      _vm.setAPI()
-                    }
-                  ]
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.filterBySet = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
                 }
               },
               [
@@ -37459,9 +37511,9 @@ var render = function() {
                               _c("v-lazy-image", {
                                 attrs: {
                                   src:
-                                    "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                                    "/images/cards/" +
                                     card.multiverse_id +
-                                    "&type=card"
+                                    ".jpg"
                                 }
                               }),
                               _vm._v(" "),
@@ -37648,7 +37700,7 @@ var render = function() {
                           staticClass: "btn btn-primary",
                           attrs: {
                             type: "button",
-                            title: "save",
+                            title: "Save",
                             disabled: _vm.deckSubmitDisabled
                           },
                           on: {
@@ -37775,9 +37827,9 @@ var render = function() {
                       staticClass: "front-pane",
                       style: {
                         backgroundImage:
-                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          "url(/images/cards/" +
                           deck.cards[0].multiverse_id +
-                          "&type=card)"
+                          ".jpg)"
                       }
                     }),
                     _vm._v(" "),
@@ -37785,9 +37837,9 @@ var render = function() {
                       staticClass: "back-pane",
                       style: {
                         backgroundImage:
-                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          "url(/images/cards/" +
                           deck.cards[0].multiverse_id +
-                          "&type=card)"
+                          ".jpg)"
                       }
                     }),
                     _vm._v(" "),
@@ -37795,9 +37847,9 @@ var render = function() {
                       staticClass: "top-pane",
                       style: {
                         backgroundImage:
-                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          "url(/images/cards/" +
                           deck.cards[0].multiverse_id +
-                          "&type=card)"
+                          ".jpg)"
                       }
                     }),
                     _vm._v(" "),
@@ -37805,9 +37857,9 @@ var render = function() {
                       staticClass: "bottom-pane",
                       style: {
                         backgroundImage:
-                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          "url(/images/cards/" +
                           deck.cards[0].multiverse_id +
-                          "&type=card)"
+                          ".jpg)"
                       }
                     }),
                     _vm._v(" "),
@@ -37815,9 +37867,9 @@ var render = function() {
                       staticClass: "left-pane",
                       style: {
                         backgroundImage:
-                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          "url(/images/cards/" +
                           deck.cards[0].multiverse_id +
-                          "&type=card)"
+                          ".jpg)"
                       }
                     }),
                     _vm._v(" "),
@@ -37825,9 +37877,9 @@ var render = function() {
                       staticClass: "right-pane",
                       style: {
                         backgroundImage:
-                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          "url(/images/cards/" +
                           deck.cards[0].multiverse_id +
-                          "&type=card)"
+                          ".jpg)"
                       }
                     })
                   ]
@@ -38392,9 +38444,9 @@ var render = function() {
                                 _c("v-lazy-image", {
                                   attrs: {
                                     src:
-                                      "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                                      "/images/cards/" +
                                       card.multiverse_id +
-                                      "&type=card"
+                                      ".jpg"
                                   }
                                 }),
                                 _vm._v(" "),
@@ -38519,9 +38571,9 @@ var render = function() {
                                   _c("v-lazy-image", {
                                     attrs: {
                                       src:
-                                        "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                                        "/images/cards/" +
                                         card.multiverse_id +
-                                        "&type=card"
+                                        ".jpg"
                                     }
                                   }),
                                   _vm._v(" "),
@@ -38579,9 +38631,9 @@ var render = function() {
                                     _c("v-lazy-image", {
                                       attrs: {
                                         src:
-                                          "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                                          "/images/cards/" +
                                           card.multiverse_id +
-                                          "&type=card"
+                                          ".jpg"
                                       }
                                     })
                                   ],
@@ -38743,9 +38795,9 @@ var render = function() {
                       staticClass: "front-pane",
                       style: {
                         backgroundImage:
-                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          "url(/images/cards/" +
                           _vm.deck.cards[0].multiverse_id +
-                          "&type=card)"
+                          ".jpg)"
                       }
                     }),
                     _vm._v(" "),
@@ -38753,9 +38805,9 @@ var render = function() {
                       staticClass: "back-pane",
                       style: {
                         backgroundImage:
-                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          "url(/images/cards/" +
                           _vm.deck.cards[0].multiverse_id +
-                          "&type=card)"
+                          ".jpg)"
                       }
                     }),
                     _vm._v(" "),
@@ -38763,9 +38815,9 @@ var render = function() {
                       staticClass: "top-pane",
                       style: {
                         backgroundImage:
-                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          "url(/images/cards/" +
                           _vm.deck.cards[0].multiverse_id +
-                          "&type=card)"
+                          ".jpg)"
                       }
                     }),
                     _vm._v(" "),
@@ -38773,9 +38825,9 @@ var render = function() {
                       staticClass: "bottom-pane",
                       style: {
                         backgroundImage:
-                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          "url(/images/cards/" +
                           _vm.deck.cards[0].multiverse_id +
-                          "&type=card)"
+                          ".jpg)"
                       }
                     }),
                     _vm._v(" "),
@@ -38783,9 +38835,9 @@ var render = function() {
                       staticClass: "left-pane",
                       style: {
                         backgroundImage:
-                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          "url(/images/cards/" +
                           _vm.deck.cards[0].multiverse_id +
-                          "&type=card)"
+                          ".jpg)"
                       }
                     }),
                     _vm._v(" "),
@@ -38793,9 +38845,9 @@ var render = function() {
                       staticClass: "right-pane",
                       style: {
                         backgroundImage:
-                          "url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" +
+                          "url(/images/cards/" +
                           _vm.deck.cards[0].multiverse_id +
-                          "&type=card)"
+                          ".jpg)"
                       }
                     })
                   ]

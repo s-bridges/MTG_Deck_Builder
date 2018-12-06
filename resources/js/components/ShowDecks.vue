@@ -14,12 +14,12 @@
                                 
                             <div v-for="deck in deckList" class="col-lg-3 text-center cube-wrap">
                                   <div class="cube" v-on:click="selectDeck(deck.id)">
-                                      <div class="front-pane" v-bind:style="{backgroundImage: 'url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='+ deck.cards[0].multiverse_id + '&type=card)' }"></div>
-                                      <div class="back-pane" v-bind:style="{backgroundImage: 'url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='+ deck.cards[0].multiverse_id + '&type=card)' }"></div>
-                                      <div class="top-pane" v-bind:style="{backgroundImage: 'url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='+ deck.cards[0].multiverse_id + '&type=card)' }"></div>
-                                      <div class="bottom-pane" v-bind:style="{backgroundImage: 'url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='+ deck.cards[0].multiverse_id + '&type=card)' }"></div>
-                                      <div class="left-pane" v-bind:style="{backgroundImage: 'url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='+ deck.cards[0].multiverse_id + '&type=card)' }"></div>
-                                      <div class="right-pane" v-bind:style="{backgroundImage: 'url(http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='+ deck.cards[0].multiverse_id + '&type=card)' }"></div>
+                                      <div class="front-pane" v-bind:style="{backgroundImage: 'url(/images/cards/' + deck.cards[0].multiverse_id + '.jpg)' }"></div>
+                                      <div class="back-pane" v-bind:style="{backgroundImage: 'url(/images/cards/' + deck.cards[0].multiverse_id + '.jpg)' }"></div>
+                                      <div class="top-pane" v-bind:style="{backgroundImage: 'url(/images/cards/' + deck.cards[0].multiverse_id + '.jpg)' }"></div>
+                                      <div class="bottom-pane" v-bind:style="{backgroundImage: 'url(/images/cards/' + deck.cards[0].multiverse_id + '.jpg)' }"></div>
+                                      <div class="left-pane" v-bind:style="{backgroundImage: 'url(/images/cards/' + deck.cards[0].multiverse_id + '.jpg)' }"></div>
+                                      <div class="right-pane" v-bind:style="{backgroundImage: 'url(/images/cards/' + deck.cards[0].multiverse_id + '.jpg)' }"></div>
                               </div>
                               <p>{{ deck.name }}</p>
                             </div>                             

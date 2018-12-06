@@ -43,7 +43,7 @@
                   class="row card-body">
                   <div v-for="card in paginated('paginatedCards')" class="col justify-col-center addable" style="padding-bottom:2em;" v-on:click="addCard(card)">                                 
                     <v-lazy-image 
-                        v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
+                        v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
                     />
                     <div class="overlay">
                       <div v-on:click="addCard(card)" class="text">
@@ -86,7 +86,7 @@
                         <span><strong>{{card.pivot.count}}x</strong></span>
                       </div>                 
                       <v-lazy-image
-                        v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
+                        v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
                       />
                       <div v-if="editable">
                         <i v-on:click="removeCard(card)" class="material-icons clickable">remove_circle</i>
@@ -96,7 +96,7 @@
                     <span v-else>
                       <span v-show="activeImage == card.multiverse_id" class="modal-image">
                         <v-lazy-image
-                          v-bind:src="'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=' + card.multiverse_id + '&type=card'"
+                          v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
                       /></span>
                       <!-- this is what shows when the deck is in list view -->
                       <!-- <p style="margin: 0;">{{card.pivot.count}}x {{card.name}}</p> -->
