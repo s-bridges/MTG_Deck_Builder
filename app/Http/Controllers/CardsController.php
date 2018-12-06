@@ -38,4 +38,5 @@ class CardsController extends Controller
     {
         return view();
     }
+
 }

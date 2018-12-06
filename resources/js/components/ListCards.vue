@@ -66,6 +66,7 @@
                               <h5 style="margin-bottom:0.5em;"><span class="badge" v-bind:class="selectedCards.length > 60 ? 'badge-danger' : 'badge-secondary'">{{selectedCards.length}} / {{maxlength}}</span></h5>
                               <p>Creature: {{ instantCreatureCount }}<br>
                               Instant/Sorcery: {{instantSorceryCount}}<br>
+                              Enchantment: {{ instantEnchantmentCount }}</br>
                               Land: {{ instantLandCount }}</p>
                               <div v-for="card in myDeck">
                                 <p class="deck-list"><i class="material-icons text-secondary" v-on:click="removeCard(card.card)">remove_circle</i> {{card.count}} <i class="material-icons text-primary" v-on:click="addCard(card.card)">add_circle</i> <span style="padding-left:0.5em;">{{card.name}}</span></p>
@@ -267,6 +268,16 @@ export default {
           }
       });
       return k;
+    },
+    instantEnchantmentCount() {
+      let m = 0;
+      let selectedCards = this.selectedCards;
+      _.forEach(selectedCards, function(card){
+        if(card.type.includes('Enchantment')){
+          m++;
+          }
+      });
+      return m;
     },
   }
 };
