@@ -10,16 +10,7 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
-        <!-- Scripts -->
-        <script src="{{ mix('js/app.js') }}" defer></script>
-
-        <!-- Fonts -->
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
         <!-- Styles -->
-        <link href="{{ mix('css/app.css') }}" rel="stylesheet">
         <style>
             html, body {
                 background-color: #fff;
@@ -86,23 +77,19 @@
                     @endauth
                 </div>
             @endif
-            
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <img src="images/mana_symbols.png" class="img-fluid" alt="MTG Deck Builder">
-                        <div class="homepage-title m-b-md">
-                            MTG Deck Builder
-                        </div> 
-                    </div>
+
+            <div class="content">
+            <img src="images/mana_symbols.png" class="img-fluid" alt="MTG Deck Builder" width="1000px" height="225px">
+                <div class="title m-b-md">
+                    MTG Deck Builder
                 </div>
-                <div class="row">
-                    <div class="homepage-links links">
-                        <a class="hp-link" href="/card/">Build a Deck</a>
-                        <a class="hp-link" href="/deck/dotw">Deck of The Week</a>
-                        <a class="hp-link" href="/health">Game Health</a>
-                        <a class="hp-link" href="/contact/">Contact Us</a>                   
-                    </div>
+
+                <div class="links">
+                    <a href="/">Home</a>
+                    <a href="/card/">Build a Deck</a>
+                    <a href="/deck/dotw">Deck of The Week</a>
+                    <a href="/health">Game Health</a>
+                    <a href="/contact/">Contact Us</a>
                 </div>
             </div>
         </div>
