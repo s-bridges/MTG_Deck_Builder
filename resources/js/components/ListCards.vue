@@ -73,6 +73,7 @@
                               <h5 style="margin-bottom:0.5em;"><span class="badge" v-bind:class="selectedCards.length > 60 ? 'badge-danger' : 'badge-secondary'">{{selectedCards.length}} / {{maxlength}}</span></h5>
                               <p>Creature: {{ instantCreatureCount }}<br>
                               Instant/Sorcery: {{instantSorceryCount}}<br>
+                              Enchantment: {{ instantEnchantmentCount }}</br>
                               Land: {{ instantLandCount }}</p>
                               <div v-for="card in myDeck">
                                 <p class="deck-list"><i class="material-icons text-secondary" v-on:click="removeCard(card.card)">remove_circle</i> {{card.count}} <i class="material-icons text-primary" v-on:click="addCard(card.card)">add_circle</i> <span style="padding-left:0.5em;">{{card.name}}</span></p>
@@ -92,9 +93,7 @@
 <script>
 export default {
   mounted() {
-    // call methods here that you want done on page load, the methods are defined in the methods section below
-    // call a function here that you put the code you are writing right now in down below
-    // console logging all of the cards that your grabbed from the DB in your controller function
+  // console logging all of the cards that your grabbed from the DB in your controller function
   console.log(this.cards);
   },
   props: {
@@ -105,7 +104,7 @@ export default {
   },
   data() {
     return {
-      cards: this.data.cards, // here we put what we have from our Controller function data like data.cards YUP yeah so that worked great, however we need to add the view itself back haha
+      cards: this.data.cards,
       paginatedCards: [],
       filterBySet: "ALL", // setting default option to be all cards
       setOptions: [
@@ -155,6 +154,7 @@ export default {
     //  },
     setAPI() {
       // use the filterBySet value which the select option if the v-model of
+      dd($data);
       axios
         .get(`/card/${this.filterBySet}`)
         .then(response => {
@@ -272,6 +272,16 @@ export default {
           }
       });
       return k;
+    },
+    instantEnchantmentCount() {
+      let m = 0;
+      let selectedCards = this.selectedCards;
+      _.forEach(selectedCards, function(card){
+        if(card.type.includes('Enchantment')){
+          m++;
+          }
+      });
+      return m;
     },
   }
 };
