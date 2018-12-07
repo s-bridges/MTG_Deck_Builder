@@ -34,6 +34,7 @@ Route::prefix('deck')->middleware(['auth'])->group(function (){
     Route::get('/{deck_id}/cards', 'DecksController@specificDeck');
     Route::get('/dotw', 'DecksController@deckOfTheWeek');
     Route::put('/edit', 'DecksController@editDeck');
+    Route::post('/{deck_id}/delete', 'DecksController@deleteDeck'); //delete route
 });
 
 Route::prefix('import')->middleware(['auth', 'is_admin'])->group(function (){

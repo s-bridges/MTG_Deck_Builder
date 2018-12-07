@@ -17,7 +17,7 @@
             </form>
           </div>
           <div class="col-sm-12 col-md-3" style="display:flex; justify-content: space-between;">
-            <button type="button" class="btn btn-danger float-right" v-on:click="unHide = !unHide">
+            <button type="button" class="btn btn-primary float-right" v-on:click="unHide = !unHide">
               <span v-if="!unHide" title="Add Cards">Add Cards</span>
               <span v-else>Close</span>
             </button>            
@@ -71,7 +71,7 @@
             <div v-bind:class="toggleView ? 'col-lg-3' : 'col-lg-12'">
               <div class="card full-width">
                 <div class="card-header">
-                  <h4 class="mb-0">{{ deck.name }}</h4>          
+                  <h4 class="mb-0">{{ deck.name }}<button type="button" class="btn btn-danger btn-sm float-right" v-on:click="deleteDeck()" title="Delete">Delete</button></h4>        
                 </div>
                 <div v-bind:class="!toggleView ? 'row' : 'card-body'">
                   <div v-for="card in myDeckCards" v-bind:class="!toggleView ? 'col col-lg-3 text-center addable removable': ''" style="padding-top:.5em;"> 
@@ -259,6 +259,9 @@ export default {
         });
       }
       return cards_array;
+    },
+    deleteDeck(){
+
     }
   }
 };
