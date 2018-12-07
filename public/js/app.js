@@ -2322,8 +2322,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    // call methods here that you want done on page load, the methods are defined in the methods section below
-    // call a function here that you put the code you are writing right now in down below
     // console logging all of the cards that your grabbed from the DB in your controller function
     console.log(this.cards);
   },
@@ -2336,7 +2334,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   data: function data() {
     return {
-      cards: this.data.cards, // here we put what we have from our Controller function data like data.cards YUP yeah so that worked great, however we need to add the view itself back haha
+      cards: this.data.cards,
       paginatedCards: [],
       filterBySet: "",
       setOptions: [{
@@ -2382,6 +2380,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this = this;
 
       // use the filterBySet value which the select option if the v-model of
+      dd($data);
       axios.get("/card/" + this.filterBySet).then(function (response) {
         // be able to see your response to make sure you know what to set the mtgsetdata to
         _this.cards = response.data.payload;
