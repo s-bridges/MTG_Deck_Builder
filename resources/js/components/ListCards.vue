@@ -6,17 +6,24 @@
                 <div class="col-lg-3 col-md-3">
                   <!-- remove set API -->
                     <select id="sets" class="form-control" v-model="filterBySet">
-                    <option disabled value="">Search By Standard Sets</option>
                     <option v-for="option in setOptions" :value="option.set">{{option.label}}</option>
                     </select>
                 </div>
-                <div class="col-sm-12 col-md-9">
+                <div class="col-sm-12 col-md-7">
                   <form>
                     <div class="form-group">
                         <input v-model="searchText" type="search" class="form-control" id="search" placeholder="Search by Name">
                     </div>  
                   </form>
-                </div>   
+                </div>
+                <div class="col-sm-12 col-md-2">
+                  <form class="right-align">
+                    <div class="form-group">
+                      <!-- reset filter button -->
+                      <button v-on:click="searchText=''; filterBySet='ALL';" type="button" class="btn btn-dark">Reset</button>
+                    </div>  
+                  </form>
+                </div>    
               </div>   
                 <div class="row">
                     <div v-if="filteredCards.length > 0" class="mx-auto" v-bind:class="selectedCards.length > 0 ? 'col-sm-9' : 'col-sm-12'">
@@ -100,7 +107,7 @@ export default {
     return {
       cards: this.data.cards, // here we put what we have from our Controller function data like data.cards YUP yeah so that worked great, however we need to add the view itself back haha
       paginatedCards: [],
-      filterBySet: "",
+      filterBySet: "ALL", // setting default option to be all cards
       setOptions: [
         {
           label: "All Standard Sets",
@@ -177,37 +184,35 @@ export default {
       this.selectedCards = _.filter(this.selectedCards, function(item, i){
         return i !== index;
       });
-    }
-  },
-  computed: {
-    deckSubmitDisabled() {
-      return this.deckForm.name.length < 1 || this.deckForm.description.length < 1;
     },
     cardsBySet() {
       // create a copy of this.cards to manipulate
       let cards_array = this.cards;
       let set = this.filterBySet;
       if (set && set != 'ALL' ) {
-        cards_array = _.filter(cards_array, function(card) {
+        console.log('filtering out by set');
+        return _.filter(cards_array, function(card) {
           // index of finds the string within the card.name property or within the card type
           return card.set == set;
         });
       }
       // return an empty array of cards if we aren't filtering by set
-      return [];
+      return cards_array;
+    }
+  },
+  computed: {
+    deckSubmitDisabled() {
+      return this.deckForm.name.length < 1 || this.deckForm.description.length < 1;
     },
     filteredCards() {
       // check the select option that the v-model was set like this.selectedSet or whatever
       // use that down below when you are filtering, or set up separate filter. using one filter with many conditions makes it so
       // you only go through the loop once
       let search = this.searchText;
-      // if cards have been filtered by set, use them, otherwise just use all the cards
-      let cards_array = this.cardsBySet.length > 0 ? this.cardsBySet : this.cards;
+      // get all the cards by the set selected, defaults to all
+      let cards_array = this.cardsBySet();
       // get set cards here or check for them
-      
       if (search != "") {
-        // check if there was a select set option 
-
         // filter by the search field, make it lowercase
         search = search.toLowerCase();
         cards_array = _.filter(cards_array, function(card) {
