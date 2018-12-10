@@ -113,6 +113,8 @@
             </div>
             <!-- end second col -->
           </div>
+          <br>
+          <a href='https://google.com' type="button" class="btn btn-primary btn-lg btn-block">Buy here through TCGplayer.com</a>
         </div>
       </div>
     </div>

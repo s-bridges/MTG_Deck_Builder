@@ -1893,6 +1893,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -38885,7 +38887,18 @@ var render = function() {
                   )
                 ])
               ])
-            ])
+            ]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-primary btn-lg btn-block",
+                attrs: { href: "https://google.com", type: "button" }
+              },
+              [_vm._v("Buy here through TCGplayer.com")]
+            )
           ])
         ])
       ])
