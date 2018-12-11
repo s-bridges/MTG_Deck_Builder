@@ -8,13 +8,56 @@ use App\Deck;
 use App\Card;
 use Auth;
 use Log;
+use GuzzleHttp\Client;
 
 class AdminController extends Controller
 {
-    public function __construct(Request $request)
+    const TCGPLAYER = 'https://api.tcgplayer.com/token';
+
+    public function __construct(Request $request, Client $client)
     {
+        $tcg_client_id = env('TCG_CLIENT_ID', '');
+        $tcg_client_secret = env('TCG_CLIENT_SECRET', '');
+        $token = env('ACCESS_TOKEN', '');
         $this->middleware('auth');
         $this->request = $request;
+        $this->client = $client;
+        
+        // dd($this->client);
+        // $client = new Client([
+        //     // Base URI is used with relative requests
+        //     'base_uri' => 'http://httpbin.org',
+        //     // You can set any number of default request options.
+        //     'timeout'  => 2.0,
+        // ]);
+        // $response = $this->client->request('POST', self::TCGPLAYER, [
+        //     'form_params' => [
+        //         'grant_type' => 'client_credentials', 
+        //         'client_id' => $tcg_client_id,
+        //         'client_secret' => $tcg_client_secret,
+        //     ]
+        // ]);
+
+        // $response = $client->request('GET', 'https://api.tcgplayer.com/v1.17.0/catalog/categories', [
+        //     'headers' => [
+        //         'Authorization' => 'Bearer ' . $token,
+        //         'Accept'        => 'application/json',
+        //     ]
+        // ]);
+
+        // $client = new Client(['base_uri' => 'https://api.tcgplayer.com/v1.17.0/catalog/categories']);
+        // $client->request('GET', '/get', ['auth' => ['username', 'password']]);
+
+        // $headers = [
+        //     'Authorization:' => 'Bearer ' . $token,
+        //     'Accept'        => 'application/json',
+        // ];
+        // $token = (string) 'Bearer ' . $token;
+        $response = $client->request('GET', 'https://api.tcgplayer.com/v1.17.0/catalog/categories', [
+            'headers' => ['Authorization' => 'Bearer ' . $token]
+        ]);
+        $response = json_decode($response->getBody()->getContents(), true);
+        dd($response);
 
     }
 
@@ -67,5 +110,11 @@ class AdminController extends Controller
     public function changeUserType()
     {
         //here is the function to get all users, and then select specific user and give/revoke admin access
+    }
+
+    public function connect()
+    {
+        //get bearer token
+
     }
 }

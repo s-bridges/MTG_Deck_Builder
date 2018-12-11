@@ -100,7 +100,7 @@
                     <div class="homepage-links links">
                         <a class="hp-link" href="/card/">Build a Deck</a>
                         <a class="hp-link" href="/deck/dotw">Deck of The Week</a>
-                        <a class="hp-link" href="/health">Game Health</a>
+                        <a class="hp-link" href="/health">Life Counter</a>
                         <a class="hp-link" href="/contact/">Contact Us</a>                   
                     </div>
                 </div>
