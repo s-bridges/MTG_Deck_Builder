@@ -2339,6 +2339,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -37569,358 +37573,379 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "container py-3" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-lg-3 col-md-3" }, [
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.filterBySet,
-                    expression: "filterBySet"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { id: "sets" },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.filterBySet = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  }
-                }
-              },
-              _vm._l(_vm.setOptions, function(option) {
-                return _c("option", { domProps: { value: option.set } }, [
-                  _vm._v(_vm._s(option.label))
-                ])
-              })
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-sm-12 col-md-7" }, [
-            _c("form", [
-              _c("div", { staticClass: "form-group" }, [
-                _c("input", {
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("Adsense", {
+        attrs: {
+          "data-ad-client": "ca-pub-3996377264240146",
+          "data-ad-slot": "9168327710"
+        }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c("div", { staticClass: "container py-3" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-3 col-md-3" }, [
+              _c(
+                "select",
+                {
                   directives: [
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.searchText,
-                      expression: "searchText"
+                      value: _vm.filterBySet,
+                      expression: "filterBySet"
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: {
-                    type: "search",
-                    id: "search",
-                    placeholder: "Search by Name"
-                  },
-                  domProps: { value: _vm.searchText },
+                  attrs: { id: "sets" },
                   on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.searchText = $event.target.value
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.filterBySet = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
                     }
                   }
+                },
+                _vm._l(_vm.setOptions, function(option) {
+                  return _c("option", { domProps: { value: option.set } }, [
+                    _vm._v(_vm._s(option.label))
+                  ])
                 })
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-sm-12 col-md-7" }, [
+              _c("form", [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.searchText,
+                        expression: "searchText"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "search",
+                      id: "search",
+                      placeholder: "Search by Name"
+                    },
+                    domProps: { value: _vm.searchText },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.searchText = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-sm-12 col-md-2" }, [
+              _c("form", { staticClass: "right-align" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-dark",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.searchText = ""
+                          _vm.filterBySet = "ALL"
+                        }
+                      }
+                    },
+                    [_vm._v("Reset")]
+                  )
+                ])
               ])
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-sm-12 col-md-2" }, [
-            _c("form", { staticClass: "right-align" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c(
-                  "button",
+          _c("div", { staticClass: "row" }, [
+            _vm.filteredCards.length > 0
+              ? _c(
+                  "div",
                   {
-                    staticClass: "btn btn-dark",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        _vm.searchText = ""
-                        _vm.filterBySet = "ALL"
-                      }
-                    }
+                    staticClass: "mx-auto",
+                    class:
+                      _vm.selectedCards.length > 0 ? "col-sm-9" : "col-sm-12"
                   },
-                  [_vm._v("Reset")]
-                )
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _vm.filteredCards.length > 0
-            ? _c(
-                "div",
-                {
-                  staticClass: "mx-auto",
-                  class: _vm.selectedCards.length > 0 ? "col-sm-9" : "col-sm-12"
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "card" },
-                    [
-                      _vm._m(0),
-                      _vm._v(" "),
-                      _c(
-                        "paginate",
-                        {
-                          staticClass: "row card-body",
-                          attrs: {
-                            name: "paginatedCards",
-                            list: _vm.filteredCards,
-                            per: 15,
-                            tag: "div"
-                          }
-                        },
-                        _vm._l(_vm.paginated("paginatedCards"), function(card) {
-                          return _c(
-                            "div",
-                            {
-                              staticClass: "col justify-col-center addable",
-                              staticStyle: { "padding-bottom": "2em" },
-                              on: {
-                                click: function($event) {
-                                  _vm.addCard(card)
-                                }
-                              }
-                            },
-                            [
-                              _c("img", {
-                                attrs: {
-                                  src:
-                                    "/images/cards/" +
-                                    card.multiverse_id +
-                                    ".jpg"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "overlay" }, [
-                                _c("div", { staticClass: "text" }, [
-                                  _c(
-                                    "i",
-                                    { staticClass: "material-icons add" },
-                                    [_vm._v("add_circle")]
-                                  )
-                                ])
-                              ])
-                            ]
-                          )
-                        })
-                      ),
-                      _vm._v(" "),
-                      _c("paginate-links", {
-                        attrs: {
-                          for: "paginatedCards",
-                          classes: {
-                            ul: ["pagination", "justify-content-center"],
-                            li: "page-item",
-                            a: "page-link"
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "card" },
+                      [
+                        _vm._m(0),
+                        _vm._v(" "),
+                        _c(
+                          "paginate",
+                          {
+                            staticClass: "row card-body",
+                            attrs: {
+                              name: "paginatedCards",
+                              list: _vm.filteredCards,
+                              per: 15,
+                              tag: "div"
+                            }
                           },
-                          simple: {
-                            prev: "Previous",
-                            next: "Next"
+                          _vm._l(_vm.paginated("paginatedCards"), function(
+                            card
+                          ) {
+                            return _c(
+                              "div",
+                              {
+                                staticClass: "col justify-col-center addable",
+                                staticStyle: { "padding-bottom": "2em" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.addCard(card)
+                                  }
+                                }
+                              },
+                              [
+                                _c("img", {
+                                  attrs: {
+                                    src:
+                                      "/images/cards/" +
+                                      card.multiverse_id +
+                                      ".jpg"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "overlay" }, [
+                                  _c("div", { staticClass: "text" }, [
+                                    _c(
+                                      "i",
+                                      { staticClass: "material-icons add" },
+                                      [_vm._v("add_circle")]
+                                    )
+                                  ])
+                                ])
+                              ]
+                            )
+                          })
+                        ),
+                        _vm._v(" "),
+                        _c("paginate-links", {
+                          attrs: {
+                            for: "paginatedCards",
+                            classes: {
+                              ul: ["pagination", "justify-content-center"],
+                              li: "page-item",
+                              a: "page-link"
+                            },
+                            simple: {
+                              prev: "Previous",
+                              next: "Next"
+                            }
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.selectedCards.length > 0
+              ? _c("div", { staticClass: "col-sm-3" }, [
+                  _c("div", { staticClass: "card" }, [
+                    _c("div", { staticClass: "card-header" }, [
+                      _c("h4", { staticClass: "mb-0" }, [_vm._v("My Deck")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.deckForm.name,
+                            expression: "deckForm.name"
+                          }
+                        ],
+                        staticClass: "form-control mt-3",
+                        attrs: {
+                          name: "name",
+                          placeholder: "Deck Name",
+                          required: ""
+                        },
+                        domProps: { value: _vm.deckForm.name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.deckForm, "name", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.deckForm.description,
+                            expression: "deckForm.description"
+                          }
+                        ],
+                        staticClass: "form-control mt-3",
+                        attrs: {
+                          name: "description",
+                          placeholder: "Description",
+                          required: ""
+                        },
+                        domProps: { value: _vm.deckForm.description },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.deckForm,
+                              "description",
+                              $event.target.value
+                            )
                           }
                         }
                       })
-                    ],
-                    1
-                  )
-                ]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.selectedCards.length > 0
-            ? _c("div", { staticClass: "col-sm-3" }, [
-                _c("div", { staticClass: "card" }, [
-                  _c("div", { staticClass: "card-header" }, [
-                    _c("h4", { staticClass: "mb-0" }, [_vm._v("My Deck")]),
+                    ]),
                     _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.deckForm.name,
-                          expression: "deckForm.name"
-                        }
-                      ],
-                      staticClass: "form-control mt-3",
-                      attrs: {
-                        name: "name",
-                        placeholder: "Deck Name",
-                        required: ""
-                      },
-                      domProps: { value: _vm.deckForm.name },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.deckForm, "name", $event.target.value)
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.deckForm.description,
-                          expression: "deckForm.description"
-                        }
-                      ],
-                      staticClass: "form-control mt-3",
-                      attrs: {
-                        name: "description",
-                        placeholder: "Description",
-                        required: ""
-                      },
-                      domProps: { value: _vm.deckForm.description },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.deckForm,
-                            "description",
-                            $event.target.value
-                          )
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "card-body" },
-                    [
-                      _c("h5", { staticStyle: { "margin-bottom": "0.5em" } }, [
+                    _c(
+                      "div",
+                      { staticClass: "card-body" },
+                      [
                         _c(
-                          "span",
-                          {
-                            staticClass: "badge",
-                            class:
-                              _vm.selectedCards.length > 60
-                                ? "badge-danger"
-                                : "badge-secondary"
-                          },
+                          "h5",
+                          { staticStyle: { "margin-bottom": "0.5em" } },
                           [
-                            _vm._v(
-                              _vm._s(_vm.selectedCards.length) +
-                                " / " +
-                                _vm._s(_vm.maxlength)
-                            )
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("p", [
-                        _vm._v("Creature: " + _vm._s(_vm.instantCreatureCount)),
-                        _c("br"),
-                        _vm._v(
-                          "\n                          Instant/Sorcery: " +
-                            _vm._s(_vm.instantSorceryCount)
-                        ),
-                        _c("br"),
-                        _vm._v(
-                          "\n                          Enchantment: " +
-                            _vm._s(_vm.instantEnchantmentCount)
-                        ),
-                        _c("br"),
-                        _vm._v(
-                          "\n                          Land: " +
-                            _vm._s(_vm.instantLandCount)
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _vm._l(_vm.myDeck, function(card) {
-                        return _c("div", [
-                          _c("p", { staticClass: "deck-list" }, [
-                            _c(
-                              "i",
-                              {
-                                staticClass: "material-icons text-secondary",
-                                on: {
-                                  click: function($event) {
-                                    _vm.removeCard(card.card)
-                                  }
-                                }
-                              },
-                              [_vm._v("remove_circle")]
-                            ),
-                            _vm._v(" " + _vm._s(card.count) + " "),
-                            _c(
-                              "i",
-                              {
-                                staticClass: "material-icons text-primary",
-                                on: {
-                                  click: function($event) {
-                                    _vm.addCard(card.card)
-                                  }
-                                }
-                              },
-                              [_vm._v("add_circle")]
-                            ),
-                            _vm._v(" "),
                             _c(
                               "span",
-                              { staticStyle: { "padding-left": "0.5em" } },
-                              [_vm._v(_vm._s(card.name))]
+                              {
+                                staticClass: "badge",
+                                class:
+                                  _vm.selectedCards.length > 60
+                                    ? "badge-danger"
+                                    : "badge-secondary"
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(_vm.selectedCards.length) +
+                                    " / " +
+                                    _vm._s(_vm.maxlength)
+                                )
+                              ]
                             )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("p", [
+                          _vm._v(
+                            "Creature: " + _vm._s(_vm.instantCreatureCount)
+                          ),
+                          _c("br"),
+                          _vm._v(
+                            "\n                          Instant/Sorcery: " +
+                              _vm._s(_vm.instantSorceryCount)
+                          ),
+                          _c("br"),
+                          _vm._v(
+                            "\n                          Enchantment: " +
+                              _vm._s(_vm.instantEnchantmentCount)
+                          ),
+                          _c("br"),
+                          _vm._v(
+                            "\n                          Land: " +
+                              _vm._s(_vm.instantLandCount)
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.myDeck, function(card) {
+                          return _c("div", [
+                            _c("p", { staticClass: "deck-list" }, [
+                              _c(
+                                "i",
+                                {
+                                  staticClass: "material-icons text-secondary",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.removeCard(card.card)
+                                    }
+                                  }
+                                },
+                                [_vm._v("remove_circle")]
+                              ),
+                              _vm._v(" " + _vm._s(card.count) + " "),
+                              _c(
+                                "i",
+                                {
+                                  staticClass: "material-icons text-primary",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.addCard(card.card)
+                                    }
+                                  }
+                                },
+                                [_vm._v("add_circle")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                { staticStyle: { "padding-left": "0.5em" } },
+                                [_vm._v(_vm._s(card.name))]
+                              )
+                            ])
                           ])
-                        ])
-                      }),
-                      _vm._v(" "),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary",
-                          attrs: {
-                            type: "button",
-                            title: "Save",
-                            disabled: _vm.deckSubmitDisabled
-                          },
-                          on: {
-                            click: function($event) {
-                              _vm.saveDeck()
+                        }),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: {
+                              type: "button",
+                              title: "Save",
+                              disabled: _vm.deckSubmitDisabled
+                            },
+                            on: {
+                              click: function($event) {
+                                _vm.saveDeck()
+                              }
                             }
-                          }
-                        },
-                        [_vm._v("Save")]
-                      )
-                    ],
-                    2
-                  )
+                          },
+                          [_vm._v("Save")]
+                        )
+                      ],
+                      2
+                    )
+                  ])
                 ])
-              ])
-            : _vm._e()
+              : _vm._e()
+          ])
         ])
       ])
-    ])
-  ])
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
