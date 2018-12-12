@@ -51,7 +51,7 @@ Route::prefix('import')->middleware(['auth', 'is_admin'])->group(function (){
 Route::get('/contact', 'ContactController@showContact')->name('contact.show');
 Route::post('/contact', 'ContactController@sendEmail')->name('contact.send');
 
-Route::prefix('admin')->middleware('is_admin')->group(function (){
+Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function (){
     Route::get('/', 'AdminController@admin')->name('admin');
     Route::patch('/save/update-dotw/', 'AdminController@deckOfTheWeekSave')->name('update-dotw');
     Route::get('/import-cards', 'AdminController@importCards');
