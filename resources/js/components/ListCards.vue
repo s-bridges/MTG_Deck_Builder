@@ -1,12 +1,6 @@
 <template>
     <div class="container">
     <!-- just to see -->
-    <div data-ad-slot="9168327710">
-    </div>
-      <!-- <Adsense
-        data-ad-client="ca-pub-3996377264240146"
-        data-ad-slot="9168327710">
-      </Adsense> -->
           <div class="row justify-content-center">               
             <div class="container py-3">
               <div class="row">

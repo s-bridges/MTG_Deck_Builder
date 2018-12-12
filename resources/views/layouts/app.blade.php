@@ -11,17 +11,14 @@
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
+    
+    <!-- google adsense -->
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <!-- magicdb -->
-    <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-3996377264240146"
-        data-ad-slot="9168327710"
-        data-ad-format="auto"
-        data-full-width-responsive="true">
-    </ins>
     <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-3996377264240146",
+        enable_page_level_ads: true
+    });
     </script>
 
     <!-- Fonts -->
@@ -34,6 +31,17 @@
 </head>
 <body>
     <div id="app">
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- magicdb -->
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-3996377264240146"
+        data-ad-slot="9168327710"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
