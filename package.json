@@ -17,15 +17,20 @@
         "laravel-mix": "^2.0",
         "lodash": "^4.17.11",
         "popper.js": "^1.12",
-        "vue": "^2.5.7"
+        "vue": "^2.5.7",
+        "vue-adsense": "^1.0.1"
     },
     "dependencies": {
         "ajv": "^6.5.4",
+        "dotenv": "^6.2.0",
+        "dotenv-webpack": "^1.5.7",
         "imagemin": "^5.3.1",
         "nosleep.js": "^0.7.0",
         "simulate-touch": "^1.0.0",
         "v-lazy-image": "^1.2.2",
+        "vue-google-adsense": "^1.2.0",
         "vue-lazy-images": "^1.4.6",
-        "vue-paginate": "^3.6.0"
+        "vue-paginate": "^3.6.0",
+        "vue-script2": "^2.0.3"
     }
 }

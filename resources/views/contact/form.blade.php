@@ -19,7 +19,7 @@
 
             <label for="message" class="mt-3">Message</label>
             <textarea name="message" cols="30" rows="10" class="form-control"></textarea>
-
+            <input type="hidden" name="ip" id="hiddenField" value="<?php $ip ?>" />
             <button type="submit" class="btn btn-success btn-block my-3">Send Email</button>
             </form>
         </div>

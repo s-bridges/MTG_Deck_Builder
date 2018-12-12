@@ -17,7 +17,7 @@
             </form>
           </div>
           <div class="col-sm-12 col-md-3" style="display:flex; justify-content: space-between;">
-            <button type="button" class="btn btn-danger float-right" v-on:click="unHide = !unHide">
+            <button type="button" class="btn btn-primary float-right" v-on:click="unHide = !unHide">
               <span v-if="!unHide" title="Add Cards">Add Cards</span>
               <span v-else>Close</span>
             </button>            
@@ -71,7 +71,7 @@
             <div v-bind:class="toggleView ? 'col-lg-3' : 'col-lg-12'">
               <div class="card full-width">
                 <div class="card-header">
-                  <h4 class="mb-0">{{ deck.name }}</h4>          
+                  <h4 class="mb-0">{{ deck.name }}<button v-if="editable" type="button" class="btn btn-danger btn-sm float-right" v-on:click="deleteDeck(deck.id)" title="Delete">Delete</button></h4>        
                 </div>
                 <div v-bind:class="!toggleView ? 'row' : 'card-body'">
                   <div v-for="card in myDeckCards" v-bind:class="!toggleView ? 'col col-lg-3 text-center addable removable': ''" style="padding-top:.5em;"> 
@@ -113,6 +113,8 @@
             </div>
             <!-- end second col -->
           </div>
+          <br>
+          <a href='#' type="button" class="btn btn-primary btn-lg btn-block">Buy here through TCGplayer.com</a>
         </div>
       </div>
     </div>
@@ -236,6 +238,18 @@ export default {
           return i !== index;
         });
       }
+    },
+    deleteDeck(deckId){
+      axios.delete(`/deck/${deckId}/delete`)
+      .then(response => {
+        // if successful redirect user, maybe show a toast
+        if (response.data.status) {
+          window.location = '/deck';         
+        }
+      })
+      .catch(error => {
+          
+      });
     }
   },
   computed: {

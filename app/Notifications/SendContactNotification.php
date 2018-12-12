@@ -42,12 +42,14 @@ class SendContactNotification extends Notification
      */
     public function toMail($notifiable)
     {
+        $ip = $_SERVER['REMOTE_ADDR'];
         return (new MailMessage)
                     ->subject('Someone sent us a message!')
                     ->greeting('Hello')
                     ->line('Someone with the name of ' . $this->request->name . ' is trying to contact us!')
-                    ->line('Here is their message')
-                    ->line($this->request->message)
+                    ->line('They are sending this from the IP Address of ' . $ip . '.')
+                    ->line('Here is their message -')
+                    ->line('"' . $this->request->message . '"')
                     ->action('Reply', url('mailto:' . $this->request->email));
     }
 

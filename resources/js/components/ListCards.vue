@@ -1,6 +1,13 @@
 <template>
     <div class="container">
-        <div class="row justify-content-center">               
+    <!-- just to see -->
+    <div data-ad-slot="9168327710">
+    </div>
+      <!-- <Adsense
+        data-ad-client="ca-pub-3996377264240146"
+        data-ad-slot="9168327710">
+      </Adsense> -->
+          <div class="row justify-content-center">               
             <div class="container py-3">
               <div class="row">
                 <div class="col-lg-3 col-md-3">
@@ -47,6 +54,7 @@
                                         </div>
                                     </div>
                             </paginate>
+                            
                             <paginate-links
                               for="paginatedCards"
                               :classes="{
@@ -59,7 +67,7 @@
                                 next: 'Next'
                               }"
                             ></paginate-links>
-                            </div>                             
+                            </div>                         
                         </div>
                         <div v-if="selectedCards.length > 0" class="col-sm-3">
                           <div class="card">
@@ -89,6 +97,7 @@
         </div>
     </div>
 </template>
+
 
 <script>
 export default {

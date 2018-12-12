@@ -11,9 +11,14 @@ window.Vue = require('vue');
 
 import { VLazyImagePlugin } from "v-lazy-image";
 import VuePaginate from 'vue-paginate';
+import Ads from 'vue-google-adsense';
 
 Vue.use(VLazyImagePlugin);
 Vue.use(VuePaginate);
+Vue.use(require('vue-script2'));
+Vue.use(Ads.Adsense);
+Vue.use(Ads.InArticleAdsense);
+Vue.use(Ads.InFeedAdsense);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

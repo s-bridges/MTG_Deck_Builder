@@ -15,12 +15,14 @@ class DecksController extends Controller
 
     public function __construct(Request $request)
     {
-        $this->middleware('auth');
         $this->request = $request;
     }
 
     public function saveDecks()
     {
+        // I want this to only be hit by an auth user
+        // $this->middleware('auth'); only use this if it's not being placed on the route itself in web.php
+        // none of the below runs if the above fails
         $deck = new Deck;
         $deck->name = $this->request->input('name');
         $deck->description = $this->request->input('description');
@@ -59,19 +61,25 @@ class DecksController extends Controller
     }    
 
     public function specificDeck($deck_id) {
+        $check = Auth::check();
         $deck_id = (int) $deck_id;
         // need to fix this so there is an OR where clause...basically, if this is the user's deck, or the deck is allow_share, get me the deck
         $deck = Deck::where('id', $deck_id)
         ->with('cards')->first();
-
-        if ($deck && $deck_id === $deck['id']) {
-            // set editable to false if this isn't the user's deck, otherwise, let them edit their own deck
-            $editable = Auth::user()->id == $deck['user_id'];
-            $data = collect(['deck' => $deck, 'editable' => $editable]);
-            // conditions on where this is view or edit
-            return view('deck-cards', ['data' => $data]);
+        if($check == true) {
+            if ($deck && $deck_id === $deck['id']) {
+                // set editable to false if this isn't the user's deck, otherwise, let them edit their own deck
+                $editable = Auth::user()->id == $deck['user_id'];
+                $data = collect(['deck' => $deck, 'editable' => $editable]);
+                // conditions on where this is view or edit
+                return view('deck-cards', ['data' => $data]);
+            }
         }
-
+        else {
+            $data = collect(['deck' => $deck]);
+                // only view
+                return view('deck-cards', ['data' => $data]);
+        }
         return redirect('/404');
         // default don't show the page, but if they were allowed to see the deck, the above gets returned in the conditional and this line never gets hit
         // return view('errors.404');
@@ -130,6 +138,18 @@ class DecksController extends Controller
         } else {
             // redirect or throw unauthorize message
             return redirect('/404');
+        }
+    }
+
+    public function deleteDeck($id) {
+        // get the deck and delete it as long as the owner owns it
+        $deck = Deck::where('id', $id)->where('user_id', Auth::user()->id)->first();
+        $deleted = $deck->delete();
+        // return a response that it was in fact deleted
+        if ($deleted) {
+            return response()->json(['status' => true, 'message' => 'Deleted Successfully!']);
+        } else {
+            return response()->json(['status' => false, 'message' => json_encode($delete)]);
         }
     }
 }
