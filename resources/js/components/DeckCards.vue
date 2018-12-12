@@ -71,7 +71,7 @@
             <div v-bind:class="toggleView ? 'col-lg-3' : 'col-lg-12'">
               <div class="card full-width">
                 <div class="card-header">
-                  <h4 class="mb-0">{{ deck.name }}<button type="button" class="btn btn-danger btn-sm float-right" v-on:click="deleteDeck()" title="Delete">Delete</button></h4>        
+                  <h4 class="mb-0">{{ deck.name }}<button v-if="editable" type="button" class="btn btn-danger btn-sm float-right" v-on:click="deleteDeck(deck.id)" title="Delete">Delete</button></h4>        
                 </div>
                 <div v-bind:class="!toggleView ? 'row' : 'card-body'">
                   <div v-for="card in myDeckCards" v-bind:class="!toggleView ? 'col col-lg-3 text-center addable removable': ''" style="padding-top:.5em;"> 
@@ -238,6 +238,18 @@ export default {
           return i !== index;
         });
       }
+    },
+    deleteDeck(deckId){
+      axios.delete(`/deck/${deckId}/delete`)
+      .then(response => {
+        // if successful redirect user, maybe show a toast
+        if (response.data.status) {
+          window.location = '/deck';         
+        }
+      })
+      .catch(error => {
+          
+      });
     }
   },
   computed: {
@@ -261,9 +273,6 @@ export default {
         });
       }
       return cards_array;
-    },
-    deleteDeck(){
-      alert("Deck Deleted");
     }
   }
 };

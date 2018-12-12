@@ -15,27 +15,29 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/home', function () {
+    return view('welcome');
+});
+
 Route::get('/404', function () {
     return view('errors.404');
 });
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->middleware('verified')->name('home');
-
-Route::prefix('card')->middleware(['guest'])->group(function (){  
+Route::prefix('card')->group(function (){  
     Route::get('/{set}', 'CardsController@listCardsBy');
     Route::get('/', 'CardsController@listCards')->name('cards');
 }); 
 
 Route::post('/card/save', 'DecksController@saveDecks')->middleware(['auth']);
 
-Route::prefix('deck')->middleware(['guest'])->group(function (){
+Route::prefix('deck')->group(function (){
     Route::get('/', 'DecksController@myDecks')->name('decks');
     Route::get('/{deck_id}/cards', 'DecksController@specificDeck');
     Route::get('/dotw', 'DecksController@deckOfTheWeek');
     Route::put('/edit', 'DecksController@editDeck')->middleware(['auth']);
-    Route::post('/{deck_id}/delete', 'DecksController@deleteDeck')->middleware(['auth']); //delete route to be built
+    Route::delete('/{deck_id}/delete', 'DecksController@deleteDeck')->middleware(['auth']); 
 });
 
 
@@ -56,7 +58,7 @@ Route::prefix('admin')->middleware('is_admin')->group(function (){
     Route::get('/api/connect', 'AdminController@connect');
 });
 
-Route::prefix('user')->middleware(['auth'])->group(function() {
+Route::prefix('user')->group(function() {
     Route::get('/', 'UserController@profile')->name('profile');
 });
 

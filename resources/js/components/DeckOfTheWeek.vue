@@ -16,7 +16,7 @@
                 </p>
             </div>
                             </br>
-                <div class="row">
+                <div class="row justify-content-center">
                             <div v-if="deck" class="col-lg-3 text-center cube-wrap">
                                   <div class="cube" v-on:click="selectDeck(deck.id)">
                                       <div class="front-pane" v-bind:style="{backgroundImage: 'url(/images/cards/' + deck.cards[0].multiverse_id + '.jpg)' }"></div>

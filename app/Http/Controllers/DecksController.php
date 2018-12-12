@@ -15,7 +15,6 @@ class DecksController extends Controller
 
     public function __construct(Request $request)
     {
-        $this->middleware('guest');// herrrrrrrttrrritsissss
         $this->request = $request;
     }
 
@@ -142,8 +141,15 @@ class DecksController extends Controller
         }
     }
 
-    public function deleteDeck() {
-        $deck = Deck::findOrFail($id);
-        $deck->delete();
+    public function deleteDeck($id) {
+        // get the deck and delete it as long as the owner owns it
+        $deck = Deck::where('id', $id)->where('user_id', Auth::user()->id)->first();
+        $deleted = $deck->delete();
+        // return a response that it was in fact deleted
+        if ($deleted) {
+            return response()->json(['status' => true, 'message' => 'Deleted Successfully!']);
+        } else {
+            return response()->json(['status' => false, 'message' => json_encode($delete)]);
+        }
     }
 }

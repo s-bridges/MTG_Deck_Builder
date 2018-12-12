@@ -16,9 +16,9 @@ class AdminController extends Controller
 
     public function __construct(Request $request, Client $client)
     {
-        $tcg_client_id = env('TCG_CLIENT_ID', '');
+        /* $tcg_client_id = env('TCG_CLIENT_ID', '');
         $tcg_client_secret = env('TCG_CLIENT_SECRET', '');
-        $token = env('ACCESS_TOKEN', '');
+        $token = env('ACCESS_TOKEN', ''); */
         $this->middleware('auth');
         $this->request = $request;
         $this->client = $client;
@@ -53,12 +53,12 @@ class AdminController extends Controller
         //     'Accept'        => 'application/json',
         // ];
         // $token = (string) 'Bearer ' . $token;
-        $response = $client->request('GET', 'https://api.tcgplayer.com/v1.17.0/catalog/categories', [
+      /*   $response = $client->request('GET', 'https://api.tcgplayer.com/v1.17.0/catalog/categories', [
             'headers' => ['Authorization' => 'Bearer ' . $token]
         ]);
         $response = json_decode($response->getBody()->getContents(), true);
         dd($response);
-
+ */
     }
 
     public function admin()

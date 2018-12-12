@@ -2006,6 +2006,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           return i !== index;
         });
       }
+    },
+    deleteDeck: function deleteDeck(deckId) {
+      axios.delete("/deck/" + deckId + "/delete").then(function (response) {
+        // if successful redirect user, maybe show a toast
+        if (response.data.status) {
+          window.location = '/deck';
+        }
+      }).catch(function (error) {});
     }
   },
   computed: {
@@ -2026,9 +2034,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
       }
       return cards_array;
-    },
-    deleteDeck: function deleteDeck() {
-      alert("Deck Deleted");
     }
   }
 });
@@ -38703,19 +38708,21 @@ var render = function() {
                   _c("div", { staticClass: "card-header" }, [
                     _c("h4", { staticClass: "mb-0" }, [
                       _vm._v(_vm._s(_vm.deck.name)),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-danger btn-sm float-right",
-                          attrs: { type: "button", title: "Delete" },
-                          on: {
-                            click: function($event) {
-                              _vm.deleteDeck()
-                            }
-                          }
-                        },
-                        [_vm._v("Delete")]
-                      )
+                      _vm.editable
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-danger btn-sm float-right",
+                              attrs: { type: "button", title: "Delete" },
+                              on: {
+                                click: function($event) {
+                                  _vm.deleteDeck(_vm.deck.id)
+                                }
+                              }
+                            },
+                            [_vm._v("Delete")]
+                          )
+                        : _vm._e()
                     ])
                   ]),
                   _vm._v(" "),
@@ -38998,7 +39005,7 @@ var render = function() {
         _vm._v(" "),
         _c("br"),
         _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "row justify-content-center" }, [
           _vm.deck
             ? _c("div", { staticClass: "col-lg-3 text-center cube-wrap" }, [
                 _c(
