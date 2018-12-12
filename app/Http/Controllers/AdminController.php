@@ -14,14 +14,14 @@ class AdminController extends Controller
 {
     const TCGPLAYER = 'https://api.tcgplayer.com/token';
 
-    public function __construct(Request $request, Client $client)
+    public function __construct(Request $request)
     {
         /* $tcg_client_id = env('TCG_CLIENT_ID', '');
         $tcg_client_secret = env('TCG_CLIENT_SECRET', '');
         $token = env('ACCESS_TOKEN', ''); */
         $this->middleware('auth');
         $this->request = $request;
-        $this->client = $client;
+        // $this->client = $client;
         
         // dd($this->client);
         // $client = new Client([
