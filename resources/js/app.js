@@ -38,5 +38,3 @@ Vue.component('health-page', require('./components/HealthPage.vue'));
 const app = new Vue({
     el: '#app'
 });
-
-
