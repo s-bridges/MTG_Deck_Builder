@@ -28,6 +28,7 @@
             </div>
           </div>
         </div>
+        </br>
           <div class="row">
             <!-- first col -->
             <div v-bind:class="toggleView ? 'col-lg-9' : 'col-lg-12'">
@@ -109,12 +110,55 @@
                     </span>
                   </div>
                 </div>
+                </div>
+                </br>
+                <!-- Sideboard -->
+                <div class="card full-width">
+                <div class="card-header">
+                  <h4 class="mb-0">Sideboard</h4>        
+                </div>
+                <div v-bind:class="!toggleView ? 'row' : 'card-body'">
+                  <div v-for="card in myDeckCards" v-bind:class="!toggleView ? 'col col-lg-3 text-center addable removable': ''" style="padding-top:.5em;"> 
+                    <!-- when the deck is in card view -->
+                    <span v-if="!toggleView"> 
+                      <div v-if="card.pivot.count <= 4" style="height:40px; display:flex; justify-content:center; align-items:center">
+                        <span v-for="n in card.pivot.count">
+                          <i style="max-width: 24px;" class="material-icons">whatshot</i>
+                        </span>
+                      </div>
+                      <div v-else style="height:40px; display:flex; justify-content:center; align-items:center"> 
+                        <span><strong>{{card.pivot.count}}x</strong></span>
+                      </div>                 
+                      <img
+                        v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
+                      />
+                      <div v-if="editable">
+                        <i v-on:click="removeCard(card)" class="material-icons clickable">remove_circle</i>
+                        <i v-on:click="addCard(card)" class="material-icons clickable">add_circle</i>
+                      </div>
+                    </span>
+                    <span v-else>
+                      <span v-show="activeImage == card.multiverse_id" class="modal-image">
+                        <img
+                          v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
+                      /></span>
+                      <!-- this is what shows when the deck is in list view -->
+                      <!-- <p style="margin: 0;">{{card.pivot.count}}x {{card.name}}</p> -->
+                      <p class="deck-list">
+                        <i class="material-icons text-secondary" v-on:click="removeCard(card)">remove_circle</i> 
+                          {{card.pivot.count}} 
+                        <i class="material-icons text-primary" v-on:click="addCard(card)">add_circle</i> 
+                        <span v-on:mouseover="popOn(card.multiverse_id)" v-on:mouseout="popOff(card.multiverse_id)" style="padding-left:0.5em; cursor:pointer;">{{card.name}}</span>
+                      </p>
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
-            <!-- end second col -->
+            </div>            
+            </br>
+            <a href='#' type="button" class="btn btn-primary btn-lg btn-block">Buy here through TCGplayer.com</a>
           </div>
-          <br>
-          <a href='#' type="button" class="btn btn-primary btn-lg btn-block">Buy here through TCGplayer.com</a>
         </div>
       </div>
     </div>
@@ -169,6 +213,7 @@ export default {
       searchText: "",
       paginate: ["paginatedCards"],
       selectedCards: [],
+      sideboardCards: [],
       unHide: false
     };
   },
