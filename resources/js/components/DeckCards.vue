@@ -121,13 +121,13 @@
                   <div v-for="card in myDeckCards" v-bind:class="!toggleView ? 'col col-lg-3 text-center addable removable': ''" style="padding-top:.5em;"> 
                     <!-- when the deck is in card view -->
                     <span v-if="!toggleView"> 
-                      <div v-if="card.pivot.count <= 4" style="height:40px; display:flex; justify-content:center; align-items:center">
-                        <span v-for="n in card.pivot.count">
+                      <div v-if="sideboard.count <= 4" style="height:40px; display:flex; justify-content:center; align-items:center">
+                        <span v-for="n in sideboard.count">
                           <i style="max-width: 24px;" class="material-icons">whatshot</i>
                         </span>
                       </div>
                       <div v-else style="height:40px; display:flex; justify-content:center; align-items:center"> 
-                        <span><strong>{{card.pivot.count}}x</strong></span>
+                        <span><strong>{{sideboard.count}}x</strong></span>
                       </div>                 
                       <img
                         v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
@@ -157,7 +157,7 @@
             </div>
             </div>            
             </br>
-            <a href='#' type="button" class="btn btn-primary btn-lg btn-block">Buy here through TCGplayer.com</a>
+            <a href='#' type="button" class="btn btn-primary btn-lg btn-block">Buy here through ###########</a>
           </div>
         </div>
       </div>
@@ -181,6 +181,7 @@ export default {
   data() {
     return {
       deck: this.data.deck,
+      sideboard: this.data.sideboard,
       editable: this.data.editable,
       cards: [],
       paginatedCards: [],
