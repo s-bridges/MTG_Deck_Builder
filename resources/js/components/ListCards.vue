@@ -278,7 +278,6 @@ export default {
       let index = _.findIndex(this.filterByColor, function(x) {
        return x.filterByColor == card.colors;
        });
-       console.log(index);
       return cards_array;
     },
     myDeck() {

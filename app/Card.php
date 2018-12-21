@@ -32,7 +32,7 @@ class Card extends Model
 
     public function decks()
     {
-        return $this->belongsToMany(Deck::class, 'cards_decks', 'card_id', 'deck_id', 'sideboards'); //add , 'sideboards'
+        return $this->belongsToMany(Deck::class, 'cards_decks', 'card_id', 'deck_id', 'sideboards');
     }
 
     public function users() {
