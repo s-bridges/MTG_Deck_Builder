@@ -35,13 +35,13 @@
                 </div>
                 <div class="col-sm-12 col-md-7" style="padding-bottom:.5em;">
                 <!-- White = W, Blue = U, Black = B, Red = R, Green = G, Colorless = A, Land = L -->
-                  <span v-on:click="toggleFilterColors('W')"><img src="/images/mana-symbols_white.png" class="img-fluid" style="width:auto;height:50px;" alt="White"></span>
-                  <span v-on:click="toggleFilterColors('U')"><img src="/images/mana-symbols_blue.png" class="img-fluid" style="width:auto;height:50px;" alt="Blue"></span>
-                  <span v-on:click="toggleFilterColors('B')"><img src="/images/mana-symbols_black.png" class="img-fluid" style="width:auto;height:50px;" alt="Black"></span>
-                  <span v-on:click="toggleFilterColors('R')"><img src="/images/mana-symbols_red.png" class="img-fluid" style="width:auto;height:50px;" alt="Red"></span>
-                  <span v-on:click="toggleFilterColors('G')"><img src="/images/mana-symbols_green.png" class="img-fluid" style="width:auto;height:50px;" alt="Green"></span>
-                  <span v-on:click="toggleFilterColors('A')"><img src="/images/colorless.png" class="img-fluid" style="width:auto;height:50px;" alt="Colorless"></span>
-                  <span v-on:click="toggleFilterColors('L')"><img src="/images/Land_symbol.png" class="img-fluid" style="width:auto;height:50px;" alt="Land"></span>
+                  <span v-on:click="toggleFilterColors('W')"><img src="/images/magic_white.png" class="img-fluid" style="width:auto;height:50px;" alt="White"></span>
+                  <span v-on:click="toggleFilterColors('U')"><img src="/images/magic_blue.png" class="img-fluid" style="width:auto;height:50px;" alt="Blue"></span>
+                  <span v-on:click="toggleFilterColors('B')"><img src="/images/magic_black.png" class="img-fluid" style="width:auto;height:50px;" alt="Black"></span>
+                  <span v-on:click="toggleFilterColors('R')"><img src="/images/magic_red.png" class="img-fluid" style="width:auto;height:50px;" alt="Red"></span>
+                  <span v-on:click="toggleFilterColors('G')"><img src="/images/magic_green.png" class="img-fluid" style="width:auto;height:50px;" alt="Green"></span>
+                  <span v-on:click="toggleFilterColors('A')"><img src="/images/magic_colorless.png" class="img-fluid" style="width:auto;height:50px;" alt="Colorless"></span>
+                  <span v-on:click="toggleFilterColors('L')"><img src="/images/magic_land.png" class="img-fluid" style="width:auto;height:50px;" alt="Land"></span>
                 </div>    
               </div>   
                 <div class="row">
@@ -96,21 +96,12 @@
                               Enchantment: {{ instantEnchantmentCount }}</br>
                               Land: {{ instantLandCount }}</p>
                               <div v-for="card in myDeck">
-                                <p class="deck-list"><i class="material-icons text-secondary" v-on:click="removeCard(card.card)">remove_circle</i> {{card.count}} <i class="material-icons text-primary" v-on:click="addCard(card.card)">add_circle</i> <span style="padding-left:0.5em;">{{card.name}} <i class="material-icons" v-on:click="addSideboardCard(card.card)">tab</i></span></p>
+                                <p class="deck-list"><i class="material-icons text-secondary" v-on:click="removeCard(card.card)">remove_circle</i> {{card.count}} <i class="material-icons text-primary" v-on:click="addCard(card.card)">add_circle</i> <span style="padding-left:0.5em;">{{card.name}} </span></p>
                               </div>
                               <br />
                               <button type="button" class="btn btn-primary" title="Save" v-on:click="saveDeck()" :disabled="deckSubmitDisabled">Save</button>
                             </div>
                           </div>
-                          <div class="card">
-                              <div class="card-body">
-                              <h5 class="mb-0">Sideboard</h5>
-                              <h5 style="margin-bottom:0.5em;"><span class="badge" v-bind:class="sideboardCards.length > 15 ? 'badge-danger' : 'badge-secondary'">{{sideboardCards.length}} / {{sideboardMaxLength}}</span></h5>
-                              <div v-for="card in myDeck">
-                                <p class="deck-list"><i class="material-icons text-secondary" v-on:click="removeCard(card.card)">remove_circle</i> {{card.count}} <i class="material-icons text-primary" v-on:click="addCard(card.card)">add_circle</i> <span style="padding-left:0.5em;">{{card.name}} <i class="material-icons">tab</i></span></p>
-                              </div>
-                              </div>
-                              </div>
                         </div>
                     </div>
                 </div>
@@ -344,7 +335,7 @@ export default {
           }
       });
       return m;
-    },
+    }
   }
 };
 </script>

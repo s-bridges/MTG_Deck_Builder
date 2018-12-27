@@ -1767,364 +1767,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/Comment.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var _ = __webpack_require__("./node_modules/lodash/lodash.js");
-/* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['commentUrl'],
-    data: function data() {
-        var _ref;
-
-        return _ref = {
-            comments: [],
-            commentreplies: []
-        }, _defineProperty(_ref, 'comments', 0), _defineProperty(_ref, 'commentBoxs', []), _defineProperty(_ref, 'message', null), _defineProperty(_ref, 'replyCommentBoxs', []), _defineProperty(_ref, 'commentsData', []), _defineProperty(_ref, 'viewcomment', []), _defineProperty(_ref, 'show', []), _defineProperty(_ref, 'spamCommentsReply', []), _defineProperty(_ref, 'spamComments', []), _defineProperty(_ref, 'errorComment', null), _defineProperty(_ref, 'errorReply', null), _defineProperty(_ref, 'user', window.user), _ref;
-    },
-
-    http: {
-        headers: {
-            'X-CSRF-TOKEN': window.csrf
-        }
-    },
-    methods: {
-        fetchComments: function fetchComments() {
-            var _this = this;
-
-            this.$http.get('comments/' + this.commentUrl).then(function (res) {
-                _this.commentData = res.data;
-                _this.commentsData = _.orderBy(res.data, ['votes'], ['desc']);
-                _this.comments = 1;
-            });
-        },
-        showComments: function showComments(index) {
-            if (!this.viewcomment[index]) {
-                Vue.set(this.show, index, "hide");
-                Vue.set(this.viewcomment, index, 1);
-            } else {
-                Vue.set(this.show, index, "view");
-                Vue.set(this.viewcomment, index, 0);
-            }
-        },
-        openComment: function openComment(index) {
-            if (this.user) {
-                if (this.commentBoxs[index]) {
-                    Vue.set(this.commentBoxs, index, 0);
-                } else {
-                    Vue.set(this.commentBoxs, index, 1);
-                }
-            }
-        },
-        replyCommentBox: function replyCommentBox(index) {
-            if (this.user) {
-                if (this.replyCommentBoxs[index]) {
-                    Vue.set(this.replyCommentBoxs, index, 0);
-                } else {
-                    Vue.set(this.replyCommentBoxs, index, 1);
-                }
-            }
-        },
-        saveComment: function saveComment() {
-            var _this2 = this;
-
-            if (this.message != null && this.message != ' ') {
-                this.errorComment = null;
-                this.$http.post('comments', {
-                    page_id: this.commentUrl,
-                    comment: this.message,
-                    users_id: this.user.id
-                }).then(function (res) {
-                    if (res.data.status) {
-                        _this2.commentsData.push({ "commentid": res.data.commentId, "name": _this2.user.name, "comment": _this2.message, "votes": 0, "reply": 0, "replies": [] });
-                        _this2.message = null;
-                    }
-                });
-            } else {
-                this.errorComment = "Please enter a comment to save";
-            }
-        },
-        replyComment: function replyComment(commentId, index) {
-            var _this3 = this;
-
-            if (this.message != null && this.message != ' ') {
-                this.errorReply = null;
-                this.$http.post('comments', {
-                    comment: this.message,
-                    users_id: this.user.id,
-                    reply_id: commentId
-                }).then(function (res) {
-                    if (res.data.status) {
-                        if (!_this3.commentsData[index].reply) {
-                            _this3.commentsData[index].replies.push({ "commentid": res.data.commentId, "name": _this3.user.name, "comment": _this3.message, "votes": 0 });
-                            _this3.commentsData[index].reply = 1;
-                            Vue.set(_this3.replyCommentBoxs, index, 0);
-                            Vue.set(_this3.commentBoxs, index, 0);
-                        } else {
-                            _this3.commentsData[index].replies.push({ "commentid": res.data.commentId, "name": _this3.user.name, "comment": _this3.message, "votes": 0 });
-                            Vue.set(_this3.replyCommentBoxs, index, 0);
-                            Vue.set(_this3.commentBoxs, index, 0);
-                        }
-                        _this3.message = null;
-                    }
-                });
-            } else {
-                this.errorReply = "Please enter a comment to save";
-            }
-        },
-        voteComment: function voteComment(commentId, commentType, index, index2, voteType) {
-            var _this4 = this;
-
-            if (this.user) {
-                this.$http.post('comments/' + commentId + '/vote', {
-                    users_id: this.user.id,
-                    vote: voteType
-                }).then(function (res) {
-                    if (res.data) {
-                        if (commentType == 'directcomment') {
-                            if (voteType == 'up') {
-                                _this4.commentsData[index].votes++;
-                            } else if (voteType == 'down') {
-                                _this4.commentsData[index].votes--;
-                            }
-                        } else if (commentType == 'replycomment') {
-                            if (voteType == 'up') {
-                                _this4.commentsData[index].replies[index2].votes++;
-                            } else if (voteType == 'down') {
-                                _this4.commentsData[index].replies[index2].votes--;
-                            }
-                        }
-                    }
-                });
-            }
-        },
-        spamComment: function spamComment(commentId, commentType, index, index2) {
-            var _this5 = this;
-
-            console.log("spam here");
-            if (this.user) {
-                this.$http.post('comments/' + commentId + '/spam', {
-                    users_id: this.user.id
-                }).then(function (res) {
-                    if (commentType == 'directcomment') {
-                        Vue.set(_this5.spamComments, index, 1);
-                        Vue.set(_this5.viewcomment, index, 1);
-                    } else if (commentType == 'replycomment') {
-                        Vue.set(_this5.spamCommentsReply, index2, 1);
-                    }
-                });
-            }
-        }
-    },
-    mounted: function mounted() {
-        console.log("mounted");
-        this.fetchComments();
-    }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/DeckCards.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2296,7 +1943,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       paginate: ["paginatedCards"],
       selectedCards: [],
       sideboardCards: [],
-      unHide: false
+      unHide: false,
+      c: []
     };
   },
 
@@ -2392,6 +2040,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
       }
       return cards_array;
+    },
+    tcgPlayer: function tcgPlayer(c) {
+      var selectedCards = this.selectedCards;
+      _.forEach(selectedCards, function (card) {
+        c = +"||" + card.name;
+      });
+      return c;
     }
   }
 });
@@ -2602,15 +2257,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -38158,10 +37804,7 @@ var render = function() {
                     _c("img", {
                       staticClass: "img-fluid",
                       staticStyle: { width: "auto", height: "50px" },
-                      attrs: {
-                        src: "/images/mana-symbols_white.png",
-                        alt: "White"
-                      }
+                      attrs: { src: "/images/magic_white.png", alt: "White" }
                     })
                   ]
                 ),
@@ -38179,10 +37822,7 @@ var render = function() {
                     _c("img", {
                       staticClass: "img-fluid",
                       staticStyle: { width: "auto", height: "50px" },
-                      attrs: {
-                        src: "/images/mana-symbols_blue.png",
-                        alt: "Blue"
-                      }
+                      attrs: { src: "/images/magic_blue.png", alt: "Blue" }
                     })
                   ]
                 ),
@@ -38200,10 +37840,7 @@ var render = function() {
                     _c("img", {
                       staticClass: "img-fluid",
                       staticStyle: { width: "auto", height: "50px" },
-                      attrs: {
-                        src: "/images/mana-symbols_black.png",
-                        alt: "Black"
-                      }
+                      attrs: { src: "/images/magic_black.png", alt: "Black" }
                     })
                   ]
                 ),
@@ -38221,7 +37858,7 @@ var render = function() {
                     _c("img", {
                       staticClass: "img-fluid",
                       staticStyle: { width: "auto", height: "50px" },
-                      attrs: { src: "/images/mana-symbols_red.png", alt: "Red" }
+                      attrs: { src: "/images/magic_red.png", alt: "Red" }
                     })
                   ]
                 ),
@@ -38239,10 +37876,7 @@ var render = function() {
                     _c("img", {
                       staticClass: "img-fluid",
                       staticStyle: { width: "auto", height: "50px" },
-                      attrs: {
-                        src: "/images/mana-symbols_green.png",
-                        alt: "Green"
-                      }
+                      attrs: { src: "/images/magic_green.png", alt: "Green" }
                     })
                   ]
                 ),
@@ -38260,7 +37894,10 @@ var render = function() {
                     _c("img", {
                       staticClass: "img-fluid",
                       staticStyle: { width: "auto", height: "50px" },
-                      attrs: { src: "/images/colorless.png", alt: "Colorless" }
+                      attrs: {
+                        src: "/images/magic_colorless.png",
+                        alt: "Colorless"
+                      }
                     })
                   ]
                 ),
@@ -38278,7 +37915,7 @@ var render = function() {
                     _c("img", {
                       staticClass: "img-fluid",
                       staticStyle: { width: "auto", height: "50px" },
-                      attrs: { src: "/images/Land_symbol.png", alt: "Land" }
+                      attrs: { src: "/images/magic_land.png", alt: "Land" }
                     })
                   ]
                 )
@@ -38517,21 +38154,7 @@ var render = function() {
                               _c(
                                 "span",
                                 { staticStyle: { "padding-left": "0.5em" } },
-                                [
-                                  _vm._v(_vm._s(card.name) + " "),
-                                  _c(
-                                    "i",
-                                    {
-                                      staticClass: "material-icons",
-                                      on: {
-                                        click: function($event) {
-                                          _vm.addSideboardCard(card.card)
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("tab")]
-                                  )
-                                ]
+                                [_vm._v(_vm._s(card.name) + " ")]
                               )
                             ])
                           ])
@@ -38556,86 +38179,6 @@ var render = function() {
                           },
                           [_vm._v("Save")]
                         )
-                      ],
-                      2
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card" }, [
-                    _c(
-                      "div",
-                      { staticClass: "card-body" },
-                      [
-                        _c("h5", { staticClass: "mb-0" }, [
-                          _vm._v("Sideboard")
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "h5",
-                          { staticStyle: { "margin-bottom": "0.5em" } },
-                          [
-                            _c(
-                              "span",
-                              {
-                                staticClass: "badge",
-                                class:
-                                  _vm.sideboardCards.length > 15
-                                    ? "badge-danger"
-                                    : "badge-secondary"
-                              },
-                              [
-                                _vm._v(
-                                  _vm._s(_vm.sideboardCards.length) +
-                                    " / " +
-                                    _vm._s(_vm.sideboardMaxLength)
-                                )
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _vm._l(_vm.myDeck, function(card) {
-                          return _c("div", [
-                            _c("p", { staticClass: "deck-list" }, [
-                              _c(
-                                "i",
-                                {
-                                  staticClass: "material-icons text-secondary",
-                                  on: {
-                                    click: function($event) {
-                                      _vm.removeCard(card.card)
-                                    }
-                                  }
-                                },
-                                [_vm._v("remove_circle")]
-                              ),
-                              _vm._v(" " + _vm._s(card.count) + " "),
-                              _c(
-                                "i",
-                                {
-                                  staticClass: "material-icons text-primary",
-                                  on: {
-                                    click: function($event) {
-                                      _vm.addCard(card.card)
-                                    }
-                                  }
-                                },
-                                [_vm._v("add_circle")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "span",
-                                { staticStyle: { "padding-left": "0.5em" } },
-                                [
-                                  _vm._v(_vm._s(card.name) + " "),
-                                  _c("i", { staticClass: "material-icons" }, [
-                                    _vm._v("tab")
-                                  ])
-                                ]
-                              )
-                            ])
-                          ])
-                        })
                       ],
                       2
                     )
@@ -39151,645 +38694,6 @@ if (false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-54ded044\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/Comment.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "comments-app" },
-    [
-      _c("h1", [_vm._v("Comments")]),
-      _vm._v(" "),
-      _vm.user
-        ? _c("div", { staticClass: "comment-form" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("form", { staticClass: "form", attrs: { name: "form" } }, [
-              _c("div", { staticClass: "form-row" }, [
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.message,
-                      expression: "message"
-                    }
-                  ],
-                  staticClass: "input",
-                  attrs: { placeholder: "Add comment...", required: "" },
-                  domProps: { value: _vm.message },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.message = $event.target.value
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _vm.errorComment
-                  ? _c(
-                      "span",
-                      { staticClass: "input", staticStyle: { color: "red" } },
-                      [_vm._v(_vm._s(_vm.errorComment))]
-                    )
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-row" }, [
-                _c("input", {
-                  staticClass: "input",
-                  attrs: { placeholder: "Email", type: "text", disabled: "" },
-                  domProps: { value: _vm.user.name }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-row" }, [
-                _c("input", {
-                  staticClass: "btn btn-success",
-                  attrs: { type: "button", value: "Add Comment" },
-                  on: { click: _vm.saveComment }
-                })
-              ])
-            ])
-          ])
-        : _c("div", { staticClass: "comment-form" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _vm._m(2)
-          ]),
-      _vm._v(" "),
-      _vm._l(_vm.commentsData, function(comment, index) {
-        return _vm.comments
-          ? _c("div", { staticClass: "comments" }, [
-              !_vm.spamComments[index] || !comment.spam
-                ? _c("div", { staticClass: "comment" }, [
-                    _vm._m(3, true),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "comment-box" }, [
-                      _c("div", { staticClass: "comment-text" }, [
-                        _vm._v(_vm._s(comment.comment))
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "comment-footer" }, [
-                        _c("div", { staticClass: "comment-info" }, [
-                          _c("span", { staticClass: "comment-author" }, [
-                            _c("em", [_vm._v(_vm._s(comment.name))])
-                          ]),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "comment-date" }, [
-                            _vm._v(_vm._s(comment.date))
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "comment-actions" }, [
-                          _c("ul", { staticClass: "list" }, [
-                            _c("li", [
-                              _vm._v(
-                                "Votes: " +
-                                  _vm._s(comment.votes) +
-                                  "\r\n                               "
-                              ),
-                              !comment.votedByUser
-                                ? _c(
-                                    "a",
-                                    {
-                                      on: {
-                                        click: function($event) {
-                                          _vm.voteComment(
-                                            comment.commentid,
-                                            "directcomment",
-                                            index,
-                                            0,
-                                            "up"
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("Up Votes")]
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              !comment.votedByUser
-                                ? _c(
-                                    "a",
-                                    {
-                                      on: {
-                                        click: function($event) {
-                                          _vm.voteComment(
-                                            comment.commentid,
-                                            "directcomment",
-                                            index,
-                                            0,
-                                            "down"
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("Down Votes")]
-                                  )
-                                : _vm._e()
-                            ]),
-                            _vm._v(" "),
-                            _c("li", [
-                              _c(
-                                "a",
-                                {
-                                  on: {
-                                    click: function($event) {
-                                      _vm.spamComment(
-                                        comment.commentId,
-                                        "directcomment",
-                                        index,
-                                        0
-                                      )
-                                    }
-                                  }
-                                },
-                                [_vm._v("Spam")]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("li", [
-                              _c(
-                                "a",
-                                {
-                                  on: {
-                                    click: function($event) {
-                                      _vm.openComment(index)
-                                    }
-                                  }
-                                },
-                                [_vm._v("Reply")]
-                              )
-                            ])
-                          ])
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _vm.commentBoxs[index]
-                      ? _c("div", { staticClass: "comment-form comment-v" }, [
-                          _vm._m(4, true),
-                          _vm._v(" "),
-                          _c(
-                            "form",
-                            { staticClass: "form", attrs: { name: "form" } },
-                            [
-                              _c("div", { staticClass: "form-row" }, [
-                                _c("textarea", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.message,
-                                      expression: "message"
-                                    }
-                                  ],
-                                  staticClass: "input",
-                                  attrs: {
-                                    placeholder: "Add comment...",
-                                    required: ""
-                                  },
-                                  domProps: { value: _vm.message },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.message = $event.target.value
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _vm.errorReply
-                                  ? _c(
-                                      "span",
-                                      {
-                                        staticClass: "input",
-                                        staticStyle: { color: "red" }
-                                      },
-                                      [_vm._v(_vm._s(_vm.errorReply))]
-                                    )
-                                  : _vm._e()
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-row" }, [
-                                _c("input", {
-                                  staticClass: "input",
-                                  attrs: { placeholder: "Email", type: "text" },
-                                  domProps: { value: _vm.user.name }
-                                })
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-row" }, [
-                                _c("input", {
-                                  staticClass: "btn btn-success",
-                                  attrs: {
-                                    type: "button",
-                                    value: "Add Comment"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.replyComment(comment.commentid, index)
-                                    }
-                                  }
-                                })
-                              ])
-                            ]
-                          )
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    comment.replies
-                      ? _c(
-                          "div",
-                          _vm._l(comment.replies, function(replies, index2) {
-                            return _c("div", { staticClass: "comments" }, [
-                              !_vm.spamCommentsReply[index2] || !replies.spam
-                                ? _c("div", { staticClass: "comment reply" }, [
-                                    _vm._m(5, true),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass: "comment-box",
-                                        staticStyle: { background: "grey" }
-                                      },
-                                      [
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass: "comment-text",
-                                            staticStyle: { color: "white" }
-                                          },
-                                          [_vm._v(_vm._s(replies.comment))]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          { staticClass: "comment-footer" },
-                                          [
-                                            _c(
-                                              "div",
-                                              { staticClass: "comment-info" },
-                                              [
-                                                _c(
-                                                  "span",
-                                                  {
-                                                    staticClass:
-                                                      "comment-author"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      "\r\n                                           " +
-                                                        _vm._s(replies.name) +
-                                                        "\r\n                                       "
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "span",
-                                                  {
-                                                    staticClass: "comment-date"
-                                                  },
-                                                  [_vm._v(_vm._s(replies.date))]
-                                                )
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass: "comment-actions"
-                                              },
-                                              [
-                                                _c(
-                                                  "ul",
-                                                  { staticClass: "list" },
-                                                  [
-                                                    _c("li", [
-                                                      _vm._v(
-                                                        "Total votes: " +
-                                                          _vm._s(
-                                                            replies.votes
-                                                          ) +
-                                                          "\r\n                                           "
-                                                      ),
-                                                      !replies.votedByUser
-                                                        ? _c(
-                                                            "a",
-                                                            {
-                                                              on: {
-                                                                click: function(
-                                                                  $event
-                                                                ) {
-                                                                  _vm.voteComment(
-                                                                    replies.commentid,
-                                                                    "replycomment",
-                                                                    index,
-                                                                    index2,
-                                                                    "up"
-                                                                  )
-                                                                }
-                                                              }
-                                                            },
-                                                            [_vm._v("Up Votes")]
-                                                          )
-                                                        : _vm._e(),
-                                                      _vm._v(" "),
-                                                      !replies.votedByUser
-                                                        ? _c(
-                                                            "a",
-                                                            {
-                                                              on: {
-                                                                click: function(
-                                                                  $event
-                                                                ) {
-                                                                  _vm.voteComment(
-                                                                    comment.commentid,
-                                                                    "replycomment",
-                                                                    index,
-                                                                    index2,
-                                                                    "down"
-                                                                  )
-                                                                }
-                                                              }
-                                                            },
-                                                            [
-                                                              _vm._v(
-                                                                "Down Votes"
-                                                              )
-                                                            ]
-                                                          )
-                                                        : _vm._e()
-                                                    ]),
-                                                    _vm._v(" "),
-                                                    _c("li", [
-                                                      _c(
-                                                        "a",
-                                                        {
-                                                          on: {
-                                                            click: function(
-                                                              $event
-                                                            ) {
-                                                              _vm.spamComment(
-                                                                replies.commentid,
-                                                                "replycomment",
-                                                                index,
-                                                                index2
-                                                              )
-                                                            }
-                                                          }
-                                                        },
-                                                        [_vm._v("Spam")]
-                                                      )
-                                                    ]),
-                                                    _vm._v(" "),
-                                                    _c("li", [
-                                                      _c(
-                                                        "a",
-                                                        {
-                                                          on: {
-                                                            click: function(
-                                                              $event
-                                                            ) {
-                                                              _vm.replyCommentBox(
-                                                                index2
-                                                              )
-                                                            }
-                                                          }
-                                                        },
-                                                        [_vm._v("Reply")]
-                                                      )
-                                                    ])
-                                                  ]
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _vm.replyCommentBoxs[index2]
-                                      ? _c(
-                                          "div",
-                                          { staticClass: "comment-form reply" },
-                                          [
-                                            _vm._m(6, true),
-                                            _vm._v(" "),
-                                            _c(
-                                              "form",
-                                              {
-                                                staticClass: "form",
-                                                attrs: { name: "form" }
-                                              },
-                                              [
-                                                _c(
-                                                  "div",
-                                                  { staticClass: "form-row" },
-                                                  [
-                                                    _c("textarea", {
-                                                      directives: [
-                                                        {
-                                                          name: "model",
-                                                          rawName: "v-model",
-                                                          value: _vm.message,
-                                                          expression: "message"
-                                                        }
-                                                      ],
-                                                      staticClass: "input",
-                                                      attrs: {
-                                                        placeholder:
-                                                          "Add comment...",
-                                                        required: ""
-                                                      },
-                                                      domProps: {
-                                                        value: _vm.message
-                                                      },
-                                                      on: {
-                                                        input: function(
-                                                          $event
-                                                        ) {
-                                                          if (
-                                                            $event.target
-                                                              .composing
-                                                          ) {
-                                                            return
-                                                          }
-                                                          _vm.message =
-                                                            $event.target.value
-                                                        }
-                                                      }
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _vm.errorReply
-                                                      ? _c(
-                                                          "span",
-                                                          {
-                                                            staticClass:
-                                                              "input",
-                                                            staticStyle: {
-                                                              color: "red"
-                                                            }
-                                                          },
-                                                          [
-                                                            _vm._v(
-                                                              _vm._s(
-                                                                _vm.errorReply
-                                                              )
-                                                            )
-                                                          ]
-                                                        )
-                                                      : _vm._e()
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "div",
-                                                  { staticClass: "form-row" },
-                                                  [
-                                                    _c("input", {
-                                                      staticClass: "input",
-                                                      attrs: {
-                                                        placeholder: "Email",
-                                                        type: "text"
-                                                      },
-                                                      domProps: {
-                                                        value: _vm.user.name
-                                                      }
-                                                    })
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "div",
-                                                  { staticClass: "form-row" },
-                                                  [
-                                                    _c("input", {
-                                                      staticClass:
-                                                        "btn btn-success",
-                                                      attrs: {
-                                                        type: "button",
-                                                        value: "Add Comment"
-                                                      },
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          _vm.replyComment(
-                                                            comment.commentid,
-                                                            index
-                                                          )
-                                                        }
-                                                      }
-                                                    })
-                                                  ]
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        )
-                                      : _vm._e()
-                                  ])
-                                : _vm._e()
-                            ])
-                          }),
-                          0
-                        )
-                      : _vm._e()
-                  ])
-                : _vm._e()
-            ])
-          : _vm._e()
-      })
-    ],
-    2
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "comment-avatar" }, [
-      _c("img", { attrs: { src: "storage/commentbox.png" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "comment-avatar" }, [
-      _c("img", { attrs: { src: "storage/commentbox.png" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("form", { staticClass: "form", attrs: { name: "form" } }, [
-      _c("div", { staticClass: "form-row" }, [
-        _c("a", { attrs: { href: "login" } }, [
-          _c("textarea", {
-            staticClass: "input",
-            attrs: { placeholder: "Add comment...", required: "" }
-          })
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "comment-avatar" }, [
-      _c("img", { attrs: { src: "storage/comment.png" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "comment-avatar" }, [
-      _c("img", { attrs: { src: "storage/comment.png" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "comment-avatar" }, [
-      _c("img", { attrs: { src: "storage/comment.png" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "comment-avatar" }, [
-      _c("img", { attrs: { src: "storage/comment.png" } })
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-54ded044", module.exports)
-  }
-}
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7b05795f\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/DeckCards.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -40280,202 +39184,7 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _c("div", { staticClass: "card full-width" }, [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { class: !_vm.toggleView ? "row" : "card-body" },
-                    _vm._l(_vm.myDeckCards, function(card) {
-                      return _c(
-                        "div",
-                        {
-                          class: !_vm.toggleView
-                            ? "col col-lg-3 text-center addable removable"
-                            : "",
-                          staticStyle: { "padding-top": ".5em" }
-                        },
-                        [
-                          !_vm.toggleView
-                            ? _c("span", [
-                                _vm.sideboard.count <= 4
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticStyle: {
-                                          height: "40px",
-                                          display: "flex",
-                                          "justify-content": "center",
-                                          "align-items": "center"
-                                        }
-                                      },
-                                      _vm._l(_vm.sideboard.count, function(n) {
-                                        return _c("span", [
-                                          _c(
-                                            "i",
-                                            {
-                                              staticClass: "material-icons",
-                                              staticStyle: {
-                                                "max-width": "24px"
-                                              }
-                                            },
-                                            [_vm._v("whatshot")]
-                                          )
-                                        ])
-                                      }),
-                                      0
-                                    )
-                                  : _c(
-                                      "div",
-                                      {
-                                        staticStyle: {
-                                          height: "40px",
-                                          display: "flex",
-                                          "justify-content": "center",
-                                          "align-items": "center"
-                                        }
-                                      },
-                                      [
-                                        _c("span", [
-                                          _c("strong", [
-                                            _vm._v(
-                                              _vm._s(_vm.sideboard.count) + "x"
-                                            )
-                                          ])
-                                        ])
-                                      ]
-                                    ),
-                                _vm._v(" "),
-                                _c("img", {
-                                  attrs: {
-                                    src:
-                                      "/images/cards/" +
-                                      card.multiverse_id +
-                                      ".jpg"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _vm.editable
-                                  ? _c("div", [
-                                      _c(
-                                        "i",
-                                        {
-                                          staticClass:
-                                            "material-icons clickable",
-                                          on: {
-                                            click: function($event) {
-                                              _vm.removeCard(card)
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("remove_circle")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "i",
-                                        {
-                                          staticClass:
-                                            "material-icons clickable",
-                                          on: {
-                                            click: function($event) {
-                                              _vm.addCard(card)
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("add_circle")]
-                                      )
-                                    ])
-                                  : _vm._e()
-                              ])
-                            : _c("span", [
-                                _c(
-                                  "span",
-                                  {
-                                    directives: [
-                                      {
-                                        name: "show",
-                                        rawName: "v-show",
-                                        value:
-                                          _vm.activeImage == card.multiverse_id,
-                                        expression:
-                                          "activeImage == card.multiverse_id"
-                                      }
-                                    ],
-                                    staticClass: "modal-image"
-                                  },
-                                  [
-                                    _c("img", {
-                                      attrs: {
-                                        src:
-                                          "/images/cards/" +
-                                          card.multiverse_id +
-                                          ".jpg"
-                                      }
-                                    })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("p", { staticClass: "deck-list" }, [
-                                  _c(
-                                    "i",
-                                    {
-                                      staticClass:
-                                        "material-icons text-secondary",
-                                      on: {
-                                        click: function($event) {
-                                          _vm.removeCard(card)
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("remove_circle")]
-                                  ),
-                                  _vm._v(
-                                    " \n                        " +
-                                      _vm._s(card.pivot.count) +
-                                      " \n                      "
-                                  ),
-                                  _c(
-                                    "i",
-                                    {
-                                      staticClass:
-                                        "material-icons text-primary",
-                                      on: {
-                                        click: function($event) {
-                                          _vm.addCard(card)
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("add_circle")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "span",
-                                    {
-                                      staticStyle: {
-                                        "padding-left": "0.5em",
-                                        cursor: "pointer"
-                                      },
-                                      on: {
-                                        mouseover: function($event) {
-                                          _vm.popOn(card.multiverse_id)
-                                        },
-                                        mouseout: function($event) {
-                                          _vm.popOff(card.multiverse_id)
-                                        }
-                                      }
-                                    },
-                                    [_vm._v(_vm._s(card.name))]
-                                  )
-                                ])
-                              ])
-                        ]
-                      )
-                    }),
-                    0
-                  )
-                ])
+                _c("br")
               ])
             ]),
             _vm._v(" "),
@@ -40485,9 +39194,14 @@ var render = function() {
               "a",
               {
                 staticClass: "btn btn-primary btn-lg btn-block",
-                attrs: { href: "#", type: "button" }
+                attrs: {
+                  href:
+                    "http://store.tcgplayer.com/massentry?partner=MAGICDB" +
+                    _vm.c,
+                  type: "button"
+                }
               },
-              [_vm._v("Buy here through ###########")]
+              [_vm._v("Buy here through TCGPlayer")]
             )
           ])
         ])
@@ -40501,14 +39215,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("h4", { staticClass: "mb-0" }, [_vm._v("All Cards")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h4", { staticClass: "mb-0" }, [_vm._v("Sideboard")])
     ])
   }
 ]
@@ -52636,7 +51342,6 @@ Vue.component('deck-of-the-week', __webpack_require__("./resources/js/components
 Vue.component('admin-page', __webpack_require__("./resources/js/components/AdminPage.vue"));
 Vue.component('user-page', __webpack_require__("./resources/js/components/UserPage.vue"));
 Vue.component('health-page', __webpack_require__("./resources/js/components/HealthPage.vue"));
-Vue.component('comments', __webpack_require__("./resources/js/components/Comment.vue"));
 
 var app = new Vue({
   el: '#app'
@@ -52744,54 +51449,6 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-12c0d5a3", Component.options)
   } else {
     hotAPI.reload("data-v-12c0d5a3", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/js/components/Comment.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/js/components/Comment.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-54ded044\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/js/components/Comment.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/Comment.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-54ded044", Component.options)
-  } else {
-    hotAPI.reload("data-v-54ded044", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

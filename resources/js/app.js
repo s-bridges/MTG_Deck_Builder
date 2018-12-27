@@ -34,7 +34,6 @@ Vue.component('deck-of-the-week', require('./components/DeckOfTheWeek.vue'));
 Vue.component('admin-page', require('./components/AdminPage.vue'));
 Vue.component('user-page', require('./components/UserPage.vue'));
 Vue.component('health-page', require('./components/HealthPage.vue'));
-Vue.component('comments', require('./components/Comment.vue'));
 
 const app = new Vue({
     el: '#app'

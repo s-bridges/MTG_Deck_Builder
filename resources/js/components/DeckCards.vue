@@ -112,52 +112,11 @@
                 </div>
                 </div>
                 </br>
-                <!-- Sideboard -->
-                <div class="card full-width">
-                <div class="card-header">
-                  <h4 class="mb-0">Sideboard</h4>        
-                </div>
-                <div v-bind:class="!toggleView ? 'row' : 'card-body'">
-                  <div v-for="card in myDeckCards" v-bind:class="!toggleView ? 'col col-lg-3 text-center addable removable': ''" style="padding-top:.5em;"> 
-                    <!-- when the deck is in card view -->
-                    <span v-if="!toggleView"> 
-                      <div v-if="sideboard.count <= 4" style="height:40px; display:flex; justify-content:center; align-items:center">
-                        <span v-for="n in sideboard.count">
-                          <i style="max-width: 24px;" class="material-icons">whatshot</i>
-                        </span>
-                      </div>
-                      <div v-else style="height:40px; display:flex; justify-content:center; align-items:center"> 
-                        <span><strong>{{sideboard.count}}x</strong></span>
-                      </div>                 
-                      <img
-                        v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
-                      />
-                      <div v-if="editable">
-                        <i v-on:click="removeCard(card)" class="material-icons clickable">remove_circle</i>
-                        <i v-on:click="addCard(card)" class="material-icons clickable">add_circle</i>
-                      </div>
-                    </span>
-                    <span v-else>
-                      <span v-show="activeImage == card.multiverse_id" class="modal-image">
-                        <img
-                          v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
-                      /></span>
-                      <!-- this is what shows when the deck is in list view -->
-                      <!-- <p style="margin: 0;">{{card.pivot.count}}x {{card.name}}</p> -->
-                      <p class="deck-list">
-                        <i class="material-icons text-secondary" v-on:click="removeCard(card)">remove_circle</i> 
-                          {{card.pivot.count}} 
-                        <i class="material-icons text-primary" v-on:click="addCard(card)">add_circle</i> 
-                        <span v-on:mouseover="popOn(card.multiverse_id)" v-on:mouseout="popOff(card.multiverse_id)" style="padding-left:0.5em; cursor:pointer;">{{card.name}}</span>
-                      </p>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
+                <!-- Sideboard -->                
+            </div> 
             </div>            
             </br>
-            <a href='#' type="button" class="btn btn-primary btn-lg btn-block">Buy here through ###########</a>
+            <a v-bind:href="'http://store.tcgplayer.com/massentry?partner=MAGICDB' + c" type="button" class="btn btn-primary btn-lg btn-block">Buy here through TCGPlayer</a>
           </div>
         </div>
       </div>
@@ -175,7 +134,7 @@ export default {
   props: {
     data: {
       type: Object,
-      required: false
+      required: false,
     }
   },
   data() {
@@ -215,9 +174,10 @@ export default {
       paginate: ["paginatedCards"],
       selectedCards: [],
       sideboardCards: [],
-      unHide: false
+      unHide: false,
+      c: [],
     };
-  },
+  }, 
   methods: {
     popOff(id) {
       // always reset active image
@@ -296,7 +256,7 @@ export default {
       .catch(error => {
           
       });
-    }
+    },
   },
   computed: {
     myDeckCards() {
@@ -319,6 +279,13 @@ export default {
         });
       }
       return cards_array;
+    },    
+    tcgPlayer(c) {
+      let selectedCards = this.selectedCards;
+      _.forEach(selectedCards, function(card){
+        c =+ "||" + card.name;
+      });
+      return c;
     }
   }
 };
