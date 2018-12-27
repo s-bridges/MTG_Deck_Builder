@@ -112,52 +112,11 @@
                 </div>
                 </div>
                 </br>
-                <!-- Sideboard -->
-                <div class="card full-width">
-                <div class="card-header">
-                  <h4 class="mb-0">Sideboard</h4>        
-                </div>
-                <div v-bind:class="!toggleView ? 'row' : 'card-body'">
-                  <div v-for="card in myDeckCards" v-bind:class="!toggleView ? 'col col-lg-3 text-center addable removable': ''" style="padding-top:.5em;"> 
-                    <!-- when the deck is in card view -->
-                    <span v-if="!toggleView"> 
-                      <div v-if="card.pivot.count <= 4" style="height:40px; display:flex; justify-content:center; align-items:center">
-                        <span v-for="n in card.pivot.count">
-                          <i style="max-width: 24px;" class="material-icons">whatshot</i>
-                        </span>
-                      </div>
-                      <div v-else style="height:40px; display:flex; justify-content:center; align-items:center"> 
-                        <span><strong>{{card.pivot.count}}x</strong></span>
-                      </div>                 
-                      <img
-                        v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
-                      />
-                      <div v-if="editable">
-                        <i v-on:click="removeCard(card)" class="material-icons clickable">remove_circle</i>
-                        <i v-on:click="addCard(card)" class="material-icons clickable">add_circle</i>
-                      </div>
-                    </span>
-                    <span v-else>
-                      <span v-show="activeImage == card.multiverse_id" class="modal-image">
-                        <img
-                          v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
-                      /></span>
-                      <!-- this is what shows when the deck is in list view -->
-                      <!-- <p style="margin: 0;">{{card.pivot.count}}x {{card.name}}</p> -->
-                      <p class="deck-list">
-                        <i class="material-icons text-secondary" v-on:click="removeCard(card)">remove_circle</i> 
-                          {{card.pivot.count}} 
-                        <i class="material-icons text-primary" v-on:click="addCard(card)">add_circle</i> 
-                        <span v-on:mouseover="popOn(card.multiverse_id)" v-on:mouseout="popOff(card.multiverse_id)" style="padding-left:0.5em; cursor:pointer;">{{card.name}}</span>
-                      </p>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
+                <!-- Sideboard -->                
+            </div> 
             </div>            
             </br>
-            <a href='#' type="button" class="btn btn-primary btn-lg btn-block">Buy here through TCGplayer.com</a>
+            <span v-on:click="tcgPlayer()" type="button" class="btn btn-primary btn-lg btn-block">Buy here through TCGPlayer</span>
           </div>
         </div>
       </div>
@@ -175,12 +134,13 @@ export default {
   props: {
     data: {
       type: Object,
-      required: false
+      required: false,
     }
   },
   data() {
     return {
       deck: this.data.deck,
+      sideboard: this.data.sideboard,
       editable: this.data.editable,
       cards: [],
       paginatedCards: [],
@@ -216,7 +176,7 @@ export default {
       sideboardCards: [],
       unHide: false
     };
-  },
+  }, 
   methods: {
     popOff(id) {
       // always reset active image
@@ -295,6 +255,26 @@ export default {
       .catch(error => {
           
       });
+    },
+    tcgPlayer() {
+      let selectedCards = this.deck.cards;
+      console.log(selectedCards);
+      // c is essentially your overall link you keep appending too, maybe change the variable name
+      let link = '';
+      _.forEach(selectedCards, function(card){
+        // its better to only append in one line like so, and this variable is resent each time we go through the loop
+        // because it's initialized within the loop, not outside like c was
+        let tempVar = "||" + card.pivot.count.toString() + "%20" + encodeURI(card.name);
+        // in one line you append what you just created above
+        link = link.concat(tempVar);
+        console.log(link);
+      });
+      // no need for a return
+      let tcgLink = "http://store.tcgplayer.com/massentry?partner=MAGICDB&c=" + link;
+      // lets console log before the redirect to make sure its set properly
+      console.log(tcgLink);
+      console.log(link);
+      window.location.href = tcgLink;
     }
   },
   computed: {
@@ -318,7 +298,7 @@ export default {
         });
       }
       return cards_array;
-    }
+    },    
   }
 };
 </script>

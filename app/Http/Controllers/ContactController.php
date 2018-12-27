@@ -20,7 +20,8 @@ class ContactController extends Controller
         $this->validate($request, [
             'name'=>'required|max:255|string',
             'email'=>'required|email|max:255',
-            'message'=>'required'
+            'message'=>'required',
+            'g-recaptcha-response' => 'required|captcha',
         ]);
 
         Notification::route('mail', 'magicdb.us@gmail.com')->notify(new SendContactNotification($request));    
