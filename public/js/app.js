@@ -1943,8 +1943,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       paginate: ["paginatedCards"],
       selectedCards: [],
       sideboardCards: [],
-      unHide: false,
-      c: []
+      unHide: false
     };
   },
 
@@ -2020,6 +2019,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           window.location = '/deck';
         }
       }).catch(function (error) {});
+    },
+    tcgPlayer: function tcgPlayer() {
+      var selectedCards = this.deck.cards;
+      console.log(selectedCards);
+      // c is essentially your overall link you keep appending too, maybe change the variable name
+      var link = '';
+      _.forEach(selectedCards, function (card) {
+        // its better to only append in one line like so, and this variable is resent each time we go through the loop
+        // because it's initialized within the loop, not outside like c was
+        var tempVar = "||" + card.pivot.count.toString() + "%20" + encodeURI(card.name);
+        // in one line you append what you just created above
+        link = link.concat(tempVar);
+        console.log(link);
+      });
+      // no need for a return
+      var tcgLink = "http://store.tcgplayer.com/massentry?partner=MAGICDB&c=" + link;
+      // lets console log before the redirect to make sure its set properly
+      console.log(tcgLink);
+      console.log(link);
+      window.location.href = tcgLink;
     }
   },
   computed: {
@@ -2040,13 +2059,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
       }
       return cards_array;
-    },
-    tcgPlayer: function tcgPlayer(c) {
-      var selectedCards = this.selectedCards;
-      _.forEach(selectedCards, function (card) {
-        c = +"||" + card.name;
-      });
-      return c;
     }
   }
 });
@@ -39191,14 +39203,14 @@ var render = function() {
             _c("br"),
             _vm._v(" "),
             _c(
-              "a",
+              "span",
               {
                 staticClass: "btn btn-primary btn-lg btn-block",
-                attrs: {
-                  href:
-                    "http://store.tcgplayer.com/massentry?partner=MAGICDB" +
-                    _vm.c,
-                  type: "button"
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    _vm.tcgPlayer()
+                  }
                 }
               },
               [_vm._v("Buy here through TCGPlayer")]
