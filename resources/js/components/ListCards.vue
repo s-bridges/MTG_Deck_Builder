@@ -225,20 +225,15 @@ export default {
     toggleFilterColors(color) {
       // a function for adding or removing colors using array.push if in not in array and array.filter if in
       let colors = this.filterByColor;
-      // colors.push(color);
-      console.log(colors.indexOf(color));
-      console.log(colors);
       let found = colors.indexOf(color) != -1 ? true : false;
-      console.log(found);  
       if (!found) {
-        // push color onto colors array
+        // if not found, push color onto colors array
         colors.push(color);
       } else {
+        // color was found, filter it out
         colors = _.filter(colors, function(c) {
-          console.log(c);
           return c != color;
         });
-        console.log(colors);
       }
       this.filterByColor = colors; 
     }
