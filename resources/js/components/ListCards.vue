@@ -32,13 +32,32 @@
                 </div>
                 <div class="col-sm-12 col-md-7" style="padding-bottom:.5em;">
                 <!-- White = W, Blue = U, Black = B, Red = R, Green = G, Colorless = A, Land = L -->
-                  <span v-on:click="toggleFilterColors('W')"><img src="/images/magic_white.png" class="img-fluid" style="width:auto;height:50px;" alt="White"></span>
-                  <span v-on:click="toggleFilterColors('U')"><img src="/images/magic_blue.png" class="img-fluid" style="width:auto;height:50px;" alt="Blue"></span>
-                  <span v-on:click="toggleFilterColors('B')"><img src="/images/magic_black.png" class="img-fluid" style="width:auto;height:50px;" alt="Black"></span>
-                  <span v-on:click="toggleFilterColors('R')"><img src="/images/magic_red.png" class="img-fluid" style="width:auto;height:50px;" alt="Red"></span>
-                  <span v-on:click="toggleFilterColors('G')"><img src="/images/magic_green.png" class="img-fluid" style="width:auto;height:50px;" alt="Green"></span>
-                  <span v-on:click="toggleFilterColors('A')"><img src="/images/magic_colorless.png" class="img-fluid" style="width:auto;height:50px;" alt="Colorless"></span>
-                  <span v-on:click="toggleFilterColors('L')"><img src="/images/magic_land.png" class="img-fluid" style="width:auto;height:50px;" alt="Land"></span>
+                  <span v-on:click="toggleFilterColors('W')">
+                    <img src="/images/magic_white.png" class="img-fluid" style="width:auto;height:50px;" alt="White" v-bind:class="{ opaque: filterByColor.indexOf('W') == -1 && filterByColor.length != 0}">
+                  </span>
+                  <span v-on:click="toggleFilterColors('U')">
+                    <img src="/images/magic_blue.png" class="img-fluid" style="width:auto;height:50px;" alt="Blue" v-bind:class="{ opaque: filterByColor.indexOf('U') == -1 && filterByColor.length != 0}">
+                  </span>
+                  <span v-on:click="toggleFilterColors('B')">
+                    <img src="/images/magic_black.png" class="img-fluid" style="width:auto;height:50px;" alt="Black" v-bind:class="{ opaque: filterByColor.indexOf('B') == -1 && filterByColor.length != 0}">
+                  </span>
+                  <span v-on:click="toggleFilterColors('R')">
+                    <img src="/images/magic_red.png" class="img-fluid" style="width:auto;height:50px;" alt="Red" v-bind:class="{ opaque: filterByColor.indexOf('R') == -1 && filterByColor.length != 0}">
+                  </span>
+                  <span v-on:click="toggleFilterColors('G')">
+                    <img src="/images/magic_green.png" class="img-fluid" style="width:auto;height:50px;" alt="Green" v-bind:class="{ opaque: filterByColor.indexOf('G') == -1 && filterByColor.length != 0}">
+                  </span>
+                  <span v-on:click="toggleFilterColors('A')">
+                    <img src="/images/magic_colorless.png" class="img-fluid" style="width:auto;height:50px;" alt="Colorless" v-bind:class="{ opaque: filterByColor.indexOf('A') == -1 && filterByColor.length != 0}">
+                  </span>
+                  <span v-on:click="toggleFilterColors('L')">
+                    <img src="/images/magic_land.png" class="img-fluid" style="width:auto;height:50px;" alt="Land" v-bind:class="{ opaque: filterByColor.indexOf('L') == -1 && filterByColor.length != 0}">
+                  </span>
+                  <span v-on:click="filterByColor = []" style="height:50px;width:auto;">
+                    <button type="button" class="btn btn-dark btn-sm" style="display:inline-flex;">
+                      <i class="material-icons">replay</i>
+                    </button>
+                  </span>
                 </div>    
               </div>   
                 <div class="row">
