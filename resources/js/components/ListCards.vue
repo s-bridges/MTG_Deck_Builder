@@ -151,24 +151,28 @@ export default {
           set: "ALL"
         },
         {
-          label: "Guilds of Ravnica",
-          set: "GRN"
-        },
-        {
           label: "Core Set 2019",
           set: "M19"
         },
         {
           label: "Dominaria",
           set: "DOM"
-        },
+        },        
         {
-          label: "Rivals of Ixalan",
-          set: "RIX"
+          label: "Guilds of Ravnica",
+          set: "GRN"
         },
         {
           label: "Ixalan",
           set: "XLN"
+        },
+        {
+          label: "Ravnica Allegiance 1/25/19",
+          set: "RNA"
+        },
+        {
+          label: "Rivals of Ixalan",
+          set: "RIX"
         }
       ],
       mtgSetData: {},
