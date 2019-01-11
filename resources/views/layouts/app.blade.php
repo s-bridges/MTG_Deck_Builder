@@ -123,7 +123,11 @@
     </div>
     <footer class="footer">
       <div class="container">
-        <span class="text-muted">© 2018 MagicDB.us All Rights Reserved.</span>
+        <span class="text-muted">Magic the Gathering, Magic the Gathering Arena and related logos are registered trademarks, trademarks and/or copyright of Wizards of the Coast, 
+        Inc, a subsidiary of Hasbro, Inc. All rights reserved. All art is property of their respective artists and/or Wizards of the Coast Inc. 
+        This website is not produced, endorsed, supported, or affiliated with Wizards of the Coast Inc. Articles and comments are user-submitted and do not represent 
+        official endorsements of this site.</span>        
+        <p><span class="text-muted">© 2018 MagicDB.us All Rights Reserved.</span></p>
       </div>
     </footer>
 </body>
