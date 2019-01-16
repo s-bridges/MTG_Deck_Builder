@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Deck;
 use App\User;
 use App\Card;
+use App\Sideboard;
 use Auth;
 use JavaScript;
 use Illuminate\Http\Request;

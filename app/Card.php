@@ -32,11 +32,14 @@ class Card extends Model
 
     public function decks()
     {
-        return $this->belongsToMany(Deck::class, 'cards_decks', 'card_id', 'deck_id'); //add  , 'sideboards'
+        return $this->belongsToMany(Deck::class, 'cards_decks', 'card_id', 'deck_id');
     }
 
     public function users() {
         return $this->hasMany(User::class);
     }
+    public function sideboard_cards() {
+        return $this->belongsToMany(Card::class, 'sideboards', 'deck_id', 'card_id')->withPivot('count');
 
+    }
 }

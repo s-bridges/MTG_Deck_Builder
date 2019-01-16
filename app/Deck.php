@@ -40,6 +40,10 @@ class Deck extends Model
     }
     public function cards()
     {
-        return $this->belongsToMany(Card::class, 'cards_decks', 'deck_id', 'card_id')->withPivot('count'); //add , 'sideboards' to Card::
+        return $this->belongsToMany(Card::class, 'cards_decks', 'deck_id', 'card_id')->withPivot('count');    
+    }
+    public function sideboard_cards() {
+        return $this->belongsToMany(Card::class, 'sideboards', 'deck_id', 'card_id')->withPivot('count');
+
     }
 }

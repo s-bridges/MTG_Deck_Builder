@@ -26,7 +26,7 @@
                   <form class="right-align">
                     <div class="form-group">
                       <!-- reset filter button -->
-                      <button v-on:click="searchText=''; filterBySet='ALL';" type="button" class="btn btn-dark">Reset</button>
+                      <button v-on:click="searchText=''; filterBySet='ALL';" type="button" class="btn btn-dark noSelect">Reset</button>
                     </div>  
                   </form>
                 </div>
@@ -55,13 +55,13 @@
                   </span>
                   <span v-on:click="filterByColor = []" style="height:50px;width:auto;">
                     <button type="button" class="btn btn-dark btn-sm" style="display:inline-flex;">
-                      <i class="material-icons">replay</i>
+                      <i class="material-icons noSelect">replay</i>
                     </button>
                   </span>
                 </div>    
               </div>   
                 <div class="row">
-                    <div v-if="filteredCards.length > 0" class="mx-auto" v-bind:class="selectedCards.length > 0 ? 'col-sm-9' : 'col-sm-12'">
+                    <div v-if="filteredCards.length > 0" class="mx-auto" v-bind:class="selectedCards.length > 0 || sideboardCards.length > 0 ? 'col-sm-9' : 'col-sm-12'">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="mb-0">All Cards</h4>
@@ -73,12 +73,15 @@
                                 tag="div"
                                 class="row card-body"
                                 >
-                                    <div v-for="card in paginated('paginatedCards')" class="col justify-col-center addable" style="padding-bottom:2em;" v-on:click="addCard(card)">                                 
+                                    <div v-for="card in paginated('paginatedCards')" class="col justify-col-center addable" style="padding-bottom:2em;">                                 
                                         <img
                                             v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
                                         />
                                         <div class="overlay">
-                                            <div class="text"><i class="material-icons add">add_circle</i></div>
+                                            <div class="text">
+                                              <i v-on:click="addCard(card)" class="material-icons add noSelect" title="deck">add_circle</i>
+                                              <i v-on:click="addSideboardCard(card)" class="material-icons add noSelect" title="sideboard">tab</i>
+                                              </div>
                                         </div>
                                     </div>
                             </paginate>
@@ -97,7 +100,8 @@
                             ></paginate-links>
                             </div>                         
                         </div>
-                        <div v-if="selectedCards.length > 0" class="col-sm-3">
+                        <!-- show this if sideboard or selected cards have been added --> 
+                        <div v-if="selectedCards.length > 0 || sideboardCards.length > 0" class="col-sm-3">
                           <div class="card">
                             <div class="card-header">
                                 <h4 class="mb-0">My Deck</h4>
@@ -112,8 +116,14 @@
                               Enchantment: {{ instantEnchantmentCount }}</br>
                               Land: {{ instantLandCount }}</p>
                               <div v-for="card in myDeck">
-                                <p class="deck-list"><i class="material-icons text-secondary" v-on:click="removeCard(card.card)">remove_circle</i> {{card.count}} <i class="material-icons text-primary" v-on:click="addCard(card.card)">add_circle</i> <span style="padding-left:0.5em;">{{card.name}} </span></p>
+                                <p class="deck-list"><i class="material-icons text-secondary noSelect" v-on:click="removeCard(card.card)">remove_circle</i> {{card.count}} <i class="material-icons text-primary" v-on:click="addCard(card.card)">add_circle</i> <span style="padding-left:0.5em;">{{card.name}} </span></p>
                               </div>
+                              <hr>
+                              <p v-if="mySideboard.length > 0">Sideboard</p>
+                              <div v-for="card in mySideboard">
+                                <p class="deck-list"><i class="material-icons text-secondary noSelect" v-on:click="removeSideboardCard(card.card)">remove_circle</i> {{card.count}} <i class="material-icons text-primary" v-on:click="addSideboardCard(card.card)">add_circle</i> <span style="padding-left:0.5em;">{{card.name}} </span></p>
+                              </div>
+
                               <br />
                               <button type="button" class="btn btn-primary" title="Save" v-on:click="saveDeck()" :disabled="deckSubmitDisabled">Save</button>
                             </div>
@@ -197,7 +207,6 @@ export default {
     //  },
     setAPI() {
       // use the filterBySet value which the select option if the v-model of
-      dd($data);
       axios
         .get(`/card/${this.filterBySet}`)
         .then(response => {
@@ -209,7 +218,8 @@ export default {
     saveDeck() {
       // this is where the .post where you save selected cards to a deck
       let deckForm = this.deckForm;
-      deckForm.cards = this.selectedCards; // -> deckForm.cards = this.selectedCards + this.sideboardCards
+      deckForm.cards = this.selectedCards;
+      deckForm.sideboard = this.sideboardCards;
        axios
          .post(`/card/save`, this.deckForm)
          .then(response => {
@@ -228,6 +238,15 @@ export default {
           return c.multiverse_id == card.multiverse_id; 
       });
       this.selectedCards = _.filter(this.selectedCards, function(item, i){
+        return i !== index;
+      });
+    },
+    removeSideboardCard(card) {
+      // basically the same as above, may be able to paramterize it in the future
+      let index = _.findIndex(this.sideboardCards, function(c) { 
+          return c.multiverse_id == card.multiverse_id; 
+      });
+      this.sideboardCards = _.filter(this.sideboardCards, function(item, i){
         return i !== index;
       });
     },
@@ -300,6 +319,21 @@ export default {
       let selectedCards = this.selectedCards;
       // group the cards by the card name so we can keep track of duplicates
       let result = _.chain(selectedCards).groupBy('name').map(function(v, i) {
+        // get first card out of group of the same cards and set the card data
+        let cardData = _.first(v);
+        return {
+          name: i,
+          multiverse_id: cardData.multiverse_id,
+          count: v.length,
+          card: cardData
+        }
+      }).value();
+      return result;
+    },
+    mySideboard() {
+      let sideboardCards = this.sideboardCards;
+      // group the cards by the card name so we can keep track of duplicates
+      let result = _.chain(sideboardCards).groupBy('name').map(function(v, i) {
         // get first card out of group of the same cards and set the card data
         let cardData = _.first(v);
         return {

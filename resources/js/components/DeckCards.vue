@@ -1,5 +1,5 @@
 <template>            
-  <div v-if="myDeckCards" class="container">
+  <div v-if="deck.cards" class="container">
     <div class="row"> 
       <div class="container py-3">
         <div v-if="editable" class="row">
@@ -23,8 +23,8 @@
             </button>            
             <button type="button" class="btn btn-primary float-right" v-on:click="saveDeck()" title="Save">Save</button>
             <div class="mat-btn btn-primary" v-on:click="toggleView = !toggleView">
-              <i v-if="!toggleView" class="material-icons" title="List Mode">swap_horiz</i>
-              <i v-else class="material-icons" title="Image Mode">swap_vert</i>
+              <i v-if="!toggleView" class="material-icons noSelect" title="List Mode">swap_horiz</i>
+              <i v-else class="material-icons noSelect" title="Image Mode">swap_vert</i>
             </div>
           </div>
         </div>
@@ -42,13 +42,15 @@
                   :per="8"
                   tag="div"
                   class="row card-body">
-                  <div v-for="card in paginated('paginatedCards')" class="col justify-col-center addable" style="padding-bottom:2em;" v-on:click="addCard(card)">                                 
+                  <!-- <div v-for="card in paginated('paginatedCards')" class="col justify-col-center addable" style="padding-bottom:2em;" v-on:click="addCard(card)">                                  -->
+                  <div v-for="card in paginated('paginatedCards')" class="col justify-col-center addable" style="padding-bottom:2em;">                                 
                     <img 
                         v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
                     />
                     <div class="overlay">
-                      <div v-on:click="addCard(card)" class="text">
-                        <i class="material-icons add">add_circle</i>
+                      <div class="text">
+                        <i v-on:click="addSearchedCard(card)" class="material-icons noSelect add" title="deck">add_circle</i>
+                        <i v-on:click="addSearchedSideboardCard(card)" class="material-icons noSelect add" title="sideboard">tab</i>
                       </div>
                     </div>
                   </div>
@@ -70,17 +72,27 @@
             <!-- end first col -->
             <!-- second col -->
             <div v-bind:class="toggleView ? 'col-lg-3' : 'col-lg-12'">
+              <div class="card full width">
+                <div class="card-header">
+                  <h4 class="mb-0">{{ deck.name }}<button v-if="editable" type="button" class="btn btn-danger btn-sm float-right" v-on:click="deleteDeck(deck.id)" title="Delete">Delete</button></h4>
+                </div>
+                <div class="card-body">
+                  <p v-if="deck.description">{{deck.description}}</p>
+                  <p v-else>No description.</p>
+                </div>
+              </div>
+              </br>
               <div class="card full-width">
                 <div class="card-header">
-                  <h4 class="mb-0">{{ deck.name }}<button v-if="editable" type="button" class="btn btn-danger btn-sm float-right" v-on:click="deleteDeck(deck.id)" title="Delete">Delete</button></h4>        
+                  <h4 class="mb-0">Main</h4>        
                 </div>
                 <div v-bind:class="!toggleView ? 'row' : 'card-body'">
-                  <div v-for="card in myDeckCards" v-bind:class="!toggleView ? 'col col-lg-3 text-center addable removable': ''" style="padding-top:.5em;"> 
+                  <div v-for="card in deck.cards" v-bind:class="!toggleView ? 'col col-lg-3 text-center addable removable': ''"> 
                     <!-- when the deck is in card view -->
                     <span v-if="!toggleView"> 
                       <div v-if="card.pivot.count <= 4" style="height:40px; display:flex; justify-content:center; align-items:center">
                         <span v-for="n in card.pivot.count">
-                          <i style="max-width: 24px;" class="material-icons">whatshot</i>
+                          <i style="max-width: 24px;" class="material-icons noSelect">whatshot</i>
                         </span>
                       </div>
                       <div v-else style="height:40px; display:flex; justify-content:center; align-items:center"> 
@@ -90,8 +102,8 @@
                         v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
                       />
                       <div v-if="editable">
-                        <i v-on:click="removeCard(card)" class="material-icons clickable">remove_circle</i>
-                        <i v-on:click="addCard(card)" class="material-icons clickable">add_circle</i>
+                        <i v-on:click="removeCard(card)" class="material-icons noSelect clickable">remove_circle</i>
+                        <i v-on:click="addCard(card)" class="material-icons noSelect clickable">add_circle</i>
                       </div>
                     </span>
                     <span v-else>
@@ -102,9 +114,9 @@
                       <!-- this is what shows when the deck is in list view -->
                       <!-- <p style="margin: 0;">{{card.pivot.count}}x {{card.name}}</p> -->
                       <p class="deck-list">
-                        <i class="material-icons text-secondary" v-on:click="removeCard(card)">remove_circle</i> 
+                        <i class="material-icons noSelect text-secondary" v-on:click="removeCard(card)">remove_circle</i> 
                           {{card.pivot.count}} 
-                        <i class="material-icons text-primary" v-on:click="addCard(card)">add_circle</i> 
+                        <i class="material-icons noSelect text-primary" v-on:click="addCard(card)">add_circle</i> 
                         <span v-on:mouseover="popOn(card.multiverse_id)" v-on:mouseout="popOff(card.multiverse_id)" style="padding-left:0.5em; cursor:pointer;">{{card.name}}</span>
                       </p>
                     </span>
@@ -112,7 +124,51 @@
                 </div>
                 </div>
                 </br>
-                <!-- Sideboard -->                
+                <!-- Sideboard -->   
+              <div class="card full-width">
+                <div class="card-header">
+                  <h4 class="mb-0">Sideboard</h4>        
+                </div>
+                <div v-bind:class="!toggleView ? 'row' : 'card-body'">
+                  <!-- each item in the loop of mysideboard cards is a card -->
+                  <div v-for="card in deck.sideboard_cards" v-bind:class="!toggleView ? 'col col-lg-3 text-center addable removable': ''"> 
+                    <!-- when the deck is in card view -->
+                    <span v-if="!toggleView"> 
+                      <div v-if="card.pivot.count <= 4" style="height:40px; display:flex; justify-content:center; align-items:center">
+                        <span v-for="n in card.pivot.count">
+                          <i style="max-width: 24px;" class="material-icons noSelect">whatshot</i>
+                        </span>
+                      </div>
+                      <div v-else style="height:40px; display:flex; justify-content:center; align-items:center"> 
+                        <span><strong>{{card.pivot.count}}x</strong></span>
+                      </div>                 
+                      <img
+                        v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
+                      />
+                      <div v-if="editable">
+                        <i v-on:click="removeSideboardCard(card)" class="material-icons noSelect clickable">remove_circle</i>
+                        <i v-on:click="addCard(card)" class="material-icons noSelect clickable">add_circle</i>
+                      </div>
+                    </span>
+                    <span v-else>
+                      <span v-show="activeSideboardImage == card.multiverse_id" class="modal-image">
+                        <img
+                          v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
+                      /></span>
+                      <!-- this is what shows when the deck is in list view -->
+                      <!-- <p style="margin: 0;">{{sideboardCards.count}}x {{card.name}}</p> -->
+                      <p class="deck-list">
+                        <i class="material-icons noSelect text-secondary" v-on:click="removeSideboardCard(card)">remove_circle</i> 
+                          {{card.pivot.count}} 
+                        <i class="material-icons noSelect text-primary" v-on:click="addCard(card)">add_circle</i> 
+                        <span v-on:mouseover="popOn(card.multiverse_id, true)" v-on:mouseout="popOff(card.multiverse_id, true)" style="padding-left:0.5em; cursor:pointer;">{{card.name}}</span>
+                      </p>
+                    </span>
+                  </div>
+                </div>
+                </div>
+                </div>
+                </br>             
             </div> 
             </div>            
             </br>
@@ -140,13 +196,13 @@ export default {
   data() {
     return {
       deck: this.data.deck,
-      sideboard: this.data.sideboard,
       editable: this.data.editable,
       cards: [],
       paginatedCards: [],
       filterBySet: "",
       toggleView: false,
       activeImage: false,
+      activeSideboardImage: false,
       setOptions: [
         {
           label: "All Standard Sets",
@@ -186,19 +242,17 @@ export default {
     };
   }, 
   methods: {
-    popOff(id) {
+    popOff(id, isSideboard = false) {
       // always reset active image
       this.activeImage = false;
+      this.activeSideboardImage = false;
     },
-    popOn(id) {
-      // need to add set timeout?
-      // setTimeout(() => { 
-      //   if (this.activeImage != id) {
-      //     this.activeImage = id;
-      //   }
-      // }, 1000);
-      if (this.activeImage != id) {
+    popOn(id, isSideboard = false) {
+      if (this.activeImage != id && !isSideboard) {
         this.activeImage = id;
+      }
+      if (this.activeSideboardImage != id && isSideboard) {
+        this.activeSideboardImage = id;
       }
     },
     setAPI() {
@@ -216,41 +270,72 @@ export default {
       axios
         .put(`/deck/edit`, deck)
         .then(response => {
-          // get deck from the server that was added to and refresh it on the page
-          this.deck = this.data.payload.deck;
+          alert(response.data.message);
         })
         .catch(error => {});
     },
     addCard(card) {
-      // loop through the cards to see if the card exists within the deck cards array, if not found index = -1
-      let index = _.findIndex(this.deck.cards, function(c) {
-        return c.multiverse_id == card.multiverse_id;
-      });
-      // if card does not exist in deck, add it into this.deck.cards array using array push
-      if (index == -1) {
-        card.pivot = {
-          count: 1
-        };
-        // now you push that card with its newly created pivot object with card property count set to 1 into your deck.cards array
-        this.deck.cards.push(card);
+      // this is used when a card exists in the deck already, not in search view
+      // if card has property of pivot, card.pivot.count += 1 else, pivot.count = 1
+      if (_.has(card, 'pivot')){
+        card.pivot.count += 1;
       } else {
-        this.deck.cards[index].pivot.count += 1;
+        card.pivot.count = 1;
       }
+      console.log(card);
+    },
+    addSearchedCard(card) {
+      // find the searched card in sideboard_cards
+        let index = _.findIndex(this.deck.cards, function(c){
+          return c.multiverse_id == card.multiverse_id;
+        });
+        if (index != -1) {
+          this.addCard(this.deck.cards[index]);
+          // this force updates the components to reflect the recently added card
+          // this.$forceUpdate();
+        } else {
+          let cloneCard = card;
+          cloneCard.pivot = {};
+          cloneCard.pivot.count = 1;
+          this.deck.cards.push(cloneCard);
+        }
+    },
+    addSearchedSideboardCard(card) {
+      // find the searched card in sideboard_cards
+        let index = _.findIndex(this.deck.sideboard_cards, function(c){
+          return c.multiverse_id == card.multiverse_id;
+        });
+        if (index != -1) {
+          this.addCard(this.deck.sideboard_cards[index]);
+          // this force updates the components to reflect the recently added card
+          // this.$forceUpdate();
+        } else {
+          let cloneCard = card;
+          cloneCard.pivot = {};
+          cloneCard.pivot.count = 1;
+          this.deck.sideboard_cards.push(cloneCard);
+        }
     },
     removeCard(card) {
       // tick the card count down
       card.pivot.count -= 1;
       // remove card entirely if it is 0
       if (card.pivot.count <= 0) {
-        // find the card index in deck cards by the multiverse_id
-        let index = _.findIndex(this.deck.cards, function(c) {
-          return c.multiverse_id == card.multiverse_id;
-        });
-        // filter out the card
-        this.deck.cards = _.filter(this.deck.cards, function(item, i) {
-          return i !== index;
+        // if the card count reached 0, filter it out of the deck cards
+        this.deck.cards = _.filter(this.deck.cards, function(c) {
+          return c.multiverse_id != card.multiverse_id;
         });
       }
+    },
+    removeSideboardCard(card) {
+      // you pass in card up here, everything you reference should be card, that's why it's undefined
+        card.pivot.count -= 1;
+        if(card.pivot.count <= 0) {
+          // efficiency! if the card count reached 0, filter it out of the sideboard
+            this.deck.sideboard_cards = _.filter(this.deck.sideboard_cards, function(c) {
+             return c.multiverse_id != card.multiverse_id;
+            });
+        }
     },
     deleteDeck(deckId){
       axios.delete(`/deck/${deckId}/delete`)
@@ -286,11 +371,15 @@ export default {
     }
   },
   computed: {
-    myDeckCards() {
-      let selectedCards = this.deck.cards;
-      // if we add any filtering it will go in here
-      return selectedCards;
-    },
+    // myDeckCards() {
+    //   let selectedCards = this.deck.cards;
+    //   // if we add any filtering it will go in here
+    //   return selectedCards;
+    // },
+    // mySideboardCards() {
+    //   let sideboardCards = this.deck.sideboard_cards; // I think it's sideboard_cards
+    //   return sideboardCards;
+    // },
     filteredCards() {
       let search = this.searchText;
       let cards_array = this.cards;
