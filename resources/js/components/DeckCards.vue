@@ -205,10 +205,6 @@ export default {
       activeSideboardImage: false,
       setOptions: [
         {
-          label: "All Standard Sets",
-          set: "ALL"
-        },
-        {
           label: "Core Set 2019",
           set: "M19"
         },
@@ -225,7 +221,7 @@ export default {
           set: "XLN"
         },
         {
-          label: "Ravnica Allegiance 1/25/19",
+          label: "Ravnica Allegiance",
           set: "RNA"
         },
         {
