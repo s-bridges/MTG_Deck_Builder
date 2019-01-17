@@ -177,7 +177,7 @@ export default {
           set: "XLN"
         },
         {
-          label: "Ravnica Allegiance 1/25/19",
+          label: "Ravnica Allegiance",
           set: "RNA"
         },
         {
