@@ -13,6 +13,17 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+a.navbar-brand {
+  font-family: 'Shadows Into Light', cursive;
+  font-size: 1.8em;
+  display:flex;
+  align-items: center;
+  img {
+    max-height: 41px;
+    padding-right: 0.1em;
+  }
+}
+
 .justify-col-center {
   display: flex;
   justify-content: center;

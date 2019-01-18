@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="MTG Magic the Gathering Deck Builder. Build and share your MTG Standard Decks." />
-    <link rel="icon" href="https://magicdb.us/images/logoico.ico">
+    <link rel="icon" href="https://magicdb.us/images/onlycards.ico">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -27,6 +27,7 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
@@ -36,8 +37,9 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="https://magicdb.us/images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-                    {{ config('app.name', 'MTG Deck Builder') }}
+                    <img src="https://magicdb.us/images/onlycards.png" alt="Magic the Gathering Deck Builder">
+                    <!-- {{ config('app.name', 'magicdb.us') }} -->
+                    <span>magicdb.us</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
