@@ -74,7 +74,7 @@
                                 class="row card-body"
                                 >
                                     <div v-for="card in paginated('paginatedCards')" class="col justify-col-center addable" style="padding-bottom:2em;">                                 
-                                        <img
+                                        <img class="card-image"
                                             v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
                                         />
                                         <div class="overlay">
@@ -303,8 +303,8 @@ export default {
       }
       if (colors && colors.length > 0) {
         cards_array = _.filter(cards_array, function(card){
-          // turn card colors into array to loop through by splitting on space like R W U
-          let cardColors = card.colors.split(" ");
+          // remove spaces from card colors because data isn't always the same lul wizards, then split on each character
+          let cardColors = card.colors.replace(/ /g, '').split("");
           let match = _.findIndex(cardColors, function(color) {
             // see if each color the card is made up with is a match in filter by colors, return as soon
             // as it's true

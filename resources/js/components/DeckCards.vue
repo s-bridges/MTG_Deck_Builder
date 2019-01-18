@@ -44,7 +44,7 @@
                   class="row card-body">
                   <!-- <div v-for="card in paginated('paginatedCards')" class="col justify-col-center addable" style="padding-bottom:2em;" v-on:click="addCard(card)">                                  -->
                   <div v-for="card in paginated('paginatedCards')" class="col justify-col-center addable" style="padding-bottom:2em;">                                 
-                    <img 
+                    <img class="card-image" 
                         v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
                     />
                     <div class="overlay">
@@ -98,7 +98,7 @@
                       <div v-else style="height:40px; display:flex; justify-content:center; align-items:center"> 
                         <span><strong>{{card.pivot.count}}x</strong></span>
                       </div>                 
-                      <img
+                      <img class="card-image"
                         v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
                       />
                       <div v-if="editable">
@@ -108,7 +108,7 @@
                     </span>
                     <span v-else>
                       <span v-show="activeImage == card.multiverse_id" class="modal-image">
-                        <img
+                        <img class="card-image"
                           v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
                       /></span>
                       <!-- this is what shows when the deck is in list view -->
@@ -142,7 +142,7 @@
                       <div v-else style="height:40px; display:flex; justify-content:center; align-items:center"> 
                         <span><strong>{{card.pivot.count}}x</strong></span>
                       </div>                 
-                      <img
+                      <img class="card-image"
                         v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
                       />
                       <div v-if="editable">
@@ -152,7 +152,7 @@
                     </span>
                     <span v-else>
                       <span v-show="activeSideboardImage == card.multiverse_id" class="modal-image">
-                        <img
+                        <img class="card-image"
                           v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
                       /></span>
                       <!-- this is what shows when the deck is in list view -->
