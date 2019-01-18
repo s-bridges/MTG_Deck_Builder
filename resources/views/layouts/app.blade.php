@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="MTG Magic the Gathering Deck Builder. Build and share your MTG Standard Decks." />
-    <link rel="icon" href="https://magicdb.us/images/mtgicon_S5w_icon.ico">
+    <link rel="icon" href="https://magicdb.us/images/logoico.ico">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -36,6 +36,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
+                    <img src="https://magicdb.us/images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
                     {{ config('app.name', 'MTG Deck Builder') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
