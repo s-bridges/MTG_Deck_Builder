@@ -8,6 +8,7 @@
 {!! NoCaptcha::renderJs() !!}
   </head>
 
+<div class="container">
     <div class="row">
         <div class="col-sm-4 offset-sm-3">
         <h1>Contact Us</h1>
@@ -24,6 +25,8 @@
             <label for="message" class="mt-3">Message</label>
             <textarea name="message" cols="30" rows="10" class="form-control"></textarea>
             <input type="hidden" name="ip" id="hiddenField" value="<?php $ip ?>" />
+            <input class="cool" type="text" name="_honeyPot" id="_honeyPot" value="" />
+            <input class="cool" type="text" name="_honeyPot2" id="_honeyPot2" value="" />
             <button type="submit" class="btn btn-success btn-block my-3">Send Email</button>
             </form>
             <div class="form-group{{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
@@ -38,5 +41,6 @@
             </div>
         </div>
     </div>
+</div>
 
 @endsection

@@ -28,6 +28,11 @@
   }
 }
 
+// set max height on card images 
+img.card-image {
+    max-height: 311px;
+}
+
 .clickable {
   cursor:pointer;
 }
@@ -216,4 +221,10 @@ div {
   -ms-user-select: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+}
+
+// throw the robots off the trail / honepot
+.cool {
+  display:none;
+  opacity: 0;
 }
