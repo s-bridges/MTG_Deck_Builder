@@ -37,7 +37,8 @@ Route::prefix('deck')->group(function (){
     Route::get('/{deck_id}/cards', 'DecksController@specificDeck');
     Route::get('/dotw', 'DecksController@deckOfTheWeek');
     Route::put('/edit', 'DecksController@editDeck')->middleware(['auth']);
-    Route::delete('/{deck_id}/delete', 'DecksController@deleteDeck')->middleware(['auth']); 
+    Route::delete('/{deck_id}/delete', 'DecksController@deleteDeck')->middleware(['auth']);
+    Route::get('/all', 'DecksController@listAllDecks')->name('alldecks'); 
 });
 
 
@@ -56,6 +57,8 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function (){
     Route::patch('/save/update-dotw/', 'AdminController@deckOfTheWeekSave')->name('update-dotw');
     Route::get('/import-cards', 'AdminController@importCards');
     Route::get('/api/connect', 'AdminController@connect');
+    Route::get('/blog', 'AdminController@createBlogPost')->name('blog');
+    Route::post('/blog/save', 'AdminController@saveBlogPost')->name('saveBlogPost');
 });
 
 Route::prefix('user')->group(function() {

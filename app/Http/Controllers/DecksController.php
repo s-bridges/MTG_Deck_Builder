@@ -199,4 +199,10 @@ class DecksController extends Controller
             return response()->json(['status' => false, 'message' => json_encode($delete)]);
         }
     }
+
+    public function listAllDecks() {
+        $decks = Deck::has('cards')->with('cards')->get();
+        $data = collect(['decks' => $decks]);
+        return view('all-decks', ['data' => $data]);
+    }
 }
