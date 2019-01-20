@@ -53,17 +53,18 @@
             <div class="card-header" id="headingThree">
             <h5 class="mb-0">
                 <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                Some other cool admin feature?
+                Make Blog Post
                 </button>
             </h5>
             </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+            <div class="card-body">
+            <p>This will take you to a new magical world, where you can create content for the site!</p>
+                <button v-on:click="goToBlog()" type="button" class="btn btn-primary">Create Blog Post</button>
+            </div>
+            </div>
         </div>
         </div>
-
-
-
-
-
         </div>
     </div>
     </body>
@@ -101,6 +102,9 @@
                         this.deckId = '';
                     })
                     .catch(error => {});
+            },
+            goToBlog() {
+                window.location.href = '/admin/blog';
             }
         },
         computed: {

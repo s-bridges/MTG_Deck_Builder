@@ -117,4 +117,13 @@ class AdminController extends Controller
         //get bearer token
 
     }
+
+    public function createBlogPost()
+    {
+        return view('blog');
+    }
+    public function saveBlogPost()
+    {
+        
+    }
 }

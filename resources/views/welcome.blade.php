@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="MTG Magic the Gathering Deck Builder. Build and share your MTG Standard Decks." />
-        <link rel="icon" href="https://magicdb.us/images/logoico.ico">
+        <link rel="icon" href="https://magicdb.us/images/onlycards.ico">
         <title>MTG: Deck Builder</title>
         <!-- Google AdSense -->
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -22,6 +22,7 @@
         <link rel="dns-prefetch" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet">
 
         <!-- Styles -->
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
@@ -95,9 +96,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
-                        <img src="images/mana_symbols.png" class="img-fluid" alt="MTG Deck Builder">
+                        <img src="images/mana_symbols.png" class="img-fluid" alt="magicdb.us">
                         <div class="homepage-title m-b-md">
-                            MTG Deck Builder
+                            magicdb.us
                         </div> 
                     </div>
                 </div>

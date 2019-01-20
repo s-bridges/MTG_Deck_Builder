@@ -13,7 +13,9 @@
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
-    
+    <!-- Include the Quill library -->
+    <!-- <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script> -->
+
     <!-- google adsense -->
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
@@ -31,13 +33,15 @@
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="https://magicdb.us/images/onlycards.png" alt="Magic the Gathering Deck Builder">
+                    <img src="https://magicdb.us/images/onlycards.png" alt="magicdb.us">
                     <!-- {{ config('app.name', 'magicdb.us') }} -->
                     <span>magicdb.us</span>
                 </a>
@@ -74,11 +78,14 @@
                                     <a class="dropdown-item" href="{{ route('admin') }}">
                                             {{ __('Admin') }}
                                         </a>
+                                    <a class="dropdown-item" href="{{ route('alldecks') }}">
+                                            {{ __('All Decks') }}
+                                        </a>
                                     <a class="dropdown-item" href="{{ route('decks') }}">
-                                            {{ __('Decks') }}
+                                            {{ __('My Decks') }}
                                         </a>
                                     <a class="dropdown-item" href="{{ route('cards') }}">
-                                            {{ __('Cards') }}
+                                            {{ __('Build a Deck') }}
                                         </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
