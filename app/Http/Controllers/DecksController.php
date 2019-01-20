@@ -88,7 +88,7 @@ class DecksController extends Controller
         $deck_id = (int) $deck_id;
         // this query below is perfect     
         $deck = Deck::where('id', $deck_id)
-        ->with('cards')->with('sideboard_cards')->first();
+        ->with('cards')->with('sideboard_cards')->with('user')->first();
 
         if($check == true) {
             // this if below should be put together with the one above using &&
@@ -202,7 +202,8 @@ class DecksController extends Controller
 
     public function listAllDecks() {
         $decks = Deck::has('cards')->with('cards')->get();
-        $data = collect(['decks' => $decks]);
+        $users = User::all();
+        $data = collect(['decks' => $decks, 'users' => $users]);
         return view('all-decks', ['data' => $data]);
     }
 }
