@@ -74,7 +74,7 @@
             <div v-bind:class="toggleView ? 'col-lg-3' : 'col-lg-12'">
               <div class="card full width">
                 <div class="card-header">
-                  <h4 class="mb-0">{{ deck.name }} by {{ users.username }}<button v-if="editable" type="button" class="btn btn-danger btn-sm float-right" v-on:click="deleteDeck(deck.id)" title="Delete">Delete</button></h4>
+                  <h4 class="mb-0">{{ deck.name }} by {{ deck.user.username }}<button v-if="editable" type="button" class="btn btn-danger btn-sm float-right" v-on:click="deleteDeck(deck.id)" title="Delete">Delete</button></h4>
                 </div>
                 <div class="card-body">
                   <p v-if="deck.description">{{deck.description}}</p>
@@ -196,7 +196,6 @@ export default {
   data() {
     return {
       deck: this.data.deck,
-      users: this.data.users,
       editable: this.data.editable,
       cards: [],
       paginatedCards: [],

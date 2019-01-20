@@ -86,24 +86,22 @@ class DecksController extends Controller
     public function specificDeck($deck_id) {
         $check = Auth::check();
         $deck_id = (int) $deck_id;
-        //adds username
-        $users = User::with('decks')->withCount('decks')->get();
         // this query below is perfect     
         $deck = Deck::where('id', $deck_id)
-        ->with('cards')->with('sideboard_cards')->first();
+        ->with('cards')->with('sideboard_cards')->with('user')->first();
 
         if($check == true) {
             // this if below should be put together with the one above using &&
             if ($deck && $deck_id === $deck['id']) {
                 // set editable to false if this isn't the user's deck, otherwise, let them edit their own deck
                 $editable = Auth::user()->id == $deck['user_id'];
-                $data = collect(['deck' => $deck, 'editable' => $editable, 'users' => $users]);
+                $data = collect(['deck' => $deck, 'editable' => $editable]);
                 // conditions on where this is view or edit
                 return view('deck-cards', ['data' => $data]);
             }
         }
         else {
-            $data = collect(['deck' => $deck, 'users' => $users]);
+            $data = collect(['deck' => $deck]);
                 // only view
                 return view('deck-cards', ['data' => $data]);
         }               
