@@ -44,6 +44,7 @@ Route::prefix('deck')->group(function (){
 Route::prefix('blog')->group(function (){
     Route::get('/all', 'BlogController@allBlogs');
     Route::get('/{slug}', 'BlogController@showBlog')->name('blogPost'); 
+    Route::delete('/{slug}/delete', 'BlogController@deletePost')->name('post_delete');
 });
 
 

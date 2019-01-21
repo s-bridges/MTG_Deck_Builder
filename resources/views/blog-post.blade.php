@@ -12,6 +12,11 @@
                     <div style="float:left;">
                         <p>Author: {{$user['username']}}</p> 
                         <p>Created at: {{ \Carbon\Carbon::parse($created_at)->format('M d, Y')}}</p>
+                        <form action="{{route('post_delete',[$id])}}" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit">Delete</button>               
+                        </form>
                         {!!$content!!}
                     </div>
                 </div>

@@ -97,7 +97,8 @@
                 <div class="row">
                     <div class="col-sm-12">
                     <!-- Here will be a random blog entry with img source -->
-                        <img src="images/mana_symbols.png" class="img-fluid" alt="magicdb.us">
+                        <!--<img src="images/mana_symbols.png" class="img-fluid" alt="magicdb.us">-->
+                        
                         <div class="homepage-title m-b-md">
                             magicdb.us
                         </div> 
