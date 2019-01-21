@@ -1,10 +1,16 @@
 <template>
     <div class="container">
-    <div class="card-header">
-        <h4 class="mb-0">All Blog Posts</h4>
-        </div>
-        <div class="row justify-content-center">        
-            
+        <div class="row justify-content-center">               
+            <div class="container py-3">
+              <div class="row">
+                <div class="col-sm-12 col-md-9">
+                </div>   
+              </div> 
+                <div class="card-header">
+                <h4 class="mb-0">All Blog Posts</h4>
+                </div>  
+                </br>      
+                    
             <paginate
                 name="paginatedBlog"
                 :list="postList"
@@ -20,7 +26,7 @@
                             <div class="card-body">
                                 <h5 class="card-title"> {{ posts.title }}</h5>
                                 <p class="card-text">{{ posts.meta_description }}</p>
-                                <span v-on:click=viewBlog(posts.slug) class="btn btn-primary">Go somewhere</span>
+                                <span v-on:click=viewBlog(posts.slug) class="btn btn-primary">Read More</span>
                             </div>
                         </div>                       
                     </div>
@@ -39,6 +45,7 @@
                 }"
             ></paginate-links>
         </div>
+    </div>
     </div>
 </template>
 
