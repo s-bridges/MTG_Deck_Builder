@@ -20,7 +20,7 @@
             <input class="form-control" type="text" placeholder="Meta Title" name="meta_title" id="meta_title" value="" />
           </div>
           <div class="form-group">
-            <label for="imageInput">Upload Featured Image</label>
+            <label for="imageInput">Upload Featured Image (200x200 Min.)</label>
               <input class="form-control-file" name="input_img" type="file" id="input_img">
             </div>
         </div>
