@@ -64,7 +64,10 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function (){
     Route::get('/import-cards', 'AdminController@importCards');
     Route::get('/api/connect', 'AdminController@connect');
     Route::get('/blog', 'AdminController@createBlogPost')->name('blog');
+    Route::get('/blog/{slug}', 'AdminController@editBlogPost')->name('blog');
     Route::post('/blog/save', 'AdminController@saveBlogPost')->name('saveBlogPost');
+    Route::post('/blog/update', 'AdminController@updateBlogPost')->name('updateBlogPost');
+
 });
 
 Route::prefix('user')->group(function() {
