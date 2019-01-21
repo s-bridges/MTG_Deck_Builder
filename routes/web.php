@@ -42,7 +42,7 @@ Route::prefix('deck')->group(function (){
 });
 
 Route::prefix('blog')->group(function (){
-    Route::get('/{slug}', 'DecksController@showBlog')->name('blogPost'); 
+    Route::get('/{slug}', 'BlogController@showBlog')->name('blogPost'); 
 });
 
 
