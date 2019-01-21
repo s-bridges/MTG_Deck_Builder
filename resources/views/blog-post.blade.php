@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <img style="max-width:250px; height: auto;float:left;padding-right: 1em;" src="/images/{{$image_url}}" />
                     <div style="float:left;">
-                        <p>{{$title}} by: {{$user['name']}}</p> 
+                        <p>{{$title}} by: {{$user['username']}}</p> 
                         {!!$content!!}
                     </div>
                 </div>
