@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Deck;
 use App\Card;
+use App\Post;
 use Auth;
 use Log;
+use Validator;
 use GuzzleHttp\Client;
 
 class AdminController extends Controller
@@ -122,8 +124,40 @@ class AdminController extends Controller
     {
         return view('blog');
     }
+    
     public function saveBlogPost()
     {
-        
+        $data = $this->request->all();
+        $data['slug'] = preg_replace('/\s+/', '-', strtolower($data['title']));
+        // make sure title and slug are unique within the DB
+        $validation = Validator::make($data, [
+            'slug' => 'required|unique:posts|max:255',
+            'title' => 'required|unique:posts|max:255',
+            'input_img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'content' => 'required'
+        ]);
+        if ($validation->passes()) {
+            // save image 
+            $image = $data['input_img'];
+            $image_name = time() . '-' . $image->getClientOriginalName();
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $image_name);
+            $data['image_url'] = $image_name;
+            $data['user_id'] = Auth::user()->id;
+
+            $saved = Post::create($data);
+            if ($saved) {
+                // messaging that the shit actually happened, for now we can just take a dump
+                return response()->json(['status' => true, 'message' => 'Saved Successfully!', 'payload' => $saved]);
+            } else {
+                // we can get more detailed with an error message later on, like actually outputting it here
+                return response()->json(['status' => false, 'message' => 'Post save failed, please reload the page']);
+            }
+        }
+        // if there were errors from validation, return them
+        return response()->json([
+            'success' => false,
+            'message' => json_decode($validation->errors())
+        ], 422);
     }
 }
