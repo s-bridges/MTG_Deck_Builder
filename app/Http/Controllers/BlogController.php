@@ -14,6 +14,12 @@ use JavaScript;
 class BlogController extends Controller
 {
     //
+    public function allBlogs() {
+        $posts = Post::all()->toArray();
+        $data = collect(['posts' => $posts]);
+        return view('all-blogs', ['data' => $data]);
+    }
+
     public function showBlog($slug) {
         // get post by slug
         $post = Post::where('slug', $slug)->with('user')->first()->toArray();

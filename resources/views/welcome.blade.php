@@ -96,6 +96,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
+                    <!-- Here will be a random blog entry with img source -->
                         <img src="images/mana_symbols.png" class="img-fluid" alt="magicdb.us">
                         <div class="homepage-title m-b-md">
                             magicdb.us
@@ -106,6 +107,7 @@
                     <div class="homepage-links links">
                         <a class="hp-link" href="/card/">Build a Deck</a>
                         <a class="hp-link" href="/deck/dotw">Deck of The Week</a>
+                        <a class="hp-link" href="/blog/all">Posts</a>
                         <a class="hp-link" href="/health">Life Counter</a>
                         <a class="hp-link" href="/contact/">Contact Us</a>                   
                     </div>
