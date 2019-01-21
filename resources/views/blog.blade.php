@@ -71,14 +71,19 @@
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <!-- Initialize Quill editor -->
 <script type="text/javascript">
-    @if (isset($content))
-      var oldContent = "{!! $content !!}";
-      var slug = "{{$slug}}";
+    @if (isset($content) && $content = addslashes($content))
+      // this is an edit
+      var oldContent = '{!! $content !!}';
+      var slug = '{{$slug}}';
+    @else 
+      // this is a new post
+      var oldContent = false;
     @endif
   window.onload = function(e){
     window.quill = new Quill('#editor', {
       theme: 'snow'  // or 'bubble'
     });
+    
     if (oldContent) {
       // set the old content
       document.getElementsByClassName("ql-editor")[0].innerHTML = oldContent;
@@ -98,7 +103,6 @@
     var meta_description = document.getElementById("meta_description").value;
     var meta_title = document.getElementById("meta_title").value;
     var input_img = document.getElementById('input_img').files[0];
-    var current_img = document.getElementById("currentImg").src;
 
     // append all form data
     var formData = new FormData();
@@ -117,7 +121,7 @@
       formData.append('slug', window.slug);
       xhr.open("POST", "/admin/blog/update");
     } else {
-      forData.append('is_edit', false);
+      formData.append('is_edit', false);
       // new post
       xhr.open("POST", "/admin/blog/save");
     }

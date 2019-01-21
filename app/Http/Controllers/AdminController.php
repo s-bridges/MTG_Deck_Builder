@@ -140,12 +140,7 @@ class AdminController extends Controller
         $data = $this->request->all();
         $data['slug'] = preg_replace('/\s+/', '-', strtolower($data['title']));
         // make sure title and slug are unique within the DB
-        $validation = Validator::make($data, [
-            'slug' => 'required|unique:posts|max:255',
-            'title' => 'required|unique:posts|max:255',
-            'input_img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'content' => 'required'
-        ]);
+        $validation = Validator::make($data, $this->blogValidation());
         if ($validation->passes()) {
             // save image 
             $image = $data['input_img'];
