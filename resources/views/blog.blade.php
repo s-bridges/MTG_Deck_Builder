@@ -6,9 +6,9 @@
       <div class="row">
         <div class="col-sm-12">
         @if (isset($title))
-          <h1>New Blog Post</h1>
-        @else
           <h1>Update Blog Post</h1>
+        @else
+          <h1>New Blog Post</h1>
         @endif
         </div>
       </div>
