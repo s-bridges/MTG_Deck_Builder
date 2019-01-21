@@ -8,7 +8,7 @@
         <p class="lead">Hello, {{ admin.name }} / {{admin.username}}</p>
         <hr class="my-4">
         <p><a href="/import">Import CSV</a></p>
-        <p><a href="/admin/import-cards">Import Cards</a></p>
+        <p><a href="/admin/import-cards">Import Cards</a> - Do Not Click</p>
         <p v-if="totalUsers">Users Registered: {{ totalUsers }}</p>
         <p v-if="totalDecks">Total Decks Built: {{ totalDecks }}</p>
         <p class="lead">

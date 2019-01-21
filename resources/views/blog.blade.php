@@ -48,9 +48,9 @@
           @endif
           <div class="form-group">
             @if(isset($image_url))
-            <label for="imageInput">Replace Featured Image</label>
+            <label for="imageInput">Replace Featured Image (200x200 Min.)</label>
             @else
-            <label for="imageInput">Upload Featured Image</label>
+            <label for="imageInput">Upload Featured Image (200x200 Min.)</label>
             @endif
               <input class="form-control-file" name="input_img" type="file" id="input_img">
             </div>
@@ -104,7 +104,7 @@
     var formData = new FormData();
     formData.append('title', title);
     formData.append('meta_description', meta_description);
-    formData.append('meta_title', meta_description);
+    formData.append('meta_title', meta_title);
     formData.append('content', content);
     formData.append('input_img', input_img);
     var token = getMetaContent('csrf-token');

@@ -208,9 +208,5 @@ class DecksController extends Controller
         return view('all-decks', ['data' => $data]);
     }
 
-    public function showBlog($slug) {
-        // get post by slug
-        $post = Post::where('slug', $slug)->with('user')->first()->toArray();
-        return view('blog-post', $post);
-    }
+    
 }
