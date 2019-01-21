@@ -18,7 +18,11 @@ class CreateBlogPosts extends Migration
             $table->string('title', 255);
             $table->mediumText('content');
             $table->integer('user_id');
-            $table->string('image_url');
+            $table->string('image_url')->nullable();
+            $table->string('meta_description', 255)->nullable();
+            $table->string('meta_title', 255)->nullable();
+            $table->string('slug', 255);
+
             $table->timestamps();
         });
     }

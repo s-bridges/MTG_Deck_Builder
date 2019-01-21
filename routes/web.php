@@ -41,6 +41,10 @@ Route::prefix('deck')->group(function (){
     Route::get('/all', 'DecksController@listAllDecks')->name('alldecks'); 
 });
 
+Route::prefix('blog')->group(function (){
+    Route::get('/{slug}', 'DecksController@showBlog')->name('blogPost'); 
+});
+
 
 Route::prefix('import')->middleware(['auth', 'is_admin'])->group(function (){
     Route::get('/', 'ImportController@getImport')->name('import');
