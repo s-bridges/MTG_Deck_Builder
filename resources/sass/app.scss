@@ -244,3 +244,13 @@ div {
 .ql-editor {
   background-color: white;
 }
+
+// blog featured image
+.blog-card {
+  .featured-img {
+    height: 200px;
+    background-position: 50%;
+    background-size: cover;
+    margin-top: -1px;
+  }
+}

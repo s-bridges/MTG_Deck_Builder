@@ -4,7 +4,15 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    @if (isset($content) && isset($meta_title) && isset($meta_description))
+    <meta name="title" content="{{$meta_title}}" />
+    <meta name="description" content="{{$meta_description}}" />
+    <meta property="og:image" content="/images/{{$image_url}}"/>
+    <!--blog content meta title and description -->
+    @else
     <meta name="description" content="MTG Magic the Gathering Deck Builder. Build and share your MTG Standard Decks." />
+    <meta name="title" content="MTG Deck Builder, share your Magic the Gathering Standard Decks." />
+    @endif
     <link rel="icon" href="https://magicdb.us/images/onlycards.ico">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
