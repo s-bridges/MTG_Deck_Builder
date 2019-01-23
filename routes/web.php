@@ -66,7 +66,9 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function (){
     Route::get('/blog/{slug}', 'AdminController@editBlogPost')->name('blog');
     Route::post('/blog/save', 'AdminController@saveBlogPost')->name('saveBlogPost');
     Route::post('/blog/update', 'AdminController@updateBlogPost')->name('updateBlogPost');
-
+    // route for updating card power levels
+    Route::get('/cards/power-levels', 'AdminController@powerLevels')->name('powerLevels');
+    Route::post('/cards/power-levels/update', 'AdminController@syncPowerLevels')->name('syncPowerLevels');
 });
 
 Route::prefix('user')->group(function() {
