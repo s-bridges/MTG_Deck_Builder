@@ -11,12 +11,17 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable;
 
     CONST ADMIN_TYPE = 'admin';
+    CONST EDITOR_TYPE = 'editor';
     CONST DEFAULT_TYPE = 'default';
 
     public function isAdmin(){
         return $this->type === self::ADMIN_TYPE;
     }
 
+    public function isEditor(){
+        return $this->type === self::EDITOR_TYPE || $this->type === self::ADMIN_TYPE;
+    }
+    
     /**
      * The attributes that are mass assignable.
      *

@@ -7,8 +7,10 @@
         <h1 class="display-4">Admin Panel</h1>
         <p class="lead">Hello, {{ admin.name }} / {{admin.username}}</p>
         <hr class="my-4">
+        <p><a href="/admin/blog">Create Blog Post</a></p>
         <p><a href="/import">Import CSV</a></p>
-        <p><a href="/admin/import-cards">Import Cards</a> - Do Not Click</p>
+        <p><a href="/admin/import-cards">Import Card Images from WotC</a> - Do Not Click Unless New Set Added</p>
+        <p><a href="/admin/cards/power-levels">Edit Power Levels</a></p>
         <p v-if="totalUsers">Users Registered: {{ totalUsers }}</p>
         <p v-if="totalDecks">Total Decks Built: {{ totalDecks }}</p>
         <p class="lead">
@@ -46,21 +48,6 @@
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
             <div class="card-body">
                 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-            </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header" id="headingThree">
-            <h5 class="mb-0">
-                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                Make Blog Post
-                </button>
-            </h5>
-            </div>
-            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-            <div class="card-body">
-            <p>This will take you to a new magical world, where you can create content for the site!</p>
-                <button v-on:click="goToBlog()" type="button" class="btn btn-primary">Create Blog Post</button>
             </div>
             </div>
         </div>
@@ -102,9 +89,6 @@
                         this.deckId = '';
                     })
                     .catch(error => {});
-            },
-            goToBlog() {
-                window.location.href = '/admin/blog';
             }
         },
         computed: {

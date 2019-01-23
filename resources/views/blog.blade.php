@@ -119,11 +119,11 @@
       // if update
       formData.append('is_edit', true);
       formData.append('slug', window.slug);
-      xhr.open("POST", "/admin/blog/update");
+      xhr.open("POST", "/editor/blog/update");
     } else {
       formData.append('is_edit', false);
       // new post
-      xhr.open("POST", "/admin/blog/save");
+      xhr.open("POST", "/editor/blog/save");
     }
     // need to pass along token with header for authorization
     xhr.setRequestHeader("X-CSRF-TOKEN", token);
@@ -135,7 +135,7 @@
         alert('Post has been saved!');
         // redirect to post edit
         var response = JSON.parse(xhr.response);
-        window.location = '/admin/blog/' + response.payload.slug;
+        window.location = '/editor/blog/' + response.payload.slug;
       }
       // if there was an error
       if (xhr.readyState === 4 && xhr.status === 422) {

@@ -14,6 +14,11 @@ use JavaScript;
 class BlogController extends Controller
 {
     //
+    public function __construct(Request $request)
+    {
+        $this->middleware('auth');
+    }
+
     public function allBlogs() {
         $posts = Post::all()->toArray();
         $data = collect(['posts' => $posts]);
@@ -25,4 +30,25 @@ class BlogController extends Controller
         $post = Post::where('slug', $slug)->with('user')->first()->toArray();
         return view('blog-post', $post);
     }
+    
+    public function deletePost($id) {
+        $check = Auth::check();
+        $post = Post::where('id', $id);
+        $deleted = $post->delete();
+        if ($deleted) {
+            return response()->json(['status' => true, 'message' => 'Deleted Successfully!']);
+        } else {
+            return response()->json(['status' => false, 'message' => json_encode($deleted)]);
+        }
+    }
+
+    public function randomPostHome() {
+        $post = Post::orderByRaw('RAND()')->first()->toArray();
+        return view('welcome', [ 'post' => $post ]);
+    }
 }
+
+
+/*     $deck = Deck::where('id', $id)->where('user_id', Auth::user()->id)->first();
+   
+} */
