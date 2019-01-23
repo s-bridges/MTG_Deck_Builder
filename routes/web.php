@@ -80,9 +80,9 @@ Route::get('/health', 'HealthController@health');
 
 Route::prefix('editor')->middleware(['auth', 'is_editor'])->group(function () {
     Route::get('/', 'EditorController@editor')->name('editor');
-    Route::get('/blog', 'AdminController@createBlogPost')->name('blog');
-    Route::get('/blog/{slug}', 'AdminController@editBlogPost')->name('blog');
-    Route::post('/blog/save', 'AdminController@saveBlogPost')->name('saveBlogPost');
-    Route::post('/blog/update', 'AdminController@updateBlogPost')->name('updateBlogPost');
-    Route::delete('/{slug}/delete', 'BlogController@deletePost')->name('post_delete');
+    Route::get('/blog', 'EditorController@createBlogPost')->name('blog');
+    Route::get('/blog/{slug}', 'EditorController@editBlogPost')->name('blog');
+    Route::post('/blog/save', 'EditorController@saveBlogPost')->name('saveBlogPost');
+    Route::post('/blog/update', 'EditorController@updateBlogPost')->name('updateBlogPost');
+    Route::delete('/{slug}/delete', 'EditorController@deletePost')->name('post_delete');
 });
