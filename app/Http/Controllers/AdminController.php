@@ -7,6 +7,7 @@ use App\User;
 use App\Deck;
 use App\Card;
 use App\Post;
+use App\PowerLevel;
 use Auth;
 use Log;
 use Validator;
@@ -222,5 +223,69 @@ class AdminController extends Controller
             'success' => false,
             'message' => json_decode($validation->errors())
         ], 422);
+    }
+
+    public function powerLevels()
+    {
+        // get all cards
+        $cards = Card::with('power_levels')->get()->toArray();
+        // var_dump($cards);
+        $power_levels = PowerLevel::select('id','name')->get();
+        // make power level look like relationship
+        $p_levels = collect($power_levels)->map(function($level, $key){
+            return [
+                'name' => $level['name'],
+                'id' => $level['id'],
+                'pivot' => [
+                    'ranking' => 1.0
+                ]
+            ];
+        })->keyBy('name');
+
+        // transform power_levels to have levels if they didn't have them already
+        $cards = collect($cards)->map(function($card, $key) use ($p_levels){
+            $card['power_levels'] = collect($card['power_levels'])->keyBy('id');
+            foreach ($p_levels as $level) {
+                // if card doesn't have ranking
+                if ($card['power_levels']->has($level['id']) === false){
+                    $card['power_levels'][$level['id']] = $level;
+                }
+            }
+            return $card;
+        });
+
+        $data = collect(['cards' => $cards, 'power_levels' => $power_levels->keyBy('name')]);
+        return view('power-levels', ['data' => $data]);
+    }
+
+    public function syncPowerLevels()
+    {
+        $cards = $this->request->all();
+        if (count($cards) > 0 ) {
+            $power_levels = PowerLevel::select('id','name')->get();
+            $synched_success = [];
+            // transform cards coming in that are being synced with power levels
+            $power_levels->each(function($level, $key) use($cards, &$synched_success){
+                $updated = $cards[$level->name];
+                // remove level id
+                unset($updated['id']);
+                // remove level name
+                unset($updated['name']);
+                $synched = $level->cards()->syncWithoutDetaching($updated);
+                $synched_success[] = [
+                    'updated' => $synched['updated'],
+                    'attached' => $synched['attached']
+                ];
+            });
+            if (count($synched_success) > 0) {
+                // messaging that the shit actually happened, for now we can just take a dump
+                return response()->json(['status' => true, 'message' => 'Ranking Successfully!', 'payload' => $power_levels->keyBy('name')]);
+            } else {
+                // we can get more detailed with an error message later on, like actually outputting it here
+                return response()->json(['status' => false, 'message' => 'No cards rankings were added.']);
+            }
+        }
+        // we can get more detailed with an error message later on, like actually outputting it here
+        return response()->json(['status' => false, 'message' => 'No cards rankings were added.']);
     }
 }

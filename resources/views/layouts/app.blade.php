@@ -4,7 +4,15 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    @if (isset($content) && isset($meta_title) && isset($meta_description))
+    <meta name="title" content="{{$meta_title}}" />
+    <meta name="description" content="{{$meta_description}}" />
+    <meta property="og:image" content="/images/{{$image_url}}"/>
+    <!--blog content meta title and description -->
+    @else
     <meta name="description" content="MTG Magic the Gathering Deck Builder. Build and share your MTG Standard Decks." />
+    <meta name="title" content="MTG Deck Builder, share your Magic the Gathering Standard Decks." />
+    @endif
     <link rel="icon" href="https://magicdb.us/images/onlycards.ico">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -68,61 +76,94 @@
                                 @endif
                             </li>
                         @else
-                            @if(Auth::user()->type == 'admin')
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                        @if(Auth::user()->type == 'admin')
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('admin') }}">
+                                        {{ __('Admin') }}
+                                    </a>
+                                <a class="dropdown-item" href="{{ route('alldecks') }}">
+                                        {{ __('All Decks') }}
+                                    </a>
+                                <a class="dropdown-item" href="{{ route('decks') }}">
+                                        {{ __('My Decks') }}
+                                    </a>
+                                <a class="dropdown-item" href="{{ route('cards') }}">
+                                        {{ __('Build a Deck') }}
+                                    </a>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('admin') }}">
-                                            {{ __('Admin') }}
-                                        </a>
-                                    <a class="dropdown-item" href="{{ route('alldecks') }}">
-                                            {{ __('All Decks') }}
-                                        </a>
-                                    <a class="dropdown-item" href="{{ route('decks') }}">
-                                            {{ __('My Decks') }}
-                                        </a>
-                                    <a class="dropdown-item" href="{{ route('cards') }}">
-                                            {{ __('Build a Deck') }}
-                                        </a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                        @elseif(Auth::user()->type == 'editor')
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                            </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                            @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('editor') }}">
+                                        {{ __('Editor Panel') }}
+                                    </a>
+                                <a class="dropdown-item" href="{{ route('alldecks') }}">
+                                        {{ __('All Decks') }}
+                                    </a>
+                                <a class="dropdown-item" href="{{ route('decks') }}">
+                                        {{ __('My Decks') }}
+                                    </a>
+                                <a class="dropdown-item" href="{{ route('cards') }}">
+                                        {{ __('Build a Deck') }}
+                                    </a>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('decks') }}">
-                                            {{ __('Decks') }}
-                                        </a>
-                                    <a class="dropdown-item" href="{{ route('cards') }}">
-                                            {{ __('Cards') }}
-                                        </a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>                        
+                        @else
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                            </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                            @endif
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('alldecks') }}">
+                                        {{ __('All Decks') }}
+                                    </a>
+                                <a class="dropdown-item" href="{{ route('decks') }}">
+                                        {{ __('My Decks') }}
+                                    </a>
+                                <a class="dropdown-item" href="{{ route('cards') }}">
+                                        {{ __('Build a Deck') }}
+                                    </a>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                        @endif
                         @endguest     
                     </ul>
                 </div>

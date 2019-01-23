@@ -67,6 +67,9 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function (){
     Route::post('/blog/save', 'AdminController@saveBlogPost')->name('saveBlogPost');
     Route::post('/blog/update', 'AdminController@updateBlogPost')->name('updateBlogPost');
     Route::delete('/{slug}/delete', 'BlogController@deletePost')->name('post_delete');
+    // route for updating card power levels
+    Route::get('/cards/power-levels', 'AdminController@powerLevels')->name('powerLevels');
+    Route::post('/cards/power-levels/update', 'AdminController@syncPowerLevels')->name('syncPowerLevels');
 });
 
 Route::prefix('user')->group(function() {
@@ -74,3 +77,12 @@ Route::prefix('user')->group(function() {
 });
 
 Route::get('/health', 'HealthController@health');
+
+Route::prefix('editor')->middleware(['auth', 'is_editor'])->group(function () {
+    Route::get('/', 'EditorController@editor')->name('editor');
+    Route::get('/blog', 'AdminController@createBlogPost')->name('blog');
+    Route::get('/blog/{slug}', 'AdminController@editBlogPost')->name('blog');
+    Route::post('/blog/save', 'AdminController@saveBlogPost')->name('saveBlogPost');
+    Route::post('/blog/update', 'AdminController@updateBlogPost')->name('updateBlogPost');
+    Route::delete('/{slug}/delete', 'BlogController@deletePost')->name('post_delete');
+});

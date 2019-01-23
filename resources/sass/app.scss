@@ -244,3 +244,28 @@ div {
 .ql-editor {
   background-color: white;
 }
+
+// blog featured image
+.blog-card {
+  .featured-img {
+    height: 200px;
+    background-position: 50%;
+    background-size: cover;
+    margin-top: -1px;
+  }
+}
+
+// card headers with action buttons, align button to right
+.header-with-btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+// used for setting card rankings
+.form-group {
+  &.rankings {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+}
