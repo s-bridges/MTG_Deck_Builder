@@ -19,8 +19,9 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function isEditor(){
-        return $this->type === self::EDITOR_TYPE;
+        return $this->type === self::EDITOR_TYPE || $this->type === self::ADMIN_TYPE;
     }
+    
     /**
      * The attributes that are mass assignable.
      *

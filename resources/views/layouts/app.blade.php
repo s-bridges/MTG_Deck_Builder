@@ -86,6 +86,9 @@
                                 <a class="dropdown-item" href="{{ route('admin') }}">
                                         {{ __('Admin') }}
                                     </a>
+                                <a class="dropdown-item" href="{{ route('editor') }}">
+                                    {{ __('Editor Panel') }}
+                                </a>
                                 <a class="dropdown-item" href="{{ route('alldecks') }}">
                                         {{ __('All Decks') }}
                                     </a>

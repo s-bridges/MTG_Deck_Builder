@@ -62,11 +62,11 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function (){
     Route::patch('/save/update-dotw/', 'AdminController@deckOfTheWeekSave')->name('update-dotw');
     Route::get('/import-cards', 'AdminController@importCards');
     Route::get('/api/connect', 'AdminController@connect');
-    Route::get('/blog', 'AdminController@createBlogPost')->name('blog');
-    Route::get('/blog/{slug}', 'AdminController@editBlogPost')->name('blog');
-    Route::post('/blog/save', 'AdminController@saveBlogPost')->name('saveBlogPost');
-    Route::post('/blog/update', 'AdminController@updateBlogPost')->name('updateBlogPost');
-    Route::delete('/{slug}/delete', 'BlogController@deletePost')->name('post_delete');
+    Route::get('/blog', 'EditorController@createBlogPost')->name('blog');
+    Route::get('/blog/{slug}', 'EditorController@editBlogPost')->name('blog');
+    Route::post('/blog/save', 'EditorController@saveBlogPost')->name('saveBlogPost');
+    Route::post('/blog/update', 'EditorController@updateBlogPost')->name('updateBlogPost');
+    Route::delete('/{slug}/delete', 'EditorController@deletePost')->name('post_delete');
     // route for updating card power levels
     Route::get('/cards/power-levels', 'AdminController@powerLevels')->name('powerLevels');
     Route::post('/cards/power-levels/update', 'AdminController@syncPowerLevels')->name('syncPowerLevels');
