@@ -35,11 +35,15 @@ class Card extends Model
         return $this->belongsToMany(Deck::class, 'cards_decks', 'card_id', 'deck_id');
     }
 
+    public function power_levels()
+    {
+        return $this->belongsToMany(PowerLevel::class, 'cards_power_levels', 'card_id', 'power_level_id')->withPivot('ranking');
+    }
+
     public function users() {
         return $this->hasMany(User::class);
     }
     public function sideboard_cards() {
         return $this->belongsToMany(Card::class, 'sideboards', 'deck_id', 'card_id')->withPivot('count');
-
     }
 }
