@@ -44,8 +44,7 @@ class BlogController extends Controller
 
     public function randomPostHome() {
         $post = Post::orderByRaw('RAND()')->first()->toArray();
-        dd($post);
-        return view('welcome', $post);
+        return view('welcome', [ 'post' => $post ]);
     }
 }
 

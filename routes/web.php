@@ -44,7 +44,6 @@ Route::prefix('deck')->group(function (){
 Route::prefix('blog')->group(function (){
     Route::get('/all', 'BlogController@allBlogs');
     Route::get('/{slug}', 'BlogController@showBlog')->name('blogPost'); 
-    Route::delete('/{slug}/delete', 'BlogController@deletePost')->name('post_delete');
 });
 
 
@@ -67,7 +66,7 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function (){
     Route::get('/blog/{slug}', 'AdminController@editBlogPost')->name('blog');
     Route::post('/blog/save', 'AdminController@saveBlogPost')->name('saveBlogPost');
     Route::post('/blog/update', 'AdminController@updateBlogPost')->name('updateBlogPost');
-
+    Route::delete('/{slug}/delete', 'BlogController@deletePost')->name('post_delete');
 });
 
 Route::prefix('user')->group(function() {
