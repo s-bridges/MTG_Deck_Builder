@@ -24,7 +24,7 @@
                 >
                 
                 <div v-for="posts in paginated('paginatedBlog')" class="col addable">  
-                    <div class="media" v-on:click=viewBlog(posts.slug)>
+                    <div class="media" v-on:click=viewBlog(posts.slug) style="cursor:pointer">
                         <img v-bind:src="'/images/' + posts.image_url" class="mr-3 all-blog-img" alt="posts.title">
                         <div class="media-body">
                             <h5 class="mt-0">{{ posts.title }}</h5>
