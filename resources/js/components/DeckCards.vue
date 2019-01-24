@@ -1,5 +1,9 @@
-<template>            
+<template>
   <div v-if="deck.cards" class="container">
+  <!-- TCG ad -->
+    <div class="row justify-content-center">
+    <span v-on:click="viewAd()"><img src="https://tcgplayer-marketing.s3.amazonaws.com/content/magic/buy_all_singles_kb_seven_percent_affiliate_leaderboard_728x90_01252019.jpg" class="img-fluid" alt="Responsive image"></span>
+    </div>
     <div class="row"> 
       <div class="container py-3">
         <div v-if="editable" class="row">
@@ -364,6 +368,9 @@ export default {
       console.log(tcgLink);
       console.log(link);
       window.location.href = tcgLink;
+    },
+    viewAd() {
+            window.location.href = "https://www.tcgplayer.com?partner=MAGICDB&utm_campaign=affiliate&utm_medium=MAGICDB&utm_source=RavnicaPromo";
     }
   },
   computed: {

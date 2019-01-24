@@ -2,6 +2,11 @@
 
 @section('content')
 <div class="container">
+<!-- TCG ad -->
+<div class="row justify-content-center">
+    <span v-on:click="viewAd()"><img src="https://tcgplayer-marketing.s3.amazonaws.com/content/magic/buy_all_singles_kb_seven_percent_affiliate_leaderboard_728x90_01252019.jpg" class="img-fluid" alt="Responsive image"></span>
+    </div>
+    </br>
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
