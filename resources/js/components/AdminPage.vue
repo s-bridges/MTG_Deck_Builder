@@ -7,7 +7,7 @@
         <h1 class="display-4">Admin Panel</h1>
         <p class="lead">Hello, {{ admin.name }} / {{admin.username}}</p>
         <hr class="my-4">
-        <p><a href="/admin/blog">Create Blog Post</a></p>
+        <p><a href="/editor/blog">Create Blog Post</a></p>
         <p><a href="/import">Import CSV</a></p>
         <p><a href="/admin/import-cards">Import Card Images from WotC</a> - Do Not Click Unless New Set Added</p>
         <p><a href="/admin/cards/power-levels">Edit Power Levels</a></p>

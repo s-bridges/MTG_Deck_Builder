@@ -38,7 +38,7 @@
         },
         methods: {
             goToBlog() {
-                window.location.href = '/admin/blog';
+                window.location.href = '/editor/blog';
             }
         },
         computed: {
