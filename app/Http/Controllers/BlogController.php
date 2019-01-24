@@ -20,7 +20,7 @@ class BlogController extends Controller
     }
 
     public function allBlogs() {
-        $posts = Post::all()->toArray();
+        $posts = Post::latest()->get();
         $data = collect(['posts' => $posts]);
         return view('all-blogs', ['data' => $data]);
     }
@@ -42,13 +42,9 @@ class BlogController extends Controller
         }
     }
 
-    public function randomPostHome() {
+    public function randomPost() {
         $post = Post::orderByRaw('RAND()')->first()->toArray();
         return view('welcome', [ 'post' => $post ]);
     }
 }
 
-
-/*     $deck = Deck::where('id', $id)->where('user_id', Auth::user()->id)->first();
-   
-} */
