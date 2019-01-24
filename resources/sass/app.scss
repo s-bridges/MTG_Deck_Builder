@@ -18,6 +18,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  img {
+    max-height: 400px;
+  }
 }
 
 a.navbar-brand {
@@ -275,4 +278,8 @@ div {
     flex-wrap: wrap;
     justify-content: space-evenly;
   }
+}
+
+.all-blog-img {
+  max-width: 64px;
 }

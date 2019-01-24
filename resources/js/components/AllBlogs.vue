@@ -7,7 +7,7 @@
         <div class="row justify-content-center">               
             <div class="container py-3">
               <div class="row">
-                <div class="col-sm-12 col-md-9">
+                <div class="col">
                 </div>   
               </div> 
                 <div class="card-header">
@@ -20,20 +20,21 @@
                 :list="postList"
                 :per="12"
                 tag="div"
-                class="row card-body"
+                class="col"
                 >
-                    <div v-for="posts in paginated('paginatedBlog')" class="col justify-col-center addable" style="padding-bottom:2em;">                                 
-                        <div class="card" style="width: 18rem;">
-                            <img class="card-image-top img-thumbnail"
-                                v-bind:src="'/images/' + posts.image_url"
-                            />
-                            <div class="card-body">
-                                <h5 class="card-title"> {{ posts.title }}</h5>
-                                <p class="card-text">{{ posts.meta_description }}</p>
-                                <span v-on:click=viewBlog(posts.slug) class="btn btn-primary">Read More</span>
-                            </div>
-                        </div>                       
+                
+                <div v-for="posts in paginated('paginatedBlog')" class="col addable">  
+                    <div class="media" v-on:click=viewBlog(posts.slug)>
+                        <img v-bind:src="'/images/' + posts.image_url" class="mr-3 all-blog-img" alt="posts.title">
+                        <div class="media-body">
+                            <h5 class="mt-0">{{ posts.title }}</h5>
+                            {{posts.meta_description}}
+                        </div>
                     </div>
+                    <hr/>
+                </div>
+
+                   
             </paginate>
                             
             <paginate-links
