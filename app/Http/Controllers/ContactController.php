@@ -16,6 +16,8 @@ class ContactController extends Controller
 
     public function sendEmail(Request $request)
     {
+        // $post = $request->all();
+        // dd($post);
         $ip = $_SERVER['REMOTE_ADDR'];
         $this->validate($request, [
             'name'=>'required|max:255|string',
