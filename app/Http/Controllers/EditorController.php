@@ -133,4 +133,14 @@ class EditorController extends Controller
             'message' => json_decode($validation->errors())
         ], 422);
     }
+    public function deletePost($id) {
+        $check = Auth::check();
+        $post = Post::where('id', $id);
+        $deleted = $post->delete();
+        if ($deleted) {
+            return response()->json(['status' => true, 'message' => 'Deleted Successfully!']);
+        } else {
+            return response()->json(['status' => false, 'message' => json_encode($deleted)]);
+        }
+    }
 }

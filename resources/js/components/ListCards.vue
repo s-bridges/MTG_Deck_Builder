@@ -279,7 +279,7 @@ export default {
     },
     viewAd() {
             window.location.href = "https://www.tcgplayer.com?partner=MAGICDB&utm_campaign=affiliate&utm_medium=MAGICDB&utm_source=RavnicaPromo";
-        }
+    }
   },
   computed: {
     deckSubmitDisabled() {
