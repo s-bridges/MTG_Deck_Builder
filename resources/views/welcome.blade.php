@@ -95,10 +95,9 @@
             
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-12 homepage-blog-img">
                     <!-- Here will be a random blog entry with img source -->
-                        <!--<img src="images/mana_symbols.png" class="img-fluid" alt="magicdb.us">-->
-                        
+                        <img class="img-fluid" src="/images/{{$post->image_url}}" /> 
                         <div class="homepage-title m-b-md">
                             magicdb.us
                         </div> 

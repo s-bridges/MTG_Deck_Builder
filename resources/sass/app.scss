@@ -13,6 +13,13 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+.homepage-blog-img {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 a.navbar-brand {
   font-family: 'Shadows Into Light', cursive;
   font-size: 1.8em;
