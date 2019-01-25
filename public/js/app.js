@@ -2136,6 +2136,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -2160,6 +2202,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       toggleView: false,
       activeImage: false,
       activeSideboardImage: false,
+      filterByColor: [],
       setOptions: [{
         label: "Core Set 2019",
         set: "M19"
@@ -2229,7 +2272,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       } else {
         card.pivot.count = 1;
       }
-      console.log(card);
     },
     addSearchedCard: function addSearchedCard(card) {
       // find the searched card in sideboard_cards
@@ -2294,7 +2336,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     tcgPlayer: function tcgPlayer() {
       var selectedCards = this.deck.cards;
-      console.log(selectedCards);
       // c is essentially your overall link you keep appending too, maybe change the variable name
       var link = '';
       _.forEach(selectedCards, function (card) {
@@ -2303,32 +2344,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var tempVar = "||" + card.pivot.count.toString() + "%20" + encodeURI(card.name);
         // in one line you append what you just created above
         link = link.concat(tempVar);
-        console.log(link);
       });
       // no need for a return
       var tcgLink = "http://store.tcgplayer.com/massentry?partner=MAGICDB&c=" + link;
       // lets console log before the redirect to make sure its set properly
-      console.log(tcgLink);
-      console.log(link);
       window.location.href = tcgLink;
+    },
+    toggleFilterColors: function toggleFilterColors(color) {
+      // a function for adding or removing colors using array.push if in not in array and array.filter if in
+      var colors = this.filterByColor;
+      var found = colors.indexOf(color) != -1 ? true : false;
+      if (!found) {
+        // if not found, push color onto colors array
+        colors.push(color);
+      } else {
+        // color was found, filter it out
+        colors = _.filter(colors, function (c) {
+          return c != color;
+        });
+      }
+      this.filterByColor = colors;
     },
     viewAd: function viewAd() {
       window.location.href = "https://www.tcgplayer.com?partner=MAGICDB&utm_campaign=affiliate&utm_medium=MAGICDB&utm_source=RavnicaPromo";
     }
   },
   computed: {
-    // myDeckCards() {
-    //   let selectedCards = this.deck.cards;
-    //   // if we add any filtering it will go in here
-    //   return selectedCards;
-    // },
-    // mySideboardCards() {
-    //   let sideboardCards = this.deck.sideboard_cards; // I think it's sideboard_cards
-    //   return sideboardCards;
-    // },
+    sideboardMaxLength: function sideboardMaxLength() {
+      var sideboardCards = this.deck.sideboard_cards;
+      return sideboardCards.length > 15 ? sideboardCards.length : 15;
+    },
+    maxlength: function maxlength() {
+      var selectedCards = this.deck.cards;
+      // if card length is higher than 60, let max length be higher otherwise set it to 60
+      return selectedCards.length > 60 ? selectedCards.length : 60;
+    },
     filteredCards: function filteredCards() {
       var search = this.searchText;
       var cards_array = this.cards;
+      var colors = this.filterByColor;
       if (search != "") {
         // filter by the search field, make it lowercase
         search = search.toLowerCase();
@@ -2337,7 +2391,60 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           return card.name.toLowerCase().indexOf(search) > -1 || card.type.toLowerCase().indexOf(search) > -1;
         });
       }
+      if (colors && colors.length > 0) {
+        cards_array = _.filter(cards_array, function (card) {
+          // remove spaces from card colors because data isn't always the same lul wizards, then split on each character
+          var cardColors = card.colors.replace(/ /g, '').split("");
+          var match = _.findIndex(cardColors, function (color) {
+            // see if each color the card is made up with is a match in filter by colors, return as soon
+            // as it's true
+            return colors.indexOf(color) != -1;
+          });
+          return match != -1;
+        });
+      }
       return cards_array;
+    },
+    instantSorceryCount: function instantSorceryCount() {
+      var i = 0;
+      var selectedCards = this.selectedCards;
+      _.forEach(selectedCards, function (card) {
+        if (card.type == 'Instant' || card.type == 'Sorcery') {
+          // increase the count of i if instant or sorcery
+          i++;
+        }
+      });
+      return i;
+    },
+    instantCreatureCount: function instantCreatureCount() {
+      var j = 0;
+      var selectedCards = this.deck.cards;
+      _.forEach(selectedCards, function (card) {
+        if (card.type.includes('Creature')) {
+          j++;
+        }
+      });
+      return j;
+    },
+    instantLandCount: function instantLandCount() {
+      var k = 0;
+      var selectedCards = this.deck.cards;
+      _.forEach(selectedCards, function (card) {
+        if (card.type.includes('Land')) {
+          k++;
+        }
+      });
+      return k;
+    },
+    instantEnchantmentCount: function instantEnchantmentCount() {
+      var m = 0;
+      var selectedCards = this.deck.cards;
+      _.forEach(selectedCards, function (card) {
+        if (card.type.includes('Enchantment')) {
+          m++;
+        }
+      });
+      return m;
     }
   }
 });
@@ -2761,11 +2868,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     // console logging all of the cards that your grabbed from the DB in your controller function
-    console.log(this.cards);
   },
 
   props: {
@@ -2780,6 +2901,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       paginatedCards: [],
       filterBySet: "ALL", // setting default option to be all cards
       filterByColor: [],
+      activeImage: false,
+      activeSideboardImage: false,
       setOptions: [{
         label: "All Standard Sets",
         set: "ALL"
@@ -2815,14 +2938,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   methods: {
-    //  getCardsFromAPI() {
-    //      // API stuff to mtgo for all cards this should work right? Yeah, let's check your routes for the right route
-    // this only gets used if we are calling to our API after page load ok
-    //      axios.get({{ /card }})
-    //      .then(response => {
-    //          this.cards = response.data.cards;
-    //      })
-    //  },
+    popOff: function popOff(id) {
+      var isSideboard = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+      // always reset active image
+      this.activeImage = false;
+      this.activeSideboardImage = false;
+    },
+    popOn: function popOn(id) {
+      var isSideboard = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+      if (this.activeImage != id && !isSideboard) {
+        this.activeImage = id;
+      }
+      if (this.activeSideboardImage != id && isSideboard) {
+        this.activeSideboardImage = id;
+      }
+    },
     setAPI: function setAPI() {
       var _this = this;
 
@@ -2869,7 +3001,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var cards_array = this.cards;
       var set = this.filterBySet;
       if (set && set != 'ALL') {
-        console.log('filtering out by set');
         return _.filter(cards_array, function (card) {
           // index of finds the string within the card.name property or within the card type
           return card.set == set;
@@ -38853,6 +38984,33 @@ var render = function() {
                       _vm._v(" "),
                       _vm._l(_vm.myDeck, function(card) {
                         return _c("div", [
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: _vm.activeImage == card.multiverse_id,
+                                  expression:
+                                    "activeImage == card.multiverse_id"
+                                }
+                              ],
+                              staticClass: "modal-image"
+                            },
+                            [
+                              _c("img", {
+                                staticClass: "card-image",
+                                attrs: {
+                                  src:
+                                    "/images/cards/" +
+                                    card.multiverse_id +
+                                    ".jpg"
+                                }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
                           _c("p", { staticClass: "deck-list" }, [
                             _c(
                               "i",
@@ -38867,7 +39025,11 @@ var render = function() {
                               },
                               [_vm._v("remove_circle")]
                             ),
-                            _vm._v(" " + _vm._s(card.count) + " "),
+                            _vm._v(
+                              " " +
+                                _vm._s(card.count) +
+                                " \n                              "
+                            ),
                             _c(
                               "i",
                               {
@@ -38883,7 +39045,20 @@ var render = function() {
                             _vm._v(" "),
                             _c(
                               "span",
-                              { staticStyle: { "padding-left": "0.5em" } },
+                              {
+                                staticStyle: {
+                                  "padding-left": "0.5em",
+                                  cursor: "pointer"
+                                },
+                                on: {
+                                  mouseover: function($event) {
+                                    _vm.popOn(card.multiverse_id)
+                                  },
+                                  mouseout: function($event) {
+                                    _vm.popOff(card.multiverse_id)
+                                  }
+                                }
+                              },
                               [_vm._v(_vm._s(card.name) + " ")]
                             )
                           ])
@@ -38898,6 +39073,35 @@ var render = function() {
                       _vm._v(" "),
                       _vm._l(_vm.mySideboard, function(card) {
                         return _c("div", [
+                          _c(
+                            "span",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value:
+                                    _vm.activeSideboardImage ==
+                                    card.multiverse_id,
+                                  expression:
+                                    "activeSideboardImage == card.multiverse_id"
+                                }
+                              ],
+                              staticClass: "modal-image"
+                            },
+                            [
+                              _c("img", {
+                                staticClass: "card-image",
+                                attrs: {
+                                  src:
+                                    "/images/cards/" +
+                                    card.multiverse_id +
+                                    ".jpg"
+                                }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
                           _c("p", { staticClass: "deck-list" }, [
                             _c(
                               "i",
@@ -38912,7 +39116,11 @@ var render = function() {
                               },
                               [_vm._v("remove_circle")]
                             ),
-                            _vm._v(" " + _vm._s(card.count) + " "),
+                            _vm._v(
+                              " \n                              " +
+                                _vm._s(card.count) +
+                                " "
+                            ),
                             _c(
                               "i",
                               {
@@ -38928,7 +39136,20 @@ var render = function() {
                             _vm._v(" "),
                             _c(
                               "span",
-                              { staticStyle: { "padding-left": "0.5em" } },
+                              {
+                                staticStyle: {
+                                  "padding-left": "0.5em",
+                                  cursor: "pointer"
+                                },
+                                on: {
+                                  mouseover: function($event) {
+                                    _vm.popOn(card.multiverse_id, true)
+                                  },
+                                  mouseout: function($event) {
+                                    _vm.popOff(card.multiverse_id, true)
+                                  }
+                                }
+                              },
                               [_vm._v(_vm._s(card.name) + " ")]
                             )
                           ])
@@ -40351,7 +40572,213 @@ var render = function() {
                         ]
                       )
                     ]
-                  )
+                  ),
+                  _vm._v(" "),
+                  _vm.unHide == true
+                    ? _c(
+                        "div",
+                        {
+                          staticClass: "col-sm-12 col-md-7",
+                          staticStyle: { "padding-bottom": ".5em" }
+                        },
+                        [
+                          _c(
+                            "span",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.toggleFilterColors("W")
+                                }
+                              }
+                            },
+                            [
+                              _c("img", {
+                                staticClass: "img-fluid",
+                                class: {
+                                  opaque:
+                                    _vm.filterByColor.indexOf("W") == -1 &&
+                                    _vm.filterByColor.length != 0
+                                },
+                                staticStyle: { width: "auto", height: "50px" },
+                                attrs: {
+                                  src: "/images/magic_white.png",
+                                  alt: "White"
+                                }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.toggleFilterColors("U")
+                                }
+                              }
+                            },
+                            [
+                              _c("img", {
+                                staticClass: "img-fluid",
+                                class: {
+                                  opaque:
+                                    _vm.filterByColor.indexOf("U") == -1 &&
+                                    _vm.filterByColor.length != 0
+                                },
+                                staticStyle: { width: "auto", height: "50px" },
+                                attrs: {
+                                  src: "/images/magic_blue.png",
+                                  alt: "Blue"
+                                }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.toggleFilterColors("B")
+                                }
+                              }
+                            },
+                            [
+                              _c("img", {
+                                staticClass: "img-fluid",
+                                class: {
+                                  opaque:
+                                    _vm.filterByColor.indexOf("B") == -1 &&
+                                    _vm.filterByColor.length != 0
+                                },
+                                staticStyle: { width: "auto", height: "50px" },
+                                attrs: {
+                                  src: "/images/magic_black.png",
+                                  alt: "Black"
+                                }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.toggleFilterColors("R")
+                                }
+                              }
+                            },
+                            [
+                              _c("img", {
+                                staticClass: "img-fluid",
+                                class: {
+                                  opaque:
+                                    _vm.filterByColor.indexOf("R") == -1 &&
+                                    _vm.filterByColor.length != 0
+                                },
+                                staticStyle: { width: "auto", height: "50px" },
+                                attrs: {
+                                  src: "/images/magic_red.png",
+                                  alt: "Red"
+                                }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.toggleFilterColors("G")
+                                }
+                              }
+                            },
+                            [
+                              _c("img", {
+                                staticClass: "img-fluid",
+                                class: {
+                                  opaque:
+                                    _vm.filterByColor.indexOf("G") == -1 &&
+                                    _vm.filterByColor.length != 0
+                                },
+                                staticStyle: { width: "auto", height: "50px" },
+                                attrs: {
+                                  src: "/images/magic_green.png",
+                                  alt: "Green"
+                                }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.toggleFilterColors("A")
+                                }
+                              }
+                            },
+                            [
+                              _c("img", {
+                                staticClass: "img-fluid",
+                                class: {
+                                  opaque:
+                                    _vm.filterByColor.indexOf("A") == -1 &&
+                                    _vm.filterByColor.length != 0
+                                },
+                                staticStyle: { width: "auto", height: "50px" },
+                                attrs: {
+                                  src: "/images/magic_colorless.png",
+                                  alt: "Colorless"
+                                }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.toggleFilterColors("L")
+                                }
+                              }
+                            },
+                            [
+                              _c("img", {
+                                staticClass: "img-fluid",
+                                class: {
+                                  opaque:
+                                    _vm.filterByColor.indexOf("L") == -1 &&
+                                    _vm.filterByColor.length != 0
+                                },
+                                staticStyle: { width: "auto", height: "50px" },
+                                attrs: {
+                                  src: "/images/magic_land.png",
+                                  alt: "Land"
+                                }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticStyle: { height: "50px", width: "auto" },
+                              on: {
+                                click: function($event) {
+                                  _vm.filterByColor = []
+                                }
+                              }
+                            },
+                            [_vm._m(0)]
+                          )
+                        ]
+                      )
+                    : _vm._e()
                 ])
               : _vm._e(),
             _vm._v(" "),
@@ -40364,7 +40791,7 @@ var render = function() {
                       "div",
                       { staticClass: "card full-width" },
                       [
-                        _vm._m(0),
+                        _vm._m(1),
                         _vm._v(" "),
                         _c(
                           "paginate",
@@ -40493,199 +40920,253 @@ var render = function() {
                 _c("br"),
                 _vm._v(" "),
                 _c("div", { staticClass: "card full-width" }, [
-                  _vm._m(1),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c(
                     "div",
                     { class: !_vm.toggleView ? "row" : "card-body" },
-                    _vm._l(_vm.deck.cards, function(card) {
-                      return _c(
-                        "div",
-                        {
-                          class: !_vm.toggleView
-                            ? "col col-lg-3 text-center addable removable"
-                            : ""
-                        },
-                        [
-                          !_vm.toggleView
-                            ? _c("span", [
-                                card.pivot.count <= 4
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticStyle: {
-                                          height: "40px",
-                                          display: "flex",
-                                          "justify-content": "center",
-                                          "align-items": "center"
-                                        }
-                                      },
-                                      _vm._l(card.pivot.count, function(n) {
-                                        return _c("span", [
-                                          _c(
-                                            "i",
-                                            {
-                                              staticClass:
-                                                "material-icons noSelect",
-                                              staticStyle: {
-                                                "max-width": "24px"
-                                              }
-                                            },
-                                            [_vm._v("whatshot")]
-                                          )
-                                        ])
-                                      }),
-                                      0
-                                    )
-                                  : _c(
-                                      "div",
-                                      {
-                                        staticStyle: {
-                                          height: "40px",
-                                          display: "flex",
-                                          "justify-content": "center",
-                                          "align-items": "center"
-                                        }
-                                      },
-                                      [
-                                        _c("span", [
-                                          _c("strong", [
-                                            _vm._v(
-                                              _vm._s(card.pivot.count) + "x"
-                                            )
-                                          ])
-                                        ])
-                                      ]
-                                    ),
-                                _vm._v(" "),
-                                _c("img", {
-                                  staticClass: "card-image",
-                                  attrs: {
-                                    src:
-                                      "/images/cards/" +
-                                      card.multiverse_id +
-                                      ".jpg"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _vm.editable
-                                  ? _c("div", [
-                                      _c(
-                                        "i",
-                                        {
-                                          staticClass:
-                                            "material-icons noSelect clickable",
-                                          on: {
-                                            click: function($event) {
-                                              _vm.removeCard(card)
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("remove_circle")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "i",
-                                        {
-                                          staticClass:
-                                            "material-icons noSelect clickable",
-                                          on: {
-                                            click: function($event) {
-                                              _vm.addCard(card)
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("add_circle")]
-                                      )
-                                    ])
-                                  : _vm._e()
-                              ])
-                            : _c("span", [
+                    [
+                      _vm.toggleView
+                        ? _c("div", [
+                            _c(
+                              "h5",
+                              { staticStyle: { "margin-bottom": "0.5em" } },
+                              [
                                 _c(
                                   "span",
                                   {
-                                    directives: [
-                                      {
-                                        name: "show",
-                                        rawName: "v-show",
-                                        value:
-                                          _vm.activeImage == card.multiverse_id,
-                                        expression:
-                                          "activeImage == card.multiverse_id"
-                                      }
-                                    ],
-                                    staticClass: "modal-image"
+                                    staticClass: "badge",
+                                    class:
+                                      _vm.selectedCards.length > 60
+                                        ? "badge-danger"
+                                        : "badge-secondary"
                                   },
                                   [
-                                    _c("img", {
-                                      staticClass: "card-image",
-                                      attrs: {
-                                        src:
-                                          "/images/cards/" +
-                                          card.multiverse_id +
-                                          ".jpg"
-                                      }
-                                    })
+                                    _vm._v(
+                                      _vm._s(_vm.deck.cards.length) +
+                                        " / " +
+                                        _vm._s(_vm.maxlength)
+                                    )
                                   ]
-                                ),
-                                _vm._v(" "),
-                                _c("p", { staticClass: "deck-list" }, [
-                                  _c(
-                                    "i",
-                                    {
-                                      staticClass:
-                                        "material-icons noSelect text-secondary",
-                                      on: {
-                                        click: function($event) {
-                                          _vm.removeCard(card)
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("remove_circle")]
-                                  ),
-                                  _vm._v(
-                                    " \n                        " +
-                                      _vm._s(card.pivot.count) +
-                                      " \n                      "
-                                  ),
-                                  _c(
-                                    "i",
-                                    {
-                                      staticClass:
-                                        "material-icons noSelect text-primary",
-                                      on: {
-                                        click: function($event) {
-                                          _vm.addCard(card)
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("add_circle")]
-                                  ),
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("p", [
+                              _vm._v(
+                                "\n                      Creature: " +
+                                  _vm._s(_vm.instantCreatureCount)
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                      Instant/Sorcery: " +
+                                  _vm._s(_vm.instantSorceryCount)
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                      Enchantment: " +
+                                  _vm._s(_vm.instantEnchantmentCount)
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                      Land: " +
+                                  _vm._s(_vm.instantLandCount) +
+                                  "\n                    "
+                              )
+                            ])
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm._l(_vm.deck.cards, function(card) {
+                        return _c(
+                          "div",
+                          {
+                            class: !_vm.toggleView
+                              ? "col col-lg-3 text-center addable removable"
+                              : ""
+                          },
+                          [
+                            !_vm.toggleView
+                              ? _c("span", [
+                                  card.pivot.count <= 4
+                                    ? _c(
+                                        "div",
+                                        {
+                                          staticStyle: {
+                                            height: "40px",
+                                            display: "flex",
+                                            "justify-content": "center",
+                                            "align-items": "center"
+                                          }
+                                        },
+                                        _vm._l(card.pivot.count, function(n) {
+                                          return _c("span", [
+                                            _c(
+                                              "i",
+                                              {
+                                                staticClass:
+                                                  "material-icons noSelect",
+                                                staticStyle: {
+                                                  "max-width": "24px"
+                                                }
+                                              },
+                                              [_vm._v("whatshot")]
+                                            )
+                                          ])
+                                        }),
+                                        0
+                                      )
+                                    : _c(
+                                        "div",
+                                        {
+                                          staticStyle: {
+                                            height: "40px",
+                                            display: "flex",
+                                            "justify-content": "center",
+                                            "align-items": "center"
+                                          }
+                                        },
+                                        [
+                                          _c("span", [
+                                            _c("strong", [
+                                              _vm._v(
+                                                _vm._s(card.pivot.count) + "x"
+                                              )
+                                            ])
+                                          ])
+                                        ]
+                                      ),
                                   _vm._v(" "),
+                                  _c("img", {
+                                    staticClass: "card-image",
+                                    attrs: {
+                                      src:
+                                        "/images/cards/" +
+                                        card.multiverse_id +
+                                        ".jpg"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.editable
+                                    ? _c("div", [
+                                        _c(
+                                          "i",
+                                          {
+                                            staticClass:
+                                              "material-icons noSelect clickable",
+                                            on: {
+                                              click: function($event) {
+                                                _vm.removeCard(card)
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("remove_circle")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "i",
+                                          {
+                                            staticClass:
+                                              "material-icons noSelect clickable",
+                                            on: {
+                                              click: function($event) {
+                                                _vm.addCard(card)
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("add_circle")]
+                                        )
+                                      ])
+                                    : _vm._e()
+                                ])
+                              : _c("span", [
                                   _c(
                                     "span",
                                     {
-                                      staticStyle: {
-                                        "padding-left": "0.5em",
-                                        cursor: "pointer"
-                                      },
-                                      on: {
-                                        mouseover: function($event) {
-                                          _vm.popOn(card.multiverse_id)
-                                        },
-                                        mouseout: function($event) {
-                                          _vm.popOff(card.multiverse_id)
+                                      directives: [
+                                        {
+                                          name: "show",
+                                          rawName: "v-show",
+                                          value:
+                                            _vm.activeImage ==
+                                            card.multiverse_id,
+                                          expression:
+                                            "activeImage == card.multiverse_id"
                                         }
-                                      }
+                                      ],
+                                      staticClass: "modal-image"
                                     },
-                                    [_vm._v(_vm._s(card.name))]
-                                  )
+                                    [
+                                      _c("img", {
+                                        staticClass: "card-image",
+                                        attrs: {
+                                          src:
+                                            "/images/cards/" +
+                                            card.multiverse_id +
+                                            ".jpg"
+                                        }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("p", { staticClass: "deck-list" }, [
+                                    _c(
+                                      "i",
+                                      {
+                                        staticClass:
+                                          "material-icons noSelect text-secondary",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.removeCard(card)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("remove_circle")]
+                                    ),
+                                    _vm._v(
+                                      " \n                        " +
+                                        _vm._s(card.pivot.count) +
+                                        " \n                      "
+                                    ),
+                                    _c(
+                                      "i",
+                                      {
+                                        staticClass:
+                                          "material-icons noSelect text-primary",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.addCard(card)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("add_circle")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        staticStyle: {
+                                          "padding-left": "0.5em",
+                                          cursor: "pointer"
+                                        },
+                                        on: {
+                                          mouseover: function($event) {
+                                            _vm.popOn(card.multiverse_id)
+                                          },
+                                          mouseout: function($event) {
+                                            _vm.popOff(card.multiverse_id)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v(_vm._s(card.name))]
+                                    )
+                                  ])
                                 ])
-                              ])
-                        ]
-                      )
-                    }),
-                    0
+                          ]
+                        )
+                      })
+                    ],
+                    2
                   )
                 ]),
                 _vm._v(" "),
@@ -40693,7 +41174,7 @@ var render = function() {
                 _vm._v(" "),
                 _vm.deck.sideboard_cards.length > 0
                   ? _c("div", { staticClass: "card full-width" }, [
-                      _vm._m(2),
+                      _vm._m(3),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -40922,6 +41403,20 @@ var render = function() {
     : _vm._e()
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-dark btn-sm",
+        staticStyle: { display: "inline-flex" },
+        attrs: { type: "button" }
+      },
+      [_c("i", { staticClass: "material-icons noSelect" }, [_vm._v("replay")])]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
