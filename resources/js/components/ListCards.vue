@@ -353,7 +353,7 @@ export default {
           count: v.length,
           card: cardData
         }
-      }).value();
+      }).orderBy(['name'], ['asc']).value();
       return result;
     },
     mySideboard() {
@@ -368,7 +368,7 @@ export default {
           count: v.length,
           card: cardData
         }
-      }).value();
+      }).orderBy(['name'], ['asc']).value();
       return result;
     },
     sideboardMaxLength() {

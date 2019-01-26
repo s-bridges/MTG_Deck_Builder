@@ -118,12 +118,12 @@
               </br>
               <div class="card full-width">
                 <div class="card-header">
-                  <h4 class="mb-0">Main</h4>      
+                  <h4 class="mb-0">Main Power Level: {{calculateDeckPower}}</h4>      
                 </div>
                 <div v-bind:class="!toggleView ? 'row' : 'card-body'">
                     <div v-if="toggleView">
                       <h5 style="margin-bottom:0.5em;">
-                        <span class="badge" v-bind:class="myDeck.cards.length > 60 ? 'badge-danger' : 'badge-secondary'">{{deck.cards.length}} / {{maxlength}}</span>
+                        <span class="badge" v-bind:class="deckCards > 60 ? 'badge-danger' : 'badge-secondary'">{{deckCards.length}} / {{maxlength}}</span>
                       </h5>
                       <p>
                         Creature: {{ instantCreatureCount }}<br>
@@ -178,7 +178,7 @@
                 </div>
                 </br>
                 <!-- Sideboard -->   
-              <div class="card full-width" v-if="myDeck.sideboard_cards.length > 0">
+              <div class="card full-width" v-if="deckSideboard.length > 0">
                 <div class="card-header">
                   <h4 class="mb-0">Sideboard</h4>        
                 </div>
@@ -431,7 +431,7 @@ export default {
           card: cardData,
           powerLevels: power_levels
         }
-      }).value();
+      }).orderBy(['name'], ['asc']).value();
       deck.sideboard_cards = _.chain(sideboard).groupBy('name').map(function(v, i) {
         // get first card out of group of the same cards and set the card data
         let cardData = _.first(v);
@@ -448,8 +448,26 @@ export default {
           card: cardData,
           powerLevels: power_levels
         }
-      }).value();
+      }).orderBy(['name'], ['asc']).value();
       return deck;
+    },
+    calculateDeckPower() {
+      let powerRanking = this.filterPowerLevel;
+      if (powerRanking) {
+        let cards = this.deckCards;
+        let ranking = _.chain(cards).filter(function(card){
+          card.power_levels = _.keyBy(card.power_levels, 'name');
+          return card.power_levels && card.power_levels.hasOwnProperty(powerRanking);
+        }).map(function(card){
+          return parseFloat(card.power_levels[powerRanking].pivot.ranking);
+        }).value();
+        if (ranking.length > 0) {
+          return ranking = _.round(_.sum(ranking) / ranking.length, 2);
+        } else {
+          return 'N/A';
+        }
+      } 
+      return 'N/A';
     },
     filteredCards() {
       let search = this.searchText;
