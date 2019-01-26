@@ -77,8 +77,9 @@
                                         />
                                         <div class="overlay">
                                             <div class="text">
-                                              <i v-on:click="addCard(card)" class="material-icons add noSelect" title="deck">add_circle</i>
-                                              <i v-on:click="addSideboardCard(card)" class="material-icons add noSelect" title="sideboard">tab</i>
+                                              <i v-on:click="addCard(card)" class="material-icons add noSelect" title="Deck">add_circle</i>
+                                              <i v-on:click="addSideboardCard(card)" class="material-icons add noSelect" title="Sideboard">tab</i>
+                                              <i v-on:click="viewCard(card.id)" class="material-icons add noSelect" title="View Card">launch</i>
                                               </div>
                                         </div>
                                     </div>
@@ -299,6 +300,10 @@ export default {
     },
     viewAd() {
             window.location.href = "https://www.tcgplayer.com?partner=MAGICDB&utm_campaign=affiliate&utm_medium=MAGICDB&utm_source=RavnicaPromo";
+    },
+    viewCard(id) {
+      console.log(id);
+            window.location.href =  '/card/' + id + '/';
     }
   },
   computed: {

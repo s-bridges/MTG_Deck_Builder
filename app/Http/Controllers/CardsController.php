@@ -40,4 +40,10 @@ class CardsController extends Controller
         return view();
     }
 
+    public function cardLanding($id)
+    {
+        $card = Card::where('id', $id)->with('power_levels')->first();
+        // dd($card->power_levels);
+        return view('card-landing', ['card' => $card]);
+    }
 }
