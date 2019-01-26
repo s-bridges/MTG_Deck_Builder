@@ -23,7 +23,11 @@ class CardsController extends Controller
     }
     public function listCardsBy($set)
     {
-        $cards = Card::where('set', $set)->get();
+        $cards = Card::where('set', $set)->with('power_levels')->get();
+        $cards = $cards->map(function($card, $key){
+            $card->power_levels = $card->power_levels->keyBy('name');
+            return $card;
+        });
         
         return response()->json(['status' => 200, 'payload' => $cards]);
     }
