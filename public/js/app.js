@@ -2178,12 +2178,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     // call methods here that you want done on page load, the methods are defined in the methods section below
     // this method below here we don't need to worry about right now
-    // this.getCardsFromAPI();
   },
 
   props: {
@@ -2227,7 +2236,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       paginate: ["paginatedCards"],
       selectedCards: [],
       sideboardCards: [],
-      unHide: false
+      unHide: false,
+      powerLevels: this.data.power_levels,
+      filterPowerLevel: '',
+      deckCards: this.data.cards,
+      deckSideboard: this.data.sideboard
     };
   },
 
@@ -2259,72 +2272,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       }).catch(function (error) {});
     },
     saveDeck: function saveDeck() {
-      var deck = this.deck;
+      var deck = this.myDeck;
       axios.put("/deck/edit", deck).then(function (response) {
         alert(response.data.message);
       }).catch(function (error) {});
     },
-    addCard: function addCard(card) {
-      // this is used when a card exists in the deck already, not in search view
-      // if card has property of pivot, card.pivot.count += 1 else, pivot.count = 1
-      if (_.has(card, 'pivot')) {
-        card.pivot.count += 1;
-      } else {
-        card.pivot.count = 1;
-      }
+    addNewCard: function addNewCard(card) {
+      this.deckCards.push(card);
     },
-    addSearchedCard: function addSearchedCard(card) {
-      // find the searched card in sideboard_cards
-      var index = _.findIndex(this.deck.cards, function (c) {
-        return c.multiverse_id == card.multiverse_id;
-      });
-      if (index != -1) {
-        this.addCard(this.deck.cards[index]);
-        // this force updates the components to reflect the recently added card
-        // this.$forceUpdate();
-      } else {
-        var cloneCard = card;
-        cloneCard.pivot = {};
-        cloneCard.pivot.count = 1;
-        this.deck.cards.push(cloneCard);
-      }
-    },
-    addSearchedSideboardCard: function addSearchedSideboardCard(card) {
-      // find the searched card in sideboard_cards
-      var index = _.findIndex(this.deck.sideboard_cards, function (c) {
-        return c.multiverse_id == card.multiverse_id;
-      });
-      if (index != -1) {
-        this.addCard(this.deck.sideboard_cards[index]);
-        // this force updates the components to reflect the recently added card
-        // this.$forceUpdate();
-      } else {
-        var cloneCard = card;
-        cloneCard.pivot = {};
-        cloneCard.pivot.count = 1;
-        this.deck.sideboard_cards.push(cloneCard);
-      }
+    addNewSideboard: function addNewSideboard(card) {
+      this.deckSideboard.push(card);
     },
     removeCard: function removeCard(card) {
-      // tick the card count down
-      card.pivot.count -= 1;
-      // remove card entirely if it is 0
-      if (card.pivot.count <= 0) {
-        // if the card count reached 0, filter it out of the deck cards
-        this.deck.cards = _.filter(this.deck.cards, function (c) {
-          return c.multiverse_id != card.multiverse_id;
-        });
-      }
+      var index = _.findIndex(this.deckCards, function (c) {
+        return c.multiverse_id == card.multiverse_id;
+      });
+      this.deckCards = _.filter(this.deckCards, function (item, i) {
+        return i !== index;
+      });
     },
     removeSideboardCard: function removeSideboardCard(card) {
-      // you pass in card up here, everything you reference should be card, that's why it's undefined
-      card.pivot.count -= 1;
-      if (card.pivot.count <= 0) {
-        // efficiency! if the card count reached 0, filter it out of the sideboard
-        this.deck.sideboard_cards = _.filter(this.deck.sideboard_cards, function (c) {
-          return c.multiverse_id != card.multiverse_id;
-        });
-      }
+      // basically the same as above, may be able to paramterize it in the future
+      var index = _.findIndex(this.deckSideboard, function (c) {
+        return c.multiverse_id == card.multiverse_id;
+      });
+      this.deckSideboard = _.filter(this.deckSideboard, function (item, i) {
+        return i !== index;
+      });
     },
     deleteDeck: function deleteDeck(deckId) {
       axios.delete("/deck/" + deckId + "/delete").then(function (response) {
@@ -2332,7 +2306,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         if (response.data.status) {
           window.location = '/deck';
         }
-      }).catch(function (error) {});
+      }).catch(function (error) {
+        console.log(error);
+      });
     },
     tcgPlayer: function tcgPlayer() {
       var selectedCards = this.deck.cards;
@@ -2379,6 +2355,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       // if card length is higher than 60, let max length be higher otherwise set it to 60
       return selectedCards.length > 60 ? selectedCards.length : 60;
     },
+    myDeck: function myDeck() {
+      var deck = this.deck;
+      var cards = this.deckCards;
+      var sideboard = this.deckSideboard;
+      // group the cards by the card name so we can keep track of duplicates
+      deck.cards = _.chain(cards).groupBy('name').map(function (v, i) {
+        // get first card out of group of the same cards and set the card data
+        var cardData = _.first(v);
+        var power_levels = _.chain(cardData.power_levels).map(function (i, k) {
+          return {
+            name: i.name,
+            ranking: i.pivot.ranking
+          };
+        }).keyBy('name').value();
+        return {
+          name: i,
+          multiverse_id: cardData.multiverse_id,
+          count: v.length,
+          card: cardData,
+          powerLevels: power_levels
+        };
+      }).value();
+      console.log(deck.cards);
+      deck.sideboard_cards = _.chain(sideboard).groupBy('name').map(function (v, i) {
+        // get first card out of group of the same cards and set the card data
+        var cardData = _.first(v);
+        var power_levels = _.chain(cardData.power_levels).map(function (i, k) {
+          return {
+            name: i.name,
+            ranking: i.pivot.ranking
+          };
+        }).keyBy('name').value();
+        return {
+          name: i,
+          multiverse_id: cardData.multiverse_id,
+          count: v.length,
+          card: cardData,
+          powerLevels: power_levels
+        };
+      }).value();
+      return deck;
+    },
     filteredCards: function filteredCards() {
       var search = this.searchText;
       var cards_array = this.cards;
@@ -2407,7 +2425,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     instantSorceryCount: function instantSorceryCount() {
       var i = 0;
-      var selectedCards = this.selectedCards;
+      var selectedCards = this.deckCards;
       _.forEach(selectedCards, function (card) {
         if (card.type == 'Instant' || card.type == 'Sorcery') {
           // increase the count of i if instant or sorcery
@@ -2418,7 +2436,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     instantCreatureCount: function instantCreatureCount() {
       var j = 0;
-      var selectedCards = this.deck.cards;
+      var selectedCards = this.deckCards;
       _.forEach(selectedCards, function (card) {
         if (card.type.includes('Creature')) {
           j++;
@@ -2428,7 +2446,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     instantLandCount: function instantLandCount() {
       var k = 0;
-      var selectedCards = this.deck.cards;
+      var selectedCards = this.deckCards;
       _.forEach(selectedCards, function (card) {
         if (card.type.includes('Land')) {
           k++;
@@ -2438,7 +2456,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     instantEnchantmentCount: function instantEnchantmentCount() {
       var m = 0;
-      var selectedCards = this.deck.cards;
+      var selectedCards = this.deckCards;
       _.forEach(selectedCards, function (card) {
         if (card.type.includes('Enchantment')) {
           m++;
@@ -40834,7 +40852,7 @@ var render = function() {
                                         attrs: { title: "deck" },
                                         on: {
                                           click: function($event) {
-                                            _vm.addSearchedCard(card)
+                                            _vm.addNewCard(card)
                                           }
                                         }
                                       },
@@ -40849,7 +40867,7 @@ var render = function() {
                                         attrs: { title: "sideboard" },
                                         on: {
                                           click: function($event) {
-                                            _vm.addSearchedSideboardCard(card)
+                                            _vm.addNewSideboard(card)
                                           }
                                         }
                                       },
@@ -40937,7 +40955,7 @@ var render = function() {
                                   {
                                     staticClass: "badge",
                                     class:
-                                      _vm.selectedCards.length > 60
+                                      _vm.myDeck.cards.length > 60
                                         ? "badge-danger"
                                         : "badge-secondary"
                                   },
@@ -40973,11 +40991,65 @@ var render = function() {
                                   _vm._s(_vm.instantLandCount) +
                                   "\n                    "
                               )
-                            ])
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.filterPowerLevel,
+                                    expression: "filterPowerLevel"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { id: "levels" },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.filterPowerLevel = $event.target
+                                      .multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { disabled: "", value: "" } },
+                                  [_vm._v("Power Level by Format")]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(_vm.powerLevels, function(option) {
+                                  return _c(
+                                    "option",
+                                    {
+                                      attrs: { alt: option.description },
+                                      domProps: { value: option.name }
+                                    },
+                                    [_vm._v(_vm._s(option.name))]
+                                  )
+                                })
+                              ],
+                              2
+                            ),
+                            _vm._v(" "),
+                            _c("br")
                           ])
                         : _vm._e(),
                       _vm._v(" "),
-                      _vm._l(_vm.deck.cards, function(card) {
+                      _vm._l(_vm.myDeck.cards, function(card) {
                         return _c(
                           "div",
                           {
@@ -40988,7 +41060,7 @@ var render = function() {
                           [
                             !_vm.toggleView
                               ? _c("span", [
-                                  card.pivot.count <= 4
+                                  card.count <= 4
                                     ? _c(
                                         "div",
                                         {
@@ -40999,7 +41071,7 @@ var render = function() {
                                             "align-items": "center"
                                           }
                                         },
-                                        _vm._l(card.pivot.count, function(n) {
+                                        _vm._l(card.count, function(n) {
                                           return _c("span", [
                                             _c(
                                               "i",
@@ -41029,9 +41101,7 @@ var render = function() {
                                         [
                                           _c("span", [
                                             _c("strong", [
-                                              _vm._v(
-                                                _vm._s(card.pivot.count) + "x"
-                                              )
+                                              _vm._v(_vm._s(card.count) + "x")
                                             ])
                                           ])
                                         ]
@@ -41070,7 +41140,7 @@ var render = function() {
                                               "material-icons noSelect clickable",
                                             on: {
                                               click: function($event) {
-                                                _vm.addCard(card)
+                                                _vm.addNewCard(card.card)
                                               }
                                             }
                                           },
@@ -41109,58 +41179,75 @@ var render = function() {
                                     ]
                                   ),
                                   _vm._v(" "),
-                                  _c("p", { staticClass: "deck-list" }, [
-                                    _c(
-                                      "i",
-                                      {
-                                        staticClass:
-                                          "material-icons noSelect text-secondary",
-                                        on: {
-                                          click: function($event) {
-                                            _vm.removeCard(card)
+                                  _c(
+                                    "p",
+                                    { staticClass: "deck-list" },
+                                    [
+                                      _c(
+                                        "i",
+                                        {
+                                          staticClass:
+                                            "material-icons noSelect text-secondary",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.removeCard(card)
+                                            }
                                           }
-                                        }
-                                      },
-                                      [_vm._v("remove_circle")]
-                                    ),
-                                    _vm._v(
-                                      " \n                        " +
-                                        _vm._s(card.pivot.count) +
-                                        " \n                      "
-                                    ),
-                                    _c(
-                                      "i",
-                                      {
-                                        staticClass:
-                                          "material-icons noSelect text-primary",
-                                        on: {
-                                          click: function($event) {
-                                            _vm.addCard(card)
-                                          }
-                                        }
-                                      },
-                                      [_vm._v("add_circle")]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "span",
-                                      {
-                                        staticStyle: {
-                                          "padding-left": "0.5em",
-                                          cursor: "pointer"
                                         },
-                                        on: {
-                                          mouseover: function($event) {
-                                            _vm.popOn(card.multiverse_id)
-                                          },
-                                          mouseout: function($event) {
-                                            _vm.popOff(card.multiverse_id)
+                                        [_vm._v("remove_circle")]
+                                      ),
+                                      _vm._v(
+                                        " \n                        " +
+                                          _vm._s(card.count) +
+                                          " \n                      "
+                                      ),
+                                      _c(
+                                        "i",
+                                        {
+                                          staticClass:
+                                            "material-icons noSelect text-primary",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.addNewCard(card.card)
+                                            }
                                           }
-                                        }
-                                      },
-                                      [_vm._v(_vm._s(card.name))]
-                                    )
-                                  ])
+                                        },
+                                        [_vm._v("add_circle")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticStyle: {
+                                            "padding-left": "0.5em",
+                                            cursor: "pointer"
+                                          },
+                                          on: {
+                                            mouseover: function($event) {
+                                              _vm.popOn(card.multiverse_id)
+                                            },
+                                            mouseout: function($event) {
+                                              _vm.popOff(card.multiverse_id)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(card.name))]
+                                      ),
+                                      _vm._v(" "),
+                                      _vm._l(card.powerLevels, function(level) {
+                                        return _c("span", [
+                                          level.name == _vm.filterPowerLevel
+                                            ? _c("span", [
+                                                _vm._v(
+                                                  ", " + _vm._s(level.ranking)
+                                                )
+                                              ])
+                                            : _vm._e()
+                                        ])
+                                      })
+                                    ],
+                                    2
+                                  )
                                 ])
                           ]
                         )
@@ -41172,14 +41259,14 @@ var render = function() {
                 _vm._v(" "),
                 _c("br"),
                 _vm._v(" "),
-                _vm.deck.sideboard_cards.length > 0
+                _vm.myDeck.sideboard_cards.length > 0
                   ? _c("div", { staticClass: "card full-width" }, [
                       _vm._m(3),
                       _vm._v(" "),
                       _c(
                         "div",
                         { class: !_vm.toggleView ? "row" : "card-body" },
-                        _vm._l(_vm.deck.sideboard_cards, function(card) {
+                        _vm._l(_vm.myDeck.sideboard_cards, function(card) {
                           return _c(
                             "div",
                             {
@@ -41190,7 +41277,7 @@ var render = function() {
                             [
                               !_vm.toggleView
                                 ? _c("span", [
-                                    card.pivot.count <= 4
+                                    card.count <= 4
                                       ? _c(
                                           "div",
                                           {
@@ -41201,7 +41288,7 @@ var render = function() {
                                               "align-items": "center"
                                             }
                                           },
-                                          _vm._l(card.pivot.count, function(n) {
+                                          _vm._l(card.count, function(n) {
                                             return _c("span", [
                                               _c(
                                                 "i",
@@ -41231,9 +41318,7 @@ var render = function() {
                                           [
                                             _c("span", [
                                               _c("strong", [
-                                                _vm._v(
-                                                  _vm._s(card.pivot.count) + "x"
-                                                )
+                                                _vm._v(_vm._s(card.count) + "x")
                                               ])
                                             ])
                                           ]
@@ -41272,7 +41357,7 @@ var render = function() {
                                                 "material-icons noSelect clickable",
                                               on: {
                                                 click: function($event) {
-                                                  _vm.addCard(card)
+                                                  _vm.addNewSideboard(card.card)
                                                 }
                                               }
                                             },
@@ -41311,64 +41396,83 @@ var render = function() {
                                       ]
                                     ),
                                     _vm._v(" "),
-                                    _c("p", { staticClass: "deck-list" }, [
-                                      _c(
-                                        "i",
-                                        {
-                                          staticClass:
-                                            "material-icons noSelect text-secondary",
-                                          on: {
-                                            click: function($event) {
-                                              _vm.removeSideboardCard(card)
+                                    _c(
+                                      "p",
+                                      { staticClass: "deck-list" },
+                                      [
+                                        _c(
+                                          "i",
+                                          {
+                                            staticClass:
+                                              "material-icons noSelect text-secondary",
+                                            on: {
+                                              click: function($event) {
+                                                _vm.removeSideboardCard(card)
+                                              }
                                             }
-                                          }
-                                        },
-                                        [_vm._v("remove_circle")]
-                                      ),
-                                      _vm._v(
-                                        " \n                        " +
-                                          _vm._s(card.pivot.count) +
-                                          " \n                      "
-                                      ),
-                                      _c(
-                                        "i",
-                                        {
-                                          staticClass:
-                                            "material-icons noSelect text-primary",
-                                          on: {
-                                            click: function($event) {
-                                              _vm.addCard(card)
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("add_circle")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "span",
-                                        {
-                                          staticStyle: {
-                                            "padding-left": "0.5em",
-                                            cursor: "pointer"
                                           },
-                                          on: {
-                                            mouseover: function($event) {
-                                              _vm.popOn(
-                                                card.multiverse_id,
-                                                true
-                                              )
-                                            },
-                                            mouseout: function($event) {
-                                              _vm.popOff(
-                                                card.multiverse_id,
-                                                true
-                                              )
+                                          [_vm._v("remove_circle")]
+                                        ),
+                                        _vm._v(
+                                          " \n                        " +
+                                            _vm._s(card.count) +
+                                            " \n                      "
+                                        ),
+                                        _c(
+                                          "i",
+                                          {
+                                            staticClass:
+                                              "material-icons noSelect text-primary",
+                                            on: {
+                                              click: function($event) {
+                                                _vm.addNewSideboard(card.card)
+                                              }
                                             }
-                                          }
-                                        },
-                                        [_vm._v(_vm._s(card.name))]
-                                      )
-                                    ])
+                                          },
+                                          [_vm._v("add_circle")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          {
+                                            staticStyle: {
+                                              "padding-left": "0.5em",
+                                              cursor: "pointer"
+                                            },
+                                            on: {
+                                              mouseover: function($event) {
+                                                _vm.popOn(
+                                                  card.multiverse_id,
+                                                  true
+                                                )
+                                              },
+                                              mouseout: function($event) {
+                                                _vm.popOff(
+                                                  card.multiverse_id,
+                                                  true
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [_vm._v(_vm._s(card.name))]
+                                        ),
+                                        _vm._v(" "),
+                                        _vm._l(card.powerLevels, function(
+                                          level
+                                        ) {
+                                          return _c("span", [
+                                            level.name == _vm.filterPowerLevel
+                                              ? _c("span", [
+                                                  _vm._v(
+                                                    ", " + _vm._s(level.ranking)
+                                                  )
+                                                ])
+                                              : _vm._e()
+                                          ])
+                                        })
+                                      ],
+                                      2
+                                    )
                                   ])
                             ]
                           )

@@ -7,6 +7,7 @@ use App\User;
 use App\Card;
 use App\Sideboard;
 use App\Post;
+use App\PowerLevel;
 use Auth;
 use JavaScript;
 
@@ -89,20 +90,47 @@ class DecksController extends Controller
         $deck_id = (int) $deck_id;
         // this query below is perfect     
         $deck = Deck::where('id', $deck_id)
-        ->with('cards')->with('sideboard_cards')->with('user')->first();
+        ->with('cards')->with('cards.power_levels')->with('sideboard_cards')->with('user')->first();
 
+        // loop through deck.cards
+        $cards = [];
+        $deck->cards = $deck->cards->map(function($card, $key) use (&$cards){
+            $i = 1;
+            $card_count = $card->pivot->count;
+            $card->power_levels = $card->power_levels->keyBy('name');
+            while ($i <= $card_count) {
+                $cards[] = clone $card;
+                $i++;
+            }
+            return $card;
+        });
+        // loop through deck.cards
+        $sideboard = [];
+        $deck->sideboard_cards = $deck->sideboard_cards->map(function($card, $key) use (&$sideboard){
+            $i = 1;
+            $card_count = $card->pivot->count;
+            $card->levels = $card->power_levels->keyBy('name');
+            while ($i <= $card_count) {
+                $sideboard[] = clone $card;
+                $i++;
+            }
+            return $card;
+        });
+        $deck->cards = $cards;
+        $deck->sideboard_cards = $sideboard;
+        $power_levels = PowerLevel::all();
         if($check == true) {
             // this if below should be put together with the one above using &&
             if ($deck && $deck_id === $deck['id']) {
                 // set editable to false if this isn't the user's deck, otherwise, let them edit their own deck
                 $editable = Auth::user()->id == $deck['user_id'];
-                $data = collect(['deck' => $deck, 'editable' => $editable]);
+                $data = collect(['deck' => $deck, 'cards' => $cards, 'sideboard' => $sideboard, 'editable' => $editable, 'power_levels' => $power_levels]);
                 // conditions on where this is view or edit
                 return view('deck-cards', ['data' => $data]);
             }
         }
         else {
-            $data = collect(['deck' => $deck]);
+            $data = collect(['deck' => $deck, 'power_levels' => $power_levels]);
                 // only view
                 return view('deck-cards', ['data' => $data]);
         }               
@@ -116,6 +144,67 @@ class DecksController extends Controller
             return view('deck-of-the-week', ['data' => $data]);
         }
         return redirect('/404');
+    }
+
+    protected function setCardCounts($cards) {
+        $cards_array = [];
+        // loop through all of the cards to set the counts
+        $cards = collect($cards)->each(function ($card, $key) use (&$cards_array) {
+           $cards_array[$card['card']['id']] = ['count' => $card['count']];
+            // if (array_has($cards_array, $card['id'])) {
+            //     // get current card count
+            //     $current_count = (int) $cards_array[$card['id']]['count'];
+            //     // take the current count and add a card to it
+            //     $cards_array[$card['id']] = ['count' => $current_count + 1];
+            // } else {
+            //     $cards_array[$card['id']] = ['count' => 1];
+            // }
+            return $card;
+        });
+        return $cards_array;
+    } 
+
+    public function editDeckSave() {
+        $deck_request = $this->request->all();
+        $deck_id = (int) $deck_request['id'];
+        // query for deck by id
+        $deck = Deck::where('id', $deck_id)->with('cards')->with('sideboard_cards')->first();
+        // make sure only deck owner can edit and that a deck existed with that id
+        $can_edit = $deck && Auth::user()->id == $deck->user_id ? true: false;
+        if ($can_edit) {
+            // check to see if deck name or description is different, if it is then update the fields
+            if ($name_changed = $deck->name != $deck_request['name'] || $des_changed = $deck->description != $deck_request['description']) {
+                if ($name_changed) {
+                    $deck->name = $deck_request['name'];
+                }
+                if ($des_changed) {
+                    $deck->description = $deck_request['description'];
+                }
+                // update if one of the two is different
+                $deck->save();
+            }
+            // get all of the cards
+            $cards = $deck_request['cards'];
+            $cards_array = $this->setCardCounts($cards);
+            $synced = $deck->cards()->sync($cards_array);
+        
+            // all of the sideboard cards from the request
+            $sideboard = $deck_request['sideboard_cards'];
+            $sideboard_cards_array = $this->setCardCounts($sideboard);
+            $synced_sideboard = $deck->sideboard_cards()->sync($sideboard_cards_array);
+            
+            if ($synced || $synced_sideboard) {
+                // messaging that the shit actually happened, for now we can just take a dump
+                return response()->json(['status' => true, 'message' => 'Saved Successfully!', 'payload' => $deck->toArray()]);
+            } else {
+                // we can get more detailed with an error message later on, like actually outputting it here
+                return response()->json(['status' => false, 'message' => 'Sync Failed, please reload the page']);
+            }
+            
+        } else {
+            // redirect or throw unauthorize message
+            return redirect('/404');
+        }
     }
 
     public function editDeck() {

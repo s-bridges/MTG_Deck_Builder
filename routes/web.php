@@ -38,7 +38,9 @@ Route::prefix('deck')->group(function (){
     Route::get('/', 'DecksController@myDecks')->name('decks');
     Route::get('/{deck_id}/cards', 'DecksController@specificDeck');
     Route::get('/dotw', 'DecksController@deckOfTheWeek');
-    Route::put('/edit', 'DecksController@editDeck')->middleware(['auth']);
+    // Route::put('/edit', 'DecksController@editDeck')->middleware(['auth']);
+    Route::put('/edit', 'DecksController@editDeckSave')->middleware(['auth']);
+
     Route::delete('/{deck_id}/delete', 'DecksController@deleteDeck')->middleware(['auth']);
     Route::get('/all', 'DecksController@listAllDecks')->name('alldecks'); 
 });
