@@ -151,14 +151,6 @@ class DecksController extends Controller
         // loop through all of the cards to set the counts
         $cards = collect($cards)->each(function ($card, $key) use (&$cards_array) {
            $cards_array[$card['card']['id']] = ['count' => $card['count']];
-            // if (array_has($cards_array, $card['id'])) {
-            //     // get current card count
-            //     $current_count = (int) $cards_array[$card['id']]['count'];
-            //     // take the current count and add a card to it
-            //     $cards_array[$card['id']] = ['count' => $current_count + 1];
-            // } else {
-            //     $cards_array[$card['id']] = ['count' => 1];
-            // }
             return $card;
         });
         return $cards_array;
@@ -192,77 +184,6 @@ class DecksController extends Controller
             $sideboard = $deck_request['sideboard_cards'];
             $sideboard_cards_array = $this->setCardCounts($sideboard);
             $synced_sideboard = $deck->sideboard_cards()->sync($sideboard_cards_array);
-            
-            if ($synced || $synced_sideboard) {
-                // messaging that the shit actually happened, for now we can just take a dump
-                return response()->json(['status' => true, 'message' => 'Saved Successfully!', 'payload' => $deck->toArray()]);
-            } else {
-                // we can get more detailed with an error message later on, like actually outputting it here
-                return response()->json(['status' => false, 'message' => 'Sync Failed, please reload the page']);
-            }
-            
-        } else {
-            // redirect or throw unauthorize message
-            return redirect('/404');
-        }
-    }
-
-    public function editDeck() {
-        $deck_request = $this->request->all();
-        $deck_id = (int) $deck_request['id'];
-        // query for deck by id
-        $deck = Deck::where('id', $deck_id)
-        ->with('cards')->with('sideboard_cards')->first();
-        // make sure only deck owner can edit and that a deck existed with that id
-        $can_edit = $deck && Auth::user()->id == $deck->user_id ? true: false;
-        if ($can_edit) {
-            // check to see if deck name or description is different, if it is then update the fields
-            if ($name_changed = $deck->name != $deck_request['name'] || $des_changed = $deck->description != $deck_request['description']) {
-                if ($name_changed) {
-                    $deck->name = $deck_request['name'];
-                }
-                if ($des_changed) {
-                    $deck->description = $deck_request['description'];
-                }
-                // update if one of the two is different
-                $deck->save();
-            }
-            // get all of the cards
-            $cards = $deck_request['cards'];
-            $cards_array = [];
-            // loop through all of the cards to create an array of just the card ids from the DB
-            $cards = collect($cards)->each(function ($card, $key) use (&$cards_array) {
-                // push card pivot into cards_array for sync
-                $count = (int) $card['pivot']['count'];
-                $cards_array[$card['id']] = ['count' => $count];
-                return $card;
-            })->toArray();
-
-            // sideboard like cards_array
-            $sideboard_cards_array = [];
-            // all of the sideboard cards from the request
-            $sideboard = $deck_request['sideboard_cards'];
-            // loop through all of the cards to set the counts
-            $sideboard = collect($sideboard)->each(function ($sideboard_card, $key) use (&$sideboard_cards_array) {
-                if (array_has($sideboard_cards_array, $sideboard_card['id'])) {
-                    // get current card count
-                    $sideboard_current_count = (int) $sideboard_cards_array[$sideboard_card['id']]['pivot']['count'];
-                    // dd($sideboard_current_count);
-                    // take the current count and add a card to it
-                    $sideboard_cards_array[$sideboard_card['id']] = ['count' => $sideboard_current_count + 1];
-                } else {
-                    $sideboard_cards_array[$sideboard_card['id']] = ['count' => $sideboard_card['pivot']['count']];
-                }
-                return $sideboard_card;
-            });
-
-            // dupe above for sideboard, but we use sync since some are being added and others kept
-            $synced_sideboard = $deck->sideboard_cards()->sync($sideboard_cards_array);
-
-            // $cards = [3 => ['count' => 4], 6 => ['count' => 4], 8 => ['count' => 4]];
-
-            // using cards variable, sync all of the cards to the deck which is essentially removing any relationship with card ids not included in the array, and adding non existant ones
-            $synced = $deck->cards()->sync($cards_array);
             
             if ($synced || $synced_sideboard) {
                 // messaging that the shit actually happened, for now we can just take a dump

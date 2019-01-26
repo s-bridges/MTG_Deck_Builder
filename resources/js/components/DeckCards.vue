@@ -432,7 +432,6 @@ export default {
           powerLevels: power_levels
         }
       }).value();
-      console.log(deck.cards);
       deck.sideboard_cards = _.chain(sideboard).groupBy('name').map(function(v, i) {
         // get first card out of group of the same cards and set the card data
         let cardData = _.first(v);
