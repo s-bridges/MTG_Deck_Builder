@@ -115,12 +115,27 @@
                               Enchantment: {{ instantEnchantmentCount }}</br>
                               Land: {{ instantLandCount }}</p>
                               <div v-for="card in myDeck">
-                                <p class="deck-list"><i class="material-icons text-secondary noSelect" v-on:click="removeCard(card.card)">remove_circle</i> {{card.count}} <i class="material-icons text-primary" v-on:click="addCard(card.card)">add_circle</i> <span style="padding-left:0.5em;">{{card.name}} </span></p>
+                                <span v-show="activeImage == card.multiverse_id" class="modal-image">
+                                    <img class="card-image"
+                                      v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
+                                  /></span>
+                                <p class="deck-list">
+                                  <i class="material-icons text-secondary noSelect" v-on:click="removeCard(card.card)">remove_circle</i> {{card.count}} 
+                                  <i class="material-icons text-primary" v-on:click="addCard(card.card)">add_circle</i> 
+                                  <span v-on:mouseover="popOn(card.multiverse_id)" v-on:mouseout="popOff(card.multiverse_id)" style="padding-left:0.5em; cursor:pointer;">{{card.name}} </span></p>
                               </div>
                               <hr>
                               <p v-if="mySideboard.length > 0">Sideboard</p>
                               <div v-for="card in mySideboard">
-                                <p class="deck-list"><i class="material-icons text-secondary noSelect" v-on:click="removeSideboardCard(card.card)">remove_circle</i> {{card.count}} <i class="material-icons text-primary" v-on:click="addSideboardCard(card.card)">add_circle</i> <span style="padding-left:0.5em;">{{card.name}} </span></p>
+                                <span v-show="activeSideboardImage == card.multiverse_id" class="modal-image">
+                                    <img class="card-image"
+                                      v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
+                                  /></span>
+                                <p class="deck-list">
+                                  <i class="material-icons text-secondary noSelect" v-on:click="removeSideboardCard(card.card)">remove_circle</i> 
+                                  {{card.count}} <i class="material-icons text-primary" v-on:click="addSideboardCard(card.card)">add_circle</i> 
+                                  <span v-on:mouseover="popOn(card.multiverse_id, true)" v-on:mouseout="popOff(card.multiverse_id, true)" style="padding-left:0.5em; cursor:pointer;">{{card.name}} </span>
+                                  </p>
                               </div>
 
                               <br />
@@ -140,7 +155,6 @@
 export default {
   mounted() {
   // console logging all of the cards that your grabbed from the DB in your controller function
-  console.log(this.cards);
   },
   props: {
     data: {
@@ -153,7 +167,9 @@ export default {
       cards: this.data.cards,
       paginatedCards: [],
       filterBySet: "ALL", // setting default option to be all cards
-      filterByColor: [], 
+      filterByColor: [],
+      activeImage: false,
+      activeSideboardImage: false, 
       setOptions: [
         {
           label: "All Standard Sets",
@@ -196,24 +212,29 @@ export default {
     };
   },
   methods: {
-    //  getCardsFromAPI() {
-    //      // API stuff to mtgo for all cards this should work right? Yeah, let's check your routes for the right route
-    // this only gets used if we are calling to our API after page load ok
-    //      axios.get({{ /card }})
-    //      .then(response => {
-    //          this.cards = response.data.cards;
-    //      })
-    //  },
-    setAPI() {
-      // use the filterBySet value which the select option if the v-model of
-      axios
-        .get(`/card/${this.filterBySet}`)
-        .then(response => {
-          // be able to see your response to make sure you know what to set the mtgsetdata to
-          this.cards = response.data.payload;
-        })
-        .catch(error => {});
+    popOff(id, isSideboard = false) {
+      // always reset active image
+      this.activeImage = false;
+      this.activeSideboardImage = false;
     },
+    popOn(id, isSideboard = false) {
+      if (this.activeImage != id && !isSideboard) {
+        this.activeImage = id;
+      }
+      if (this.activeSideboardImage != id && isSideboard) {
+        this.activeSideboardImage = id;
+      }
+    },
+    // setAPI() {
+    //   // use the filterBySet value which the select option if the v-model of
+    //   axios
+    //     .get(`/card/${this.filterBySet}`)
+    //     .then(response => {
+    //       // be able to see your response to make sure you know what to set the mtgsetdata to
+    //       this.cards = response.data.payload;
+    //     })
+    //     .catch(error => {});
+    // },
     saveDeck() {
       // this is where the .post where you save selected cards to a deck
       let deckForm = this.deckForm;
@@ -254,7 +275,6 @@ export default {
       let cards_array = this.cards;
       let set = this.filterBySet;
       if (set && set != 'ALL' ) {
-        console.log('filtering out by set');
         return _.filter(cards_array, function(card) {
           // index of finds the string within the card.name property or within the card type
           return card.set == set;

@@ -27,9 +27,9 @@ Route::get('/404', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::prefix('card')->group(function (){ 
+Route::prefix('card')->group(function (){
+    Route::get('/list-set/{set}', 'CardsController@listCardsBy'); 
     Route::get('/{id}', 'CardsController@cardLanding')->name('card-landing'); 
-    Route::get('/{set}', 'CardsController@listCardsBy');
     Route::get('/', 'CardsController@listCards')->name('cards');
 }); 
 
@@ -40,7 +40,9 @@ Route::prefix('deck')->group(function (){
     Route::get('/', 'DecksController@myDecks')->name('decks');
     Route::get('/{deck_id}/cards', 'DecksController@specificDeck');
     Route::get('/dotw', 'DecksController@deckOfTheWeek');
-    Route::put('/edit', 'DecksController@editDeck')->middleware(['auth']);
+    // Route::put('/edit', 'DecksController@editDeck')->middleware(['auth']);
+    Route::put('/edit', 'DecksController@editDeckSave')->middleware(['auth']);
+
     Route::delete('/{deck_id}/delete', 'DecksController@deleteDeck')->middleware(['auth']);
     Route::get('/all', 'DecksController@listAllDecks')->name('alldecks'); 
 });
