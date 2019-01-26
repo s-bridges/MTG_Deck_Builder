@@ -225,16 +225,16 @@ export default {
         this.activeSideboardImage = id;
       }
     },
-    setAPI() {
-      // use the filterBySet value which the select option if the v-model of
-      axios
-        .get(`/card/${this.filterBySet}`)
-        .then(response => {
-          // be able to see your response to make sure you know what to set the mtgsetdata to
-          this.cards = response.data.payload;
-        })
-        .catch(error => {});
-    },
+    // setAPI() {
+    //   // use the filterBySet value which the select option if the v-model of
+    //   axios
+    //     .get(`/card/${this.filterBySet}`)
+    //     .then(response => {
+    //       // be able to see your response to make sure you know what to set the mtgsetdata to
+    //       this.cards = response.data.payload;
+    //     })
+    //     .catch(error => {});
+    // },
     saveDeck() {
       // this is where the .post where you save selected cards to a deck
       let deckForm = this.deckForm;

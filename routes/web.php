@@ -27,9 +27,9 @@ Route::get('/404', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::prefix('card')->group(function (){ 
+Route::prefix('card')->group(function (){
+    Route::get('/list-set/{set}', 'CardsController@listCardsBy'); 
     Route::get('/{id}', 'CardsController@cardLanding')->name('card-landing'); 
-    Route::get('/{set}', 'CardsController@listCardsBy');
     Route::get('/', 'CardsController@listCards')->name('cards');
 }); 
 

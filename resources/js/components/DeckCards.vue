@@ -314,7 +314,7 @@ export default {
     setAPI() {
       // use the filterBySet value which the select option if the v-model of
       axios
-        .get(`/card/${this.filterBySet}`)
+        .get(`/card/list-set/${this.filterBySet}`)
         .then(response => {
           // be able to see your response to make sure you know what to set the mtgsetdata to
           this.cards = response.data.payload;
@@ -397,7 +397,7 @@ export default {
       this.filterByColor = colors; 
     },
     viewAd() {
-            window.location.href = "https://www.tcgplayer.com?partner=MAGICDB&utm_campaign=affiliate&utm_medium=MAGICDB&utm_source=RavnicaPromo";
+      window.location.href = "https://www.tcgplayer.com?partner=MAGICDB&utm_campaign=affiliate&utm_medium=MAGICDB&utm_source=RavnicaPromo";
     }
   },
   computed: {
