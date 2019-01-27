@@ -61,8 +61,12 @@
                 <div class="row">
                     <div v-if="filteredCards.length > 0" class="mx-auto" v-bind:class="selectedCards.length > 0 || sideboardCards.length > 0 ? 'col-sm-9' : 'col-sm-12'">
                         <div class="card">
-                            <div class="card-header">
+                            <div class="card-header header-with-btn">
                                 <h4 class="mb-0">All Cards</h4>
+                                <select style="max-width:180px;" id="levels" class="form-control" v-model="filterPowerLevel">
+                                  <option disabled value="">Power Level by Format</option>
+                                  <option :alt="option.description" v-for="option in powerLevels" :value="option.name">{{option.name}}</option>
+                                </select>
                             </div>
                              <paginate
                                 name="paginatedCards"
@@ -71,7 +75,7 @@
                                 tag="div"
                                 class="row card-body"
                                 >
-                                    <div v-for="card in paginated('paginatedCards')" class="col justify-col-center addable" style="padding-bottom:2em;">                                 
+                                    <div v-for="card in paginated('paginatedCards')" class="col justify-col-center addable" style="padding-bottom:2em;flex-direction: column;text-align: center;flex-wrap: wrap;">                                 
                                         <img class="card-image"
                                             v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
                                         />
@@ -79,9 +83,12 @@
                                             <div class="text">
                                               <i v-on:click="addCard(card)" class="material-icons add noSelect" title="Deck">add_circle</i>
                                               <i v-on:click="addSideboardCard(card)" class="material-icons add noSelect" title="Sideboard">tab</i>
-                                              <i v-on:click="viewCard(card.id)" class="material-icons add noSelect" title="View Card">launch</i>
+                                              <a style="color:#fff;" :href="'/card/' + card.id + '/'" target="_blank"><i class="material-icons add noSelect" title="View Card">launch</i></a>
                                               </div>
                                         </div>
+                                        <span v-for="level in card.power_levels">
+                                          <span v-if="level.name == filterPowerLevel">{{level.name}} Ranking: {{level.pivot.ranking}}</span>
+                                        </span>
                                     </div>
                             </paginate>
                             
@@ -103,7 +110,7 @@
                         <div v-if="selectedCards.length > 0 || sideboardCards.length > 0" class="col-sm-3">
                           <div class="card">
                             <div class="card-header">
-                                <h4 class="mb-0">My Deck</h4>
+                                <h4 class="mb-0">My Deck Power Level: {{calculateDeckPower}}</h4>
                                 <input v-model="deckForm.name" name="name" placeholder="Deck Name" class="form-control mt-3" required>
 
                                 <input v-model="deckForm.description" name="description" placeholder="Description" class="form-control mt-3" required>
@@ -114,6 +121,11 @@
                               Instant/Sorcery: {{instantSorceryCount}}<br>
                               Enchantment: {{ instantEnchantmentCount }}</br>
                               Land: {{ instantLandCount }}</p>
+                              <select id="levels" class="form-control" v-model="filterPowerLevel">
+                                <option disabled value="">Power Level by Format</option>
+                                <option :alt="option.description" v-for="option in powerLevels" :value="option.name">{{option.name}}</option>
+                              </select>
+                              <br />
                               <div v-for="card in myDeck">
                                 <span v-show="activeImage == card.multiverse_id" class="modal-image">
                                     <img class="card-image"
@@ -122,7 +134,12 @@
                                 <p class="deck-list">
                                   <i class="material-icons text-secondary noSelect" v-on:click="removeCard(card.card)">remove_circle</i> {{card.count}} 
                                   <i class="material-icons text-primary" v-on:click="addCard(card.card)">add_circle</i> 
-                                  <span v-on:mouseover="popOn(card.multiverse_id)" v-on:mouseout="popOff(card.multiverse_id)" style="padding-left:0.5em; cursor:pointer;">{{card.name}} </span></p>
+                                  <span v-on:mouseover="popOn(card.multiverse_id)" v-on:mouseout="popOff(card.multiverse_id)" style="padding-left:0.5em; cursor:pointer;">{{card.name}}</span>
+                                  <span v-for="level in card.power_levels">
+                                    <span v-if="level.name == filterPowerLevel">, {{level.ranking}}</span>
+                                  </span>
+                                  </p>
+                             
                               </div>
                               <hr>
                               <p v-if="mySideboard.length > 0">Sideboard</p>
@@ -134,8 +151,12 @@
                                 <p class="deck-list">
                                   <i class="material-icons text-secondary noSelect" v-on:click="removeSideboardCard(card.card)">remove_circle</i> 
                                   {{card.count}} <i class="material-icons text-primary" v-on:click="addSideboardCard(card.card)">add_circle</i> 
-                                  <span v-on:mouseover="popOn(card.multiverse_id, true)" v-on:mouseout="popOff(card.multiverse_id, true)" style="padding-left:0.5em; cursor:pointer;">{{card.name}} </span>
+                                  <span v-on:mouseover="popOn(card.multiverse_id, true)" v-on:mouseout="popOff(card.multiverse_id, true)" style="padding-left:0.5em; cursor:pointer;">{{card.name}}</span>
+                                  <span v-for="level in card.power_levels">
+                                    <span v-if="level.name == filterPowerLevel">, {{level.ranking}}</span>
+                                  </span>
                                   </p>
+                                
                               </div>
 
                               <br />
@@ -208,7 +229,9 @@ export default {
       deckForm: {
         name: '',
         description: ''
-      }
+      },
+      filterPowerLevel: '',
+      powerLevels: this.data.power_levels
     };
   },
   methods: {
@@ -299,11 +322,10 @@ export default {
       this.filterByColor = colors; 
     },
     viewAd() {
-            window.location.href = "https://www.tcgplayer.com?partner=MAGICDB&utm_campaign=affiliate&utm_medium=MAGICDB&utm_source=RavnicaPromo";
+      window.location.href = "https://www.tcgplayer.com?partner=MAGICDB&utm_campaign=affiliate&utm_medium=MAGICDB&utm_source=RavnicaPromo";
     },
     viewCard(id) {
-      console.log(id);
-            window.location.href =  '/card/' + id + '/';
+      window.location.href =  '/card/' + id + '/';
     }
   },
   computed: {
@@ -347,11 +369,18 @@ export default {
       let result = _.chain(selectedCards).groupBy('name').map(function(v, i) {
         // get first card out of group of the same cards and set the card data
         let cardData = _.first(v);
+        let power_levels = _.chain(cardData.power_levels).map(function(i, k){
+          return {
+            name: i.name,
+            ranking: i.pivot.ranking
+          }
+        }).keyBy('name').value();
         return {
           name: i,
           multiverse_id: cardData.multiverse_id,
           count: v.length,
-          card: cardData
+          card: cardData,
+          power_levels: power_levels
         }
       }).orderBy(['name'], ['asc']).value();
       return result;
@@ -362,14 +391,40 @@ export default {
       let result = _.chain(sideboardCards).groupBy('name').map(function(v, i) {
         // get first card out of group of the same cards and set the card data
         let cardData = _.first(v);
+         let power_levels = _.chain(cardData.power_levels).map(function(i, k){
+          return {
+            name: i.name,
+            ranking: i.pivot.ranking
+          }
+        }).keyBy('name').value();
         return {
           name: i,
           multiverse_id: cardData.multiverse_id,
           count: v.length,
-          card: cardData
+          card: cardData,
+          power_levels: power_levels
         }
       }).orderBy(['name'], ['asc']).value();
       return result;
+    },
+    calculateDeckPower() {
+      let powerRanking = this.filterPowerLevel;
+      if (powerRanking) {
+        let cards = this.selectedCards;
+        console.log(cards);
+        let ranking = _.chain(cards).filter(function(card){
+          card.power_levels = _.keyBy(card.power_levels, 'name');
+          return card.power_levels && card.power_levels.hasOwnProperty(powerRanking);
+        }).map(function(card){
+          return parseFloat(card.power_levels[powerRanking].pivot.ranking);
+        }).value();
+        if (ranking.length > 0) {
+          return ranking = _.round(_.sum(ranking) / ranking.length, 2);
+        } else {
+          return 'N/A';
+        }
+      } 
+      return 'N/A';
     },
     sideboardMaxLength() {
       let sideboardCards = this.sideboardCards;
