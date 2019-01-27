@@ -178,7 +178,7 @@
                 </div>
                 </br>
                 <!-- Sideboard -->   
-              <div class="card full-width" v-if="deckSideboard.length > 0">
+              <div class="card full-width" v-if="deckSideboard">
                 <div class="card-header">
                   <h4 class="mb-0">Sideboard</h4>        
                 </div>
