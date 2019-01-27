@@ -5,7 +5,6 @@ use App\Deck;
 use App\User;
 use App\Card;
 use App\Sideboard;
-use App\PowerLevel;
 use Auth;
 use JavaScript;
 use Illuminate\Http\Request;
@@ -35,13 +34,8 @@ class CardsController extends Controller
 
     public function listCards()
     {
-        $cards = Card::with('power_levels')->get();
-        $cards = $cards->map(function($card, $key){
-            $card->power_levels = $card->power_levels->keyBy('name');
-            return $card;
-        });
-        $power_levels = PowerLevel::all();
-        $data = collect(['cards' => $cards, 'power_levels' => $power_levels]);
+        $cards = Card::all();
+        $data = collect(['cards' => $cards]);
         return view('list-cards', ['data' => $data]);
     }
     
