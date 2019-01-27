@@ -61,8 +61,12 @@
                 <div class="row">
                     <div v-if="filteredCards.length > 0" class="mx-auto" v-bind:class="selectedCards.length > 0 || sideboardCards.length > 0 ? 'col-sm-9' : 'col-sm-12'">
                         <div class="card">
-                            <div class="card-header">
+                            <div class="card-header header-with-btn">
                                 <h4 class="mb-0">All Cards</h4>
+                                <select style="max-width:180px;" id="levels" class="form-control" v-model="filterPowerLevel">
+                                  <option disabled value="">Power Level by Format</option>
+                                  <option :alt="option.description" v-for="option in powerLevels" :value="option.name">{{option.name}}</option>
+                                </select>
                             </div>
                              <paginate
                                 name="paginatedCards"
@@ -71,7 +75,7 @@
                                 tag="div"
                                 class="row card-body"
                                 >
-                                    <div v-for="card in paginated('paginatedCards')" class="col justify-col-center addable" style="padding-bottom:2em;">                                 
+                                    <div v-for="card in paginated('paginatedCards')" class="col justify-col-center addable" style="padding-bottom:2em;flex-direction: column;text-align: center;flex-wrap: wrap;">                                 
                                         <img class="card-image"
                                             v-bind:src="'/images/cards/' + card.multiverse_id + '.jpg'"
                                         />
@@ -79,9 +83,12 @@
                                             <div class="text">
                                               <i v-on:click="addCard(card)" class="material-icons add noSelect" title="Deck">add_circle</i>
                                               <i v-on:click="addSideboardCard(card)" class="material-icons add noSelect" title="Sideboard">tab</i>
-                                              <i v-on:click="viewCard(card.id)" class="material-icons add noSelect" title="View Card">launch</i>
+                                              <a style="color:#fff;" :href="'/card/' + card.id + '/'" target="_blank"><i class="material-icons add noSelect" title="View Card">launch</i></a>
                                               </div>
                                         </div>
+                                        <span v-for="level in card.power_levels">
+                                          <span v-if="level.name == filterPowerLevel">{{level.name}} Ranking: {{level.pivot.ranking}}</span>
+                                        </span>
                                     </div>
                             </paginate>
                             
