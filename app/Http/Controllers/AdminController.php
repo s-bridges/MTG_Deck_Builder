@@ -68,9 +68,10 @@ class AdminController extends Controller
     {
         // get deck of the week
         $dotw = Deck::where('deck_of_the_week', 1)->first();
+        $user = User::all();
         // get all users and decks if they have them, as well as a total count for decks a user has
         $users = User::with('decks')->withCount('decks')->get();
-        $data = collect(['users' => $users, 'admin' => Auth::user(), 'dotw' => $dotw->id]);
+        $data = collect(['users' => $users, 'admin' => Auth::user(), 'dotw' => $dotw->id, 'user' => $user]);
         return view('admin-page', ['data' => $data]);
     }
 
@@ -113,6 +114,24 @@ class AdminController extends Controller
     public function changeUserType()
     {
         //here is the function to get all users, and then select specific user and give/revoke admin access
+        $user_to_update = $this->request->input();
+
+        // findOrFail
+        $user = User::where('id', $user_to_update)->firstOrFail();
+
+        $userEditorType = User::where('type', 'default')->first();
+        if ($userEditorType){
+            $userEditorType->type = 'default';
+            $userEditorType->save();
+        }
+
+        // set user_type to editor
+        $user->type = 'editor';
+        // model->save()
+        $saved = $user->save();
+        if ($saved) {
+            return response()->json(['status' => true, 'message' => 'Saved Successfully!']);
+        }
     }
 
     public function connect()
