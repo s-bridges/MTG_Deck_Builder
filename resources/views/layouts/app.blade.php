@@ -187,7 +187,7 @@
         Inc, a subsidiary of Hasbro, Inc. All rights reserved. All art is property of their respective artists and/or Wizards of the Coast Inc. 
         This website is not produced, endorsed, supported, or affiliated with Wizards of the Coast Inc. Articles and comments are user-submitted and do not represent 
         official endorsements of this site.</span>        
-        <p><span class="text-muted">© 2018 MagicDB.us All Rights Reserved.</span></p>
+        <p class="text-center"><span class="text-muted">© 2018-2019 MagicDB.us All Rights Reserved.</span></p>
       </div>
     </footer>
 </body>
