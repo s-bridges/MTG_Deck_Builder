@@ -97,7 +97,6 @@
   function viewAd() {
       window.open("https://www.tcgplayer.com?partner=MAGICDB&utm_campaign=affiliate&utm_medium=MAGICDB&utm_source=RavnicaPromo");
   }
-
   function getMetaContent(name){
     return document.getElementsByTagName('meta')[name].getAttribute("content");
   }
