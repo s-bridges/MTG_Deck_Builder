@@ -113,8 +113,14 @@
               </div>
               </br>
               <div class="card full-width">
-                <div class="card-header">
-                  <h4 class="mb-0">Main Power Level: {{calculateDeckPower}}</h4>      
+                <div class="card-header d-flex justify-content-between">
+                  <h4 class="mb-0">Main Power Level: {{calculateDeckPower}}</h4>
+                  <div class="col-sm-3">
+                  <select id="levels" class="form-control" v-model="filterPowerLevel">
+                        <option disabled value="">Power Level by Format</option>
+                        <option :alt="option.description" v-for="option in powerLevels" :value="option.name">{{option.name}}</option>
+                      </select>    
+                      </div>  
                 </div>
                 <div v-bind:class="!toggleView ? 'row' : 'card-body'">
                     <div v-if="toggleView">
