@@ -3,16 +3,12 @@
 @section('content')
 
 <div class="container">
-<!-- TCG ad -->
-<div class="row justify-content-center">
-<img src="https://tcgplayer-marketing.s3.amazonaws.com/content/magic/buy_all_singles_kb_seven_percent_affiliate_leaderboard_728x90_01252019.jpg" class="img-fluid" alt="Responsive image">
-</div>
 </br>
 <!-- 442928 -->
 <div class="container">
     <div class="row">
         <div class="col-md-auto">
-        <img style="max-width:250px; height: auto;float:left;padding-right: 1em;" src="{{asset('/images/cards/') . '/' . $card['multiverse_id'] . '.jpg'}}"/>
+        <img style="max-width:240px; height: auto;float:left;padding-right: 1em;" src="{{asset('/images/cards/') . '/' . $card['multiverse_id'] . '.jpg'}}"/>
         </div>
         <div class="col col-9">
         <p><h4>{{$card->name}}</h4></p>

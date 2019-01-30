@@ -41,16 +41,50 @@
             <div class="card-header" id="headingTwo">
             <h5 class="mb-0">
                 <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Make Admin?
+                List All Users
                 </button>
             </h5>
             </div>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-            <div class="card-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+            <div class="card-body scroll">
+                <ul v-for="user in users">
+                    <li>{{user.type}} - {{user.username}} - User ID: {{user.id}}</li>
+                </ul>
             </div>
             </div>
         </div>
+        <div class="card">
+    <div class="card-header" id="headingThree">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Make Editor
+        </button>
+      </h5>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+      <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <input type="number" v-model="userId" name="userId" placeholder="User ID #" class="mt-3">
+                    </div>
+                </form>
+                <button v-on:click="saveUserType()" class="btn btn-primary">Update</button>      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+          Collapsible Group Item #4
+        </button>
+      </h5>
+    </div>
+    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+      <div class="card-body">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      </div>
+    </div>
+  </div>
         </div>
         </div>
     </div>
@@ -73,7 +107,9 @@
                 users: this.data.users,
                 selectedDeckId: this.data.dotw,
                 admin: this.data.admin,
-                deckId: ''   
+                user: this.data.user,
+                deckId: '',
+                userId: '',   
             }
         },
         methods: {
@@ -88,6 +124,12 @@
                         // reset the deck id
                         this.deckId = '';
                     })
+                    .catch(error => {});
+            },
+            saveUserType() {
+                let userId = this.userId;
+                axios
+                    .patch(`/admin/update/user_type`, {user_id: userId})
                     .catch(error => {});
             }
         },
@@ -109,7 +151,7 @@
             dotwID() {
                 // return deckId of DOTW
                 return this.deckId ? this.deckId : 'Not Set';
-            },
+            }
         }
     }
 </script>

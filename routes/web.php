@@ -69,6 +69,7 @@ Route::post('/contact', 'ContactController@sendEmail')->name('contact.send');
 Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function (){
     Route::get('/', 'AdminController@admin')->name('admin');
     Route::patch('/save/update-dotw/', 'AdminController@deckOfTheWeekSave')->name('update-dotw');
+    Route::patch('/update/user_type', 'AdminController@changeUserType')->name('changeUserType');
     Route::get('/import-cards', 'AdminController@importCards');
     Route::get('/api/connect', 'AdminController@connect');
     //Route::get('/blog', 'AdminController@createBlogPost')->name('blog');

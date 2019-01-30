@@ -2,10 +2,6 @@
 
 @section('content')
 <div class="container">
-<!-- TCG ad -->
-<div class="row justify-content-center">
-<span onclick="viewAd()"><img src="https://magicdb.us/images/rna_wbn_key_728x90_en.jpg" class="img-fluid" alt="Responsive image"></span>
-</div>
 </br>
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -94,9 +90,6 @@
     });
   }
 
-  function viewAd() {
-      window.open("https://www.tcgplayer.com?partner=MAGICDB&utm_campaign=affiliate&utm_medium=MAGICDB&utm_source=RavnicaPromo");
-  }
   function getMetaContent(name){
     return document.getElementsByTagName('meta')[name].getAttribute("content");
   }

@@ -1,9 +1,5 @@
 <template>
     <div class="container">
-    <!-- TCG ad -->
-    <div class="row justify-content-center">
-    <span v-on:click="viewAd()"><img src="https://magicdb.us/images/rna_wbn_key_728x90_en.jpg" class="img-fluid" alt="Responsive image"></span>
-    </div>
         <div class="row justify-content-center">               
             <div class="container py-3">
               <div class="row">
@@ -77,9 +73,6 @@ export default {
         viewBlog(slug) {
             window.location.href = '/blog/' + slug + '/';
         },
-    viewAd() {
-            window.location.href = "https://www.tcgplayer.com?partner=MAGICDB&utm_campaign=affiliate&utm_medium=MAGICDB&utm_source=RavnicaPromo";
-    }
     },
     computed: {
 

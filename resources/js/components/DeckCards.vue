@@ -1,9 +1,5 @@
 <template>
   <div v-if="deck.cards" class="container">
-  <!-- TCG ad -->
-    <div class="row justify-content-center">
-    <span v-on:click="viewAd()"><img src="https://magicdb.us/images/rna_wbn_key_728x90_en.jpg" class="img-fluid" alt="Responsive image"></span>
-    </div>
     <div class="row"> 
       <div class="container py-3">
         <div v-if="editable" class="row">
@@ -117,8 +113,14 @@
               </div>
               </br>
               <div class="card full-width">
-                <div class="card-header">
-                  <h4 class="mb-0">Main Power Level: {{calculateDeckPower}}</h4>      
+                <div class="card-header d-flex justify-content-between">
+                  <h4 class="mb-0">Main Power Level: {{calculateDeckPower}}</h4>
+                  <div class="col-sm-3">
+                  <select id="levels" class="form-control" v-model="filterPowerLevel">
+                        <option disabled value="">Power Level by Format</option>
+                        <option :alt="option.description" v-for="option in powerLevels" :value="option.name">{{option.name}}</option>
+                      </select>    
+                      </div>  
                 </div>
                 <div v-bind:class="!toggleView ? 'row' : 'card-body'">
                     <div v-if="toggleView">
@@ -396,9 +398,6 @@ export default {
       }
       this.filterByColor = colors; 
     },
-    viewAd() {
-      window.location.href = "https://www.tcgplayer.com?partner=MAGICDB&utm_campaign=affiliate&utm_medium=MAGICDB&utm_source=RavnicaPromo";
-    }
   },
   computed: {
     sideboardMaxLength() {
