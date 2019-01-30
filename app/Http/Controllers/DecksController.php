@@ -212,7 +212,7 @@ class DecksController extends Controller
     }
 
     public function listAllDecks() {
-        $decks = Deck::has('cards')->with('cards')->get();
+        $decks = Deck::has('cards')->with('cards')->latest()->get();
         $users = User::all();
         $data = collect(['decks' => $decks, 'users' => $users]);
         return view('all-decks', ['data' => $data]);
