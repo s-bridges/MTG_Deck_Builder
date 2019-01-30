@@ -1,9 +1,5 @@
 <template>
   <div v-if="deck.cards" class="container">
-  <!-- TCG ad -->
-    <div class="row justify-content-center">
-    <span v-on:click="viewAd()"><img src="https://magicdb.us/images/rna_wbn_key_728x90_en.jpg" class="img-fluid" alt="Responsive image"></span>
-    </div>
     <div class="row"> 
       <div class="container py-3">
         <div v-if="editable" class="row">
@@ -396,9 +392,6 @@ export default {
       }
       this.filterByColor = colors; 
     },
-    viewAd() {
-      window.location.href = "https://www.tcgplayer.com?partner=MAGICDB&utm_campaign=affiliate&utm_medium=MAGICDB&utm_source=RavnicaPromo";
-    }
   },
   computed: {
     sideboardMaxLength() {

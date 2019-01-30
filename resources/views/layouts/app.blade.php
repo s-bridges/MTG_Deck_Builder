@@ -174,6 +174,10 @@
         </nav>
 
         <main class="py-4">
+        <!-- TCGPlayer.com Ad -->
+        <div class="row justify-content-center">
+        <a href="https://www.tcgplayer.com/?partner=MAGICDB" target="_blank"><img src="https://magicdb.us/images/rna_wbn_key_728x90_en.jpg" class="img-fluid" alt="TCGPlayer.com"></a>
+        </div>    
             @yield('content')
         </main>
     </div>
