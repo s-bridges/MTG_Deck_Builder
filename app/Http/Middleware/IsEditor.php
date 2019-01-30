@@ -18,6 +18,6 @@ class IsEditor
         if(auth()->user()->isEditor()){
             return $next($request);
         }
-        return redirect('home');
+        return redirect('/');
     }
 }

@@ -26,7 +26,7 @@ class LoginController extends Controller
      * @var string
      */
     // this is what is redirecting people to home after logging in
-    protected $redirectTo = '/card';
+    protected $redirectTo = '/';
 
     protected function authenticated()
     {

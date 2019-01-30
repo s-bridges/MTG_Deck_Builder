@@ -3,7 +3,7 @@
         <div class="row justify-content-center">  
         <!-- TCG ad -->
     <div class="row justify-content-center">
-    <span v-on:click="viewAd()"><img src="https://tcgplayer-marketing.s3.amazonaws.com/content/magic/buy_all_singles_kb_seven_percent_affiliate_leaderboard_728x90_01252019.jpg" class="img-fluid" alt="Responsive image"></span>
+    <span v-on:click="viewAd()"><img src="https://magicdb.us/images/rna_wbn_key_728x90_en.jpg" class="img-fluid" alt="Responsive image"></span>
     </div>             
             <div class="container py-3">
               <div class="row">
