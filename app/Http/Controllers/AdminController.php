@@ -96,6 +96,36 @@ class AdminController extends Controller
         }
     }
 
+    public function changeUserType()
+    {
+        //here is the function to get all users, and then select specific user and give/revoke admin access
+        $user_to_update = $this->request->input();
+
+        // findOrFail
+        $user = User::where('id', $user_to_update)->firstOrFail();
+        // if user is editor, remove them
+        if($user->type != 'default' && $user->type != 'admin'){
+            $user->type = 'default';
+            $saved = $user->save();
+            if ($saved) {
+                return response()->json(['status' => true, 'message' => 'Editor Removed from Duty!']);
+            } 
+        }
+        //else if user is default, editor them
+        elseif($user->type == 'default') {
+           // set user_type to editor
+            $user->type = 'editor';
+            // model->save()
+            $saved = $user->save();
+                if ($saved) {
+                    return response()->json(['status' => true, 'message' => 'Saved Successfully!']);
+                } 
+        }
+        else{
+            return response()->json(['status' => true, 'message' => 'Unable to modify!']);
+        }
+    }
+
     public function importCards()
     {
         $cards = Card::all();
@@ -109,29 +139,6 @@ class AdminController extends Controller
                 Log::error('Card image with ID:' . $item . ' not saved!');
             }
         });
-    }
-
-    public function changeUserType()
-    {
-        //here is the function to get all users, and then select specific user and give/revoke admin access
-        $user_to_update = $this->request->input();
-
-        // findOrFail
-        $user = User::where('id', $user_to_update)->firstOrFail();
-
-        $userEditorType = User::where('type', 'default')->first();
-        if ($userEditorType){
-            $userEditorType->type = 'default';
-            $userEditorType->save();
-        }
-
-        // set user_type to editor
-        $user->type = 'editor';
-        // model->save()
-        $saved = $user->save();
-        if ($saved) {
-            return response()->json(['status' => true, 'message' => 'Saved Successfully!']);
-        }
     }
 
     public function connect()
