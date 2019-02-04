@@ -369,17 +369,26 @@ export default {
     },
     tcgPlayer() {
       let selectedCards = this.deck.cards;
+      // add sideboard cards
+      let selectedSideboardCards = this.deck.sideboard_cards;
+      console.log(selectedSideboardCards);
       // c is essentially your overall link you keep appending too, maybe change the variable name
       let link = '';
+      let link2 = '';
       _.forEach(selectedCards, function(card){
         // its better to only append in one line like so, and this variable is resent each time we go through the loop
         // because it's initialized within the loop, not outside like c was
-        let tempVar = "||" + card.pivot.count.toString() + "%20" + encodeURI(card.name);
+        let tempVar = "||" + card.count.toString() + "%20" + encodeURI(card.name);
         // in one line you append what you just created above
         link = link.concat(tempVar);
       });
+       _.forEach(selectedSideboardCards, function(card){
+        let tempVar = "||" + card.count.toString() + "%20" + encodeURI(card.name);
+        link2 = link2.concat(tempVar);
+      });
       // no need for a return
-      let tcgLink = "http://store.tcgplayer.com/massentry?partner=MAGICDB&c=" + link;
+      // add deck and sideboard cards with count to affiliate link
+      let tcgLink = "http://store.tcgplayer.com/massentry?partner=MAGICDB&c=" + link + link2;
       // lets console log before the redirect to make sure its set properly
       window.location.href = tcgLink;
     },
