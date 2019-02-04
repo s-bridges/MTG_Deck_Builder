@@ -249,6 +249,9 @@ export default {
     addSideboardCard(card) {
       this.sideboardCards.push(card);
     },
+    addCatalogCard(card) {
+      this.catalogCards.push(card);
+    },
     removeCard(card) {
       let index = _.findIndex(this.selectedCards, function(c) { 
           return c.multiverse_id == card.multiverse_id; 
@@ -353,6 +356,20 @@ export default {
       let sideboardCards = this.sideboardCards;
       // group the cards by the card name so we can keep track of duplicates
       let result = _.chain(sideboardCards).groupBy('name').map(function(v, i) {
+        // get first card out of group of the same cards and set the card data
+        let cardData = _.first(v);
+        return {
+          name: i,
+          multiverse_id: cardData.multiverse_id,
+          count: v.length,
+          card: cardData
+        }
+      }).orderBy(['name'], ['asc']).value();
+      return result;
+    },
+    myCatalog() {
+      let catalogCards = this.catalogCards;
+      let result = _.chain(catalogCards).groupBy('name').map(function(v, i) {
         // get first card out of group of the same cards and set the card data
         let cardData = _.first(v);
         return {

@@ -46,4 +46,7 @@ class Card extends Model
     public function sideboard_cards() {
         return $this->belongsToMany(Card::class, 'sideboards', 'deck_id', 'card_id')->withPivot('count');
     }
+    public function catalogs() {
+        return $this->belongsToMany(Catalog::class, 'card_id')->withPivot('count');
+    }
 }
