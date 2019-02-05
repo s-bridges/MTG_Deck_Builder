@@ -30,7 +30,7 @@ class LoginController extends Controller
 
     protected function authenticated()
     {
-        return redirect('/card');
+        return redirect('/');
     }
     /**
      * Create a new controller instance.
@@ -48,6 +48,6 @@ class LoginController extends Controller
         // $url = $request->query('url') ? (string) $request->query('url') : '/card';
         // use request to get url params of the current page path you are on
         // dd($this->request);
-        return '/card';
+        return '/';
     }
 }

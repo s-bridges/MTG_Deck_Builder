@@ -130,7 +130,7 @@ class DecksController extends Controller
             }
         }
         else {
-            $data = collect(['deck' => $deck, 'power_levels' => $power_levels]);
+            $data = collect(['deck' => $deck, 'cards' => $cards, 'sideboard' => $sideboard, 'power_levels' => $power_levels]);
                 // only view
                 return view('deck-cards', ['data' => $data]);
         }               

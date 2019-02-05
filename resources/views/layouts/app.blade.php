@@ -95,6 +95,9 @@
                                 <a class="dropdown-item" href="{{ route('decks') }}">
                                         {{ __('My Decks') }}
                                     </a>
+                                <a class="dropdown-item" href="{{ route('catalog') }}">
+                                        {{ __('My Catalog') }}
+                                    </a>
                                 <a class="dropdown-item" href="{{ route('cards') }}">
                                         {{ __('Build a Deck') }}
                                     </a>
@@ -175,9 +178,18 @@
 
         <main class="py-4">
         <!-- TCGPlayer.com Ad -->
-        <div class="row justify-content-center">
-        <a href="https://www.tcgplayer.com/?partner=MAGICDB" target="_blank"><img src="https://magicdb.us/images/rna_wbn_key_728x90_en.jpg" class="img-fluid" alt="TCGPlayer.com"></a>
-        </div>    
+        <div align="center">            
+            <script id="tcg-a2"
+                data-affcode="MAGICDB"
+                data-width="728"
+                data-height="90"
+                data-category-id="1"
+                data-campaign="affiliate"
+                data-source="MAGICDB"
+                data-medium="MAGICDB"
+                src="https://content.tcg20life.com/tcgafa.js" async>
+            </script>
+        </div>
             @yield('content')
         </main>
     </div>

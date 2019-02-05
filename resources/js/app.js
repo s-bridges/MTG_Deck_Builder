@@ -38,6 +38,7 @@ Vue.component('all-decks', require('./components/AllDecks.vue'));
 Vue.component('all-blogs', require('./components/AllBlogs.vue'));
 Vue.component('power-levels', require('./components/PowerLevels.vue'));
 Vue.component('editor-page', require('./components/EditorPage.vue'));
+Vue.component('catalog-view', require('./components/Catalog.vue'));
 
 const app = new Vue({
     el: '#app'

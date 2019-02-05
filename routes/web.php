@@ -96,3 +96,9 @@ Route::prefix('editor')->middleware(['auth', 'is_editor'])->group(function () {
     Route::post('/blog/update', 'EditorController@updateBlogPost')->name('updateBlogPost');
     Route::delete('/{slug}/delete', 'EditorController@deletePost')->name('post_delete');
 });
+
+Route::prefix('catalog')->middleware(['auth'])->group(function () {
+    Route::get('/', 'CatalogController@viewCatalog')->name('catalog');
+    //Route::get('/cards', 'CatalogController@listCards')->name('catalog');
+    Route::post('/save', 'CatalogController@saveCatalog');
+});
