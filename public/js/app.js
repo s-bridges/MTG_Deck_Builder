@@ -2297,14 +2297,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     downloadFile: function downloadFile() {
       // <amount> <Card Name> (<Set>) <Collector Number>
       var text = '';
-      _.each(this.deck.cards, function (card) {
+      _.each(this.myDeck.cards, function (card) {
         // make a card string 
         var cardString = card.count + ' ' + card.name + ' (' + card.card.set + ') ' + card.card.collector_number;
         text += cardString + '\n';
       });
       // sideboard is using '\n' as separator
       text += '\n';
-      _.each(this.deck.sideboard_cards, function (card) {
+      _.each(this.myDeck.sideboard_cards, function (card) {
         var cardString = card.count + ' ' + card.name + ' (' + card.card.set + ') ' + card.card.collector_number;
         text += cardString + '\n';
       });
@@ -41095,6 +41095,9 @@ var render = function() {
                           }
                         },
                         [_vm._v("Click here.")]
+                      ),
+                      _vm._v(
+                        " *Currently there is a bug in MTG Arena where basic lands sometimes cause issues with import.\n                "
                       )
                     ])
                   ])

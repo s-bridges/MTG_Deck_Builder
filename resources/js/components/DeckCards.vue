@@ -111,7 +111,7 @@
                 <div class="card-body">
                   <p v-if="deck.description">{{deck.description}}</p>
                   <p v-else>No description.</p>
-                  <p>Looking to download this deck list? <a v-on:click="downloadFile()" href="#">Click here.</a>
+                  <p>Looking to download this deck list? <a v-on:click="downloadFile()" href="#">Click here.</a> *Currently there is a bug in MTG Arena where basic lands sometimes cause issues with import.
                   </p>
                 </div>
               </div>
@@ -320,14 +320,14 @@ export default {
     downloadFile() {
         // <amount> <Card Name> (<Set>) <Collector Number>
         let text = '';
-        _.each(this.deck.cards, function(card){
+        _.each(this.myDeck.cards, function(card){
           // make a card string 
           let cardString = card.count + ' ' + card.name + ' (' + card.card.set + ') ' + card.card.collector_number;
           text += cardString + '\n';
         });
         // sideboard is using '\n' as separator
         text += '\n';
-        _.each(this.deck.sideboard_cards, function(card){
+        _.each(this.myDeck.sideboard_cards, function(card){
           let cardString = card.count + ' ' + card.name + ' (' + card.card.set + ') ' + card.card.collector_number;
           text += cardString + '\n';
         });
