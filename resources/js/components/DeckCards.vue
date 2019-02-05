@@ -104,11 +104,15 @@
             <div v-bind:class="toggleView ? 'col-lg-3' : 'col-lg-12'">
               <div class="card full width">
                 <div class="card-header">
-                  <h4 class="mb-0">{{ deck.name }} by {{ deck.user.username }}<button v-if="editable" type="button" class="btn btn-danger btn-sm float-right" v-on:click="deleteDeck(deck.id)" title="Delete">Delete</button></h4>
+                  <h4 class="mb-0">{{ deck.name }} by {{ deck.user.username }}
+                    <button type="button" class="btn btn-primary btn-sm float-right" v-on:click="downloadFile()" title="Export">Export</button>
+                    <button style="margin-right:1em;" v-if="editable" type="button" class="btn btn-danger btn-sm float-right" v-on:click="deleteDeck(deck.id)" title="Delete">Delete</button></h4>
                 </div>
                 <div class="card-body">
                   <p v-if="deck.description">{{deck.description}}</p>
                   <p v-else>No description.</p>
+                  <p>Looking to download this deck list? <a v-on:click="downloadFile()" href="#">Click here.</a> *Currently there is a bug in MTG Arena where basic lands may cause issues with import.
+                  </p>
                 </div>
               </div>
               </br>
@@ -312,6 +316,34 @@ export default {
       if (this.activeSideboardImage != id && isSideboard) {
         this.activeSideboardImage = id;
       }
+    },
+    downloadFile() {
+        // <amount> <Card Name> (<Set>) <Collector Number>
+        let text = '';
+        _.each(this.myDeck.cards, function(card){
+          // make a card string 
+          let cardString = card.count + ' ' + card.name + ' (' + card.card.set + ') ' + card.card.collector_number;
+          text += cardString + '\n';
+        });
+        // sideboard is using '\n' as separator
+        text += '\n';
+        _.each(this.myDeck.sideboard_cards, function(card){
+          let cardString = card.count + ' ' + card.name + ' (' + card.card.set + ') ' + card.card.collector_number;
+          text += cardString + '\n';
+        });
+        var filename = this.deck.name + '.txt';
+        var blob = new Blob([text], {type: 'data:text/plain;charset=utf-8'});
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+            window.navigator.msSaveOrOpenBlob(blob, filename);
+        } else{
+            var e = document.createEvent('MouseEvents'),
+            a = document.createElement('a');
+            a.download = filename;
+            a.href = window.URL.createObjectURL(blob);
+            a.dataset.downloadurl = ['data:text/plain;charset=utf-8', a.download, a.href].join(':');
+            e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+            a.dispatchEvent(e);
+        }
     },
     setAPI() {
       // use the filterBySet value which the select option if the v-model of
