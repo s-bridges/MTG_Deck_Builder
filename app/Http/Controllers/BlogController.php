@@ -63,7 +63,6 @@ class BlogController extends Controller
             // create comment
             $created = Comment::create($comment);
             if ($created) {
-                // messaging that the shit actually happened, for now we can just take a dump
                 return response()->json(['status' => true, 'message' => 'Saved Successfully!', 'payload' => $created->toArray()]);
             } else {
                 // we can get more detailed with an error message later on, like actually outputting it here

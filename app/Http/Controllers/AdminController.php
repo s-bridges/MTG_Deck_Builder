@@ -179,7 +179,6 @@ class AdminController extends Controller
 
             $saved = Post::create($data);
             if ($saved) {
-                // messaging that the shit actually happened, for now we can just take a dump
                 return response()->json(['status' => true, 'message' => 'Saved Successfully!', 'payload' => $saved]);
             } else {
                 // we can get more detailed with an error message later on, like actually outputting it here
@@ -237,7 +236,6 @@ class AdminController extends Controller
                 $updatedData
             );
             if ($saved) {
-                // messaging that the shit actually happened, for now we can just take a dump
                 return response()->json(['status' => true, 'message' => 'Saved Successfully!', 'payload' => $saved]);
             } else {
                 // we can get more detailed with an error message later on, like actually outputting it here
@@ -304,7 +302,6 @@ class AdminController extends Controller
                 ];
             });
             if (count($synched_success) > 0) {
-                // messaging that the shit actually happened, for now we can just take a dump
                 return response()->json(['status' => true, 'message' => 'Ranking Successfully!', 'payload' => $power_levels->keyBy('name')]);
             } else {
                 // we can get more detailed with an error message later on, like actually outputting it here

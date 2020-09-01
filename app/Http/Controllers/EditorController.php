@@ -62,7 +62,6 @@ class EditorController extends Controller
 
             $saved = Post::create($data);
             if ($saved) {
-                // messaging that the shit actually happened, for now we can just take a dump
                 return response()->json(['status' => true, 'message' => 'Saved Successfully!', 'payload' => $saved]);
             } else {
                 // we can get more detailed with an error message later on, like actually outputting it here
@@ -120,7 +119,6 @@ class EditorController extends Controller
                 $updatedData
             );
             if ($saved) {
-                // messaging that the shit actually happened, for now we can just take a dump
                 return response()->json(['status' => true, 'message' => 'Saved Successfully!', 'payload' => $saved]);
             } else {
                 // we can get more detailed with an error message later on, like actually outputting it here

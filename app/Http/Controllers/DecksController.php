@@ -186,7 +186,6 @@ class DecksController extends Controller
             $synced_sideboard = $deck->sideboard_cards()->sync($sideboard_cards_array);
             
             if ($synced || $synced_sideboard) {
-                // messaging that the shit actually happened, for now we can just take a dump
                 return response()->json(['status' => true, 'message' => 'Saved Successfully!', 'payload' => $deck->toArray()]);
             } else {
                 // we can get more detailed with an error message later on, like actually outputting it here
