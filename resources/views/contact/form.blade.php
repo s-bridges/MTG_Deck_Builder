@@ -28,17 +28,7 @@
             <input class="cool" type="text" name="_honeyPot2" id="_honeyPot2" value="" />
             </form>
             <button class="btn btn-success btn-block my-3" id="gcaptchy" onclick="recaptcha()">Send Email</button>
-            <div class="g-recaptcha" data-sitekey="6Lf7cYMUAAAAAP2TzmS_le768J0JTf6EA7YyJehw"></div>
-            <!-- <div class="form-group{{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
-                <div class="col-md-6">
-                    {!! app('captcha')->display() !!}
-                    @if ($errors->has('g-recaptcha-response'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
-                        </span>
-                    @endif
-                </div>
-            </div> -->
+            <div class="g-recaptcha" data-sitekey=""></div>
         </div>
         <div class="col-sm-4 align-self-center">
         <p><h4>Or join us on Discord!</h4></p>
@@ -46,27 +36,6 @@
         </div>
     </div>
 </div>
-
-<!-- Put in head section <script src='https://www.google.com/recaptcha/api.js'></script> -->
-<!-- RECAPTCHA WIDGET  <div class="g-recaptcha" data-sitekey="6Lf7cYMUAAAAAP2TzmS_le768J0JTf6EA7YyJehw"></div> -->
-<!-- server side post 
-
-URL: https://www.google.com/recaptcha/api/siteverify
-secret (required)	6Lf7cYMUAAAAAPDgtemDMFdCKpyIloZjl4XBKUWS
-response (required)	The value of 'g-recaptcha-response'.
-remoteip	The end user's ip address.
-
-				var responseToken = grecaptcha.getResponse();
-				// Send the data using post with jquery
-				var recaptchaCheck = $.post( apiBaseUrl + 'forms/recaptcha-check', {response_token: responseToken });
-				recaptchaCheck.done(function( data ) {
-					//Passed recaptcha
-				}).fail(function(xhr, status, error) {
-					//Failed recaptcha
-					valid = false;
-			   		IAPP_notifications.post('error', 'Recaptcha failed.', false);
-
--->
 
 @endsection
 
@@ -77,7 +46,7 @@ remoteip	The end user's ip address.
         if (responseToken) {
             var formData = new FormData();
             formData.append('response', responseToken);
-            formData.append('secret', '6Lf7cYMUAAAAAPDgtemDMFdCKpyIloZjl4XBKUWS');
+            formData.append('secret', '');
             var xhr = new XMLHttpRequest();   // new HttpRequest instance
             xhr.open("POST", "https://www.google.com/recaptcha/api/siteverify");
             xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
