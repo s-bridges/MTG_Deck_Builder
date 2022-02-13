@@ -21,7 +21,7 @@
         "vue-adsense": "^1.0.1"
     },
     "dependencies": {
-        "ajv": "^6.5.4",
+        "ajv": "^6.12.3",
         "dotenv": "^6.2.0",
         "dotenv-webpack": "^1.5.7",
         "imagemin": "^5.3.1",
